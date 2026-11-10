@@ -1,0 +1,9 @@
+node_modules
+.next
+package-lock.json
+prompt_iniziale.txt
+test-results
+playwright-report
+.preview
+backups
+staging

@@ -1,0 +1,23 @@
+## Un solo proprietario
+
+Un **std::unique_ptr** possiede una risorsa in modo esclusivo. Quando il puntatore proprietario viene distrutto, il deleter rilascia la risorsa. Non è copiabile: l’ownership si può invece trasferire.
+
+## Creazione e trasferimento
+
+```cpp
+#include <memory>
+#include <utility>
+
+auto primo = std::make_unique<int>(42);
+auto secondo = std::move(primo);
+// primo è ora vuoto; secondo possiede l'intero.
+// Non dereferenziare primo dopo il trasferimento.
+```
+
+**std::move** abilita il trasferimento mediante conversione a un’espressione rvalue; è il costruttore di spostamento di unique_ptr a trasferire effettivamente la proprietà.
+
+## Costruisci l’intuizione
+
+Pensa all’ownership come a una responsabilità: esiste un solo oggetto incaricato di distruggere la risorsa. Un puntatore osservatore non deve liberarla né sopravvivere alla risorsa.
+
+L’esercizio seguente è scaricabile e compilabile in locale con un compilatore C++14 o successivo. La piattaforma non esegue codice C++ sul server.

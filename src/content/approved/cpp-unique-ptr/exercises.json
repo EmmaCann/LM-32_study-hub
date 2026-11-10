@@ -1,0 +1,16 @@
+[
+  {
+    "id": "cpp-esercizio",
+    "type": "programming",
+    "title": "Trasferisci la proprietà",
+    "prompt": "Completa il file: crea un unique_ptr a 42, trasferiscilo a secondo e stampa il valore solo se secondo è valido.",
+    "answer": "std::make_unique e std::move",
+    "hints": [
+      "Usa std::make_unique<int>(42) per costruire la risorsa.",
+      "Trasferisci il proprietario con auto secondo = std::move(primo)."
+    ],
+    "solution": "#include <iostream>\n#include <memory>\n#include <utility>\n\nint main() {\n    auto primo = std::make_unique<int>(42);\n    auto secondo = std::move(primo);\n    if (secondo) std::cout << *secondo << \"\\n\";\n}",
+    "explanation": "Il trasferimento lascia primo vuoto. Alla fine dello scope, secondo distrugge l’intero una sola volta.",
+    "download": "ownership.cpp"
+  }
+]

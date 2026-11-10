@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "aos-vm-exit",
+  "subject": "aos",
+  "chapter": {
+    "id": "virtualizzazione",
+    "title": "Virtualizzazione",
+    "order": 1
+  },
+  "slug": "vm-exit",
+  "title": "VM exit: dal guest all’host e ritorno",
+  "description": "Segui due percorsi: gestione in KVM oppure emulazione di un dispositivo con QEMU.",
+  "order": 2,
+  "demo": true,
+  "updated": "2026-11-10",
+  "revision": 1,
+  "review": {
+    "status": "approved",
+    "reviewer": "Demo tecnica iniziale",
+    "sources": ["https://docs.kernel.org/virt/kvm/api.html"]
+  },
+  "assets": []
+}

@@ -1,0 +1,16 @@
+[
+  {
+    "id": "avl-esercizio",
+    "type": "multiple-choice",
+    "title": "Quale sarà la nuova radice?",
+    "prompt": "Inserisci 10 nell’albero con radice 30 e figlio sinistro 20. Dopo il ribilanciamento, qual è la radice?",
+    "options": ["10", "20", "30"],
+    "answer": "20",
+    "hints": [
+      "Il caso è sinistra-sinistra: serve una rotazione a destra.",
+      "Il figlio sinistro del nodo sbilanciato prende il posto della radice."
+    ],
+    "solution": "La nuova radice è 20. I suoi figli sono 10 (sinistra) e 30 (destra).",
+    "explanation": "La rotazione preserva la visita simmetrica 10, 20, 30 e riporta a zero il fattore di bilanciamento della radice."
+  }
+]

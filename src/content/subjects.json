@@ -1,0 +1,34 @@
+[
+  {
+    "id": "aos",
+    "title": "Advanced Operating Systems",
+    "short": "Sistemi operativi",
+    "description": "Architetture, virtualizzazione e sistemi.",
+    "color": "violet",
+    "icon": "cpu"
+  },
+  {
+    "id": "algoritmi",
+    "title": "Advanced Programming and AI Coding — Algoritmi",
+    "short": "Algoritmi",
+    "description": "Strutture dati, ragionamento e complessità.",
+    "color": "teal",
+    "icon": "network"
+  },
+  {
+    "id": "cpp",
+    "title": "Advanced Programming and AI Coding — C++",
+    "short": "Programmazione C++",
+    "description": "Codice, ownership e gestione delle risorse.",
+    "color": "amber",
+    "icon": "code"
+  },
+  {
+    "id": "ottimizzazione",
+    "title": "Tecniche di ottimizzazione per il controllo",
+    "short": "Ottimizzazione",
+    "description": "Uno spazio pronto per i prossimi appunti.",
+    "color": "blue",
+    "icon": "chart"
+  }
+]

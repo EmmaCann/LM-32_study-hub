@@ -1,0 +1,8 @@
+[
+  {
+    "id": "avl-demo",
+    "component": "avl-rotation",
+    "title": "Rotazione semplice a destra",
+    "description": "Un inserimento, uno sbilanciamento e cinque stati da esplorare."
+  }
+]

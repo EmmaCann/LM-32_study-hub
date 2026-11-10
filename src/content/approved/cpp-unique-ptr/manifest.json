@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "cpp-unique-ptr",
+  "subject": "cpp",
+  "chapter": {
+    "id": "gestione-memoria",
+    "title": "Risorse e memoria",
+    "order": 1
+  },
+  "slug": "smart-pointer",
+  "title": "std::unique_ptr e ownership esclusiva",
+  "description": "Crea, usa e trasferisci una risorsa senza gestire manualmente delete.",
+  "order": 2,
+  "demo": true,
+  "updated": "2026-11-10",
+  "revision": 1,
+  "review": {
+    "status": "approved",
+    "reviewer": "Demo tecnica iniziale",
+    "sources": ["https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rr-unique"]
+  },
+  "assets": ["ownership.cpp"]
+}

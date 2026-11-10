@@ -1,0 +1,23 @@
+## Il fattore di bilanciamento
+
+Un albero AVL è un albero binario di ricerca nel quale, per ogni nodo, le altezze dei due sottoalberi differiscono al massimo di uno. Poniamo l’altezza dell’albero vuoto uguale a −1.
+
+$$
+BF(v)=h(v_{\mathrm{sin}})-h(v_{\mathrm{des}}), \qquad |BF(v)|\leq 1
+$$
+
+## Perché l’altezza conta
+
+Ricerca, inserimento e cancellazione seguono cammini nell’albero. Il vincolo AVL garantisce altezza $O(\log n)$ e quindi operazioni di ricerca logaritmiche nel caso peggiore.
+
+Il numero minimo di nodi a una certa altezza segue la ricorrenza:
+
+$$
+N(h)=1+N(h-1)+N(h-2), \quad N(-1)=0, \quad N(0)=1.
+$$
+
+## Rotazioni che preservano l’ordine
+
+Una rotazione modifica i collegamenti locali senza alterare l’ordine della visita simmetrica. I casi sinistra-sinistra e destra-destra richiedono una rotazione semplice; i casi sinistra-destra e destra-sinistra richiedono una rotazione doppia.
+
+Passa alla [rotazione semplice](/algoritmi/alberi/rotazioni-avl#avl-demo) per osservare un esempio.

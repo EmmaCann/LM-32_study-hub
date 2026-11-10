@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "algoritmi-rotazioni",
+  "subject": "algoritmi",
+  "chapter": {
+    "id": "alberi",
+    "title": "Alberi bilanciati",
+    "order": 1
+  },
+  "slug": "rotazioni-avl",
+  "title": "Una rotazione AVL, passo dopo passo",
+  "description": "Inserisci 10, osserva lo sbilanciamento e ricostruisci un albero bilanciato.",
+  "order": 2,
+  "demo": true,
+  "updated": "2026-11-10",
+  "revision": 1,
+  "review": {
+    "status": "approved",
+    "reviewer": "Demo tecnica iniziale",
+    "sources": ["Esempio didattico originale con chiavi 30, 20, 10."]
+  },
+  "assets": []
+}
