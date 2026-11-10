@@ -1,0 +1,731 @@
+# PROGETTO: LM-32 STUDY HUB
+
+Sei un senior full-stack engineer specializzato in Next.js, TypeScript, UI/UX, sicurezza delle applicazioni web e architetture per la gestione di contenuti didattici.
+
+Devi realizzare una piattaforma web universitaria privata, denominata **LM-32 Study Hub**, destinata a una studentessa della laurea magistrale in Ingegneria Informatica.
+
+L'obiettivo è creare un ambiente personale, moderno, ordinato e responsive per consultare appunti universitari, animazioni interattive, simulazioni, esempi di codice, esercizi e PDF.
+
+**Non limitarti a produrre documentazione o un mockup: implementa realmente il progetto, esegui i controlli disponibili e lascia una prima versione funzionante in locale.**
+
+La piattaforma dovrà essere predisposta per integrarsi con skill di Codex CLI che svilupperemo separatamente.
+
+---
+
+# 1. CONTESTO E DIRECTORY ESISTENTI
+
+La directory principale è:
+
+`C:\LM-32`
+
+Al suo interno sono già presenti diverse cartelle universitarie.
+
+Le materie attuali sono:
+
+- `advanced operating systems`
+- `Advanced programming and AI coding`
+  - `algoritmi`
+  - `c++`
+- `tecniche di ottimizzazione per il controllo`
+
+Le cartelle delle singole materie contengono già sottocartelle come:
+
+- `materiali`
+- `trascrizioni audio`
+- `appunti pronti`
+
+**Vincoli fondamentali:**
+
+1. Non spostare, rinominare, eliminare o modificare i materiali universitari già presenti.
+2. Non riordinare le cartelle esistenti.
+3. Non sovrascrivere PDF, registrazioni, trascrizioni, appunti o altri file personali.
+4. Esamina la struttura reale del filesystem prima di implementare il progetto.
+5. Crea la piattaforma in una nuova directory `C:\LM-32\study-hub`.
+6. Non inizializzare Git sull'intera directory `C:\LM-32`.
+7. Se necessario, inizializza Git esclusivamente all'interno di `study-hub`.
+8. Non copiare automaticamente i file universitari nel sito.
+9. Non modificare eventuali configurazioni Codex già esistenti senza prima esaminarle.
+10. Mantieni l'architettura facilmente estendibile a nuove materie.
+
+Il sito dovrà essere indipendente dalle directory dei materiali originali. Le future skill potranno esportare contenuti approvati verso il progetto, ma non dovranno mai pubblicare automaticamente i sorgenti universitari.
+
+---
+
+# 2. STACK TECNOLOGICO
+
+Utilizza preferibilmente:
+
+- Next.js con App Router
+- TypeScript in modalità strict
+- Tailwind CSS
+- Componenti accessibili e responsive
+- Lucide Icons
+- MDX per appunti contenenti testo, formule, codice e componenti interattivi
+- KaTeX o soluzione equivalente per formule matematiche
+- Shiki o equivalente per syntax highlighting
+- SVG e componenti React per visualizzazioni didattiche interattive
+- Vercel per l'hosting futuro
+
+Usa versioni stabili e compatibili tra loro, verificando la documentazione delle librerie effettivamente installate.
+
+Evita dipendenze inutili e soluzioni eccessivamente complesse.
+
+Per la prima versione non utilizzare database, ORM o servizi esterni se non strettamente necessari.
+
+La piattaforma dovrà poter funzionare in locale senza servizi cloud obbligatori.
+
+---
+
+# 3. SICUREZZA E ACCESSO PRIVATO
+
+La piattaforma sarà destinata esclusivamente alla proprietaria.
+
+La destinazione prevista per il deployment è Vercel, con:
+
+**Vercel Authentication → All Deployments**
+
+Questo deve proteggere anche il dominio di produzione.
+
+Verifica la documentazione corrente di Vercel prima di predisporre la configurazione.
+
+Per la prima versione:
+
+- Non implementare un sistema di autenticazione personalizzato.
+- Non creare credenziali predefinite.
+- Non memorizzare password nel repository.
+- Non implementare login fittizi spacciandoli per sicuri.
+- Non introdurre pagine pubbliche contenenti contenuti universitari.
+- Non pubblicare il progetto automaticamente.
+- Non creare repository GitHub pubblici.
+- Non caricare slide, trascrizioni, registrazioni o annotazioni originali.
+- Non esporre informazioni sensibili in log, bundle client o variabili pubbliche.
+
+La sicurezza del sito pubblicato dovrà dipendere dalla protezione di Vercel, ma il codice deve comunque seguire normali pratiche di sicurezza web.
+
+Prevedi nel README una procedura per:
+
+1. Pubblicare il progetto su Vercel.
+2. Attivare Vercel Authentication su **All Deployments**.
+3. Verificare che il dominio di produzione non sia pubblico.
+4. Verificare che anche gli asset PDF/HTML siano protetti.
+5. Provare l'accesso in navigazione anonima.
+6. Accedere da Safari su iPad.
+
+**Non effettuare un deployment reale né collegare account esterni senza autorizzazione esplicita.**
+
+---
+
+# 4. DESIGN E USER EXPERIENCE
+
+Realizza una piattaforma elegante, moderna e professionale, pensata per lo studio universitario.
+
+Stile:
+
+- Minimalista e ordinato.
+- Tipografia molto leggibile.
+- Ottima gestione degli spazi.
+- Colori sobri.
+- Dark mode e light mode.
+- Design coerente tra tutte le materie.
+- Navigazione intuitiva.
+- Nessun elemento decorativo superfluo.
+- Supporto completo per desktop e iPad.
+- Interazioni touch-friendly.
+- Accessibilità da tastiera.
+
+L'interfaccia deve ricordare un'applicazione moderna per gestire conoscenza e documentazione tecnica, senza risultare sovraccarica.
+
+Prevedi:
+
+**Sidebar principale**
+- Dashboard
+- Materie
+- Tutti gli argomenti
+- Simulazioni
+- Esercizi
+- Ricerca
+
+**Dashboard**
+- Elenco delle materie.
+- Ultimi appunti aggiunti.
+- Accesso rapido ai capitoli.
+- Numero di argomenti disponibili.
+- Simulazioni disponibili.
+- Eventuale indicatore di progresso, solo se implementato realmente.
+
+Non utilizzare statistiche finte.
+
+**Navigazione**
+- Materia
+- Capitolo
+- Argomento
+- Sezioni e sottosezioni
+
+Inserisci breadcrumb e indice laterale della pagina.
+
+La piattaforma deve consentire di tornare facilmente al punto in cui ci si trovava.
+
+---
+
+# 5. ORGANIZZAZIONE DELLE MATERIE
+
+La piattaforma deve supportare inizialmente:
+
+## Advanced Operating Systems
+
+Identificatore stabile: `aos`
+
+Contenuti previsti:
+- Teoria universitaria.
+- Architetture dei sistemi.
+- Schemi e diagrammi.
+- Processi di virtualizzazione.
+- Simulazioni interattive.
+- PDF degli appunti.
+
+## Advanced Programming and AI Coding — Algoritmi
+
+Identificatore stabile: `algoritmi`
+
+Contenuti previsti:
+- Spiegazioni teoriche.
+- Pseudocodice.
+- Formule matematiche.
+- Dimostrazioni.
+- Analisi della complessità.
+- Alberi e grafi.
+- Simulazioni passo passo.
+- Esercizi.
+- PDF.
+
+## Advanced Programming and AI Coding — C++
+
+Identificatore stabile: `cpp`
+
+Contenuti previsti:
+- Teoria del linguaggio.
+- Esempi di codice.
+- Spiegazioni dell'esecuzione.
+- Esercizi progressivi.
+- Suggerimenti.
+- Soluzioni nascoste fino alla richiesta.
+- Download di file `.cpp`.
+- PDF.
+
+## Tecniche di ottimizzazione per il controllo
+
+Identificatore stabile: `ottimizzazione`
+
+Predisponi una quarta materia con struttura generica, senza inventare un programma didattico.
+
+La piattaforma dovrà supportare qualsiasi nuova materia tramite configurazione, senza dover creare manualmente nuove pagine applicative.
+
+---
+
+# 6. STRUTTURA DEI CONTENUTI
+
+Ogni materia deve essere suddivisa in capitoli e argomenti.
+
+Esempio di organizzazione logica:
+
+Advanced Operating Systems
+- Virtualizzazione
+  - Architettura QEMU/KVM
+  - Macchine virtuali e vCPU
+  - VM exit
+- Virtualizzazione della memoria
+  - Traduzione degli indirizzi
+  - Gestione della memoria guest
+
+Questi sono esempi dimostrativi, NON l'indice definitivo del corso.
+
+L'indice reale verrà costruito progressivamente dalle future skill usando i materiali dei professori.
+
+Ogni argomento deve poter contenere:
+
+- Titolo.
+- Descrizione breve.
+- Materia.
+- Capitolo.
+- Ordine di visualizzazione.
+- Contenuto teorico.
+- Formule.
+- Immagini e diagrammi.
+- Blocchi di codice.
+- Simulazioni interattive.
+- Esercizi.
+- Collegamento al PDF.
+- Metadati relativi alle fonti e alla revisione.
+- Data di aggiornamento, se disponibile.
+
+Gli URL devono essere stabili, per esempio:
+
+`/aos/virtualizzazione/vm-exit`
+
+`/algoritmi/alberi/rotazioni-avl`
+
+`/cpp/gestione-memoria/smart-pointer`
+
+Le URL sono esempi e dovranno essere gestite da un sistema di routing dinamico.
+
+Un capitolo già pubblicato deve poter essere aggiornato senza cambiare il suo URL.
+
+---
+
+# 7. VISUALIZZAZIONE DEGLI APPUNTI
+
+Gli appunti HTML saranno uno dei contenuti principali della piattaforma.
+
+Supporta:
+
+- Titoli e sottotitoli.
+- Paragrafi discorsivi.
+- Formule matematiche.
+- Tabelle.
+- Diagrammi.
+- Immagini.
+- Citazioni.
+- Pseudocodice.
+- Blocchi C++ con evidenziazione della sintassi.
+- Riquadri per definizioni e osservazioni.
+- Esempi pratici.
+- Componenti React interattivi.
+
+Crea uno stile tipografico ottimizzato per testi universitari lunghi.
+
+Gli appunti devono risultare molto leggibili anche su iPad.
+
+Non usare Markdown visualizzato come testo grezzo: deve essere renderizzato correttamente.
+
+Per le formule, verifica che vengano visualizzati bene indici, esponenti, simboli matematici, sommatorie e matrici.
+
+I contenuti devono essere trattati come dati strutturati e separati dal codice dell'applicazione.
+
+Per motivi di sicurezza, non consentire l'esecuzione arbitraria di JavaScript o JSX proveniente da contenuti importati senza revisione. Utilizza componenti interattivi registrati esplicitamente e una whitelist degli elementi supportati.
+
+---
+
+# 8. SIMULAZIONI INTERATTIVE
+
+Le simulazioni sono una funzionalità fondamentale.
+
+Non devono essere semplici video.
+
+Devono poter contenere:
+
+- Pulsante Avanti.
+- Pulsante Indietro.
+- Riproduzione automatica, quando utile.
+- Pausa.
+- Riavvio.
+- Descrizione dello stato corrente.
+- Eventuali controlli per modificare gli input.
+- Visualizzazione del risultato.
+- Interazione tramite touch su iPad.
+
+Crea un sistema che permetta di registrare simulazioni associate agli argomenti.
+
+Ogni simulazione deve avere:
+- ID stabile.
+- Titolo.
+- Descrizione.
+- Materia.
+- Argomento associato.
+- Component React corrispondente.
+- Eventuali parametri.
+- URL stabile o ancoraggio all'interno del capitolo.
+
+Predisponi un registro dei componenti interattivi, in modo che le future skill possano generarne di nuovi seguendo un'interfaccia comune.
+
+Crea almeno due simulazioni dimostrative REALMENTE FUNZIONANTI:
+
+**AOS: VM exit in QEMU/KVM**
+
+Una visualizzazione che rappresenti:
+1. Esecuzione del guest.
+2. Evento che provoca una VM exit.
+3. Gestione dell'evento da parte di KVM.
+4. Eventuale intervento di QEMU.
+5. Ripresa dell'esecuzione della VM.
+
+Il diagramma deve essere tecnicamente coerente: QEMU non deve essere coinvolto obbligatoriamente in ogni VM exit.
+
+**Algoritmi: rotazione AVL**
+
+Visualizza:
+1. Albero iniziale.
+2. Inserimento del nodo.
+3. Individuazione dello sbilanciamento.
+4. Rotazione correttiva.
+5. Albero bilanciato.
+
+Usa nodi SVG collegati da archi.
+
+La simulazione deve essere navigabile passo passo e accompagnata da brevi spiegazioni.
+
+Per C++ predisponi il sistema per future simulazioni di memoria, ownership, puntatori e lifetime degli oggetti.
+
+---
+
+# 9. ESERCIZI
+
+Implementa un sistema di esercizi che supporti più tipologie:
+
+- Domande a risposta multipla.
+- Domande vero/falso.
+- Risposta breve.
+- Esercizi di programmazione da scaricare.
+- Esercizi algoritmici con soluzione.
+- Suggerimenti progressivi.
+
+Le soluzioni devono rimanere nascoste finché l'utente non sceglie di visualizzarle.
+
+Prevedi una distinzione tra:
+- Testo dell'esercizio.
+- Suggerimenti.
+- Soluzione.
+- Spiegazione della soluzione.
+
+Non implementare un compilatore C++ lato server nella prima versione.
+
+Prevedi il download dei file `.cpp`.
+
+Realizza almeno un esercizio dimostrativo per C++ e uno per Algoritmi.
+
+---
+
+# 10. PDF E COLLEGAMENTI CON NOTES+
+
+La proprietaria utilizza Notes+ su iPad per leggere, evidenziare e annotare i PDF.
+
+La piattaforma non deve sostituire necessariamente Notes+.
+
+Deve invece permettere di consultare:
+- Versione HTML degli appunti.
+- PDF per lo studio.
+- Animazioni interattive.
+- Eventuali esercizi.
+
+Ogni PDF dovrà poter contenere collegamenti HTTPS alla piattaforma.
+
+Il collegamento deve condurre direttamente all'argomento o alla simulazione corretta.
+
+È essenziale che:
+- Gli URL siano stabili.
+- I collegamenti non puntino a file locali Windows.
+- Non dipendano da percorsi relativi a cartelle su iPad.
+- Rimangano validi dopo la pubblicazione di versioni aggiornate.
+
+Predisponi un modulo per generare o validare gli URL dei collegamenti.
+
+La generazione finale dei PDF sarà affidata alle future skill o a una pipeline dedicata. Per ora realizza un contratto di integrazione e una procedura dimostrativa.
+
+Non assumere che Notes+ supporti automaticamente tutti i tipi di link: questo comportamento verrà verificato sull'iPad.
+
+---
+
+# 11. SISTEMA DI IMPORTAZIONE DEI CONTENUTI
+
+Questa è una delle parti architetturali più importanti.
+
+Le future skill Codex dovranno poter generare contenuti autonomamente, senza dover modificare manualmente la piattaforma.
+
+Realizza quindi un sistema di importazione basato su file strutturati.
+
+Definisci uno schema versionato, per esempio:
+
+- `manifest.json` per i metadati.
+- `content.mdx` per il contenuto didattico.
+- `assets/` per immagini, diagrammi e PDF.
+- `exercises.json` per gli esercizi.
+- `simulations.json` per i riferimenti alle simulazioni.
+
+La struttura precisa può essere migliorata se esiste una soluzione tecnica più robusta.
+
+Requisiti:
+
+1. Validazione dei file importati.
+2. Validazione degli identificatori.
+3. Rilevamento di duplicati.
+4. Verifica dei riferimenti agli asset.
+5. Aggiornamento di capitoli esistenti mantenendo gli URL.
+6. Nessuna sovrascrittura distruttiva non necessaria.
+7. Messaggi di errore comprensibili.
+8. Possibilità di generare un'anteprima prima della pubblicazione.
+9. Nessuna pubblicazione automatica di file non approvati.
+10. Documentazione precisa per le skill che produrranno i contenuti.
+
+Utilizza eventualmente Zod per validare i metadati.
+
+Prevedi una directory di staging separata dai contenuti approvati.
+
+I contenuti ancora da verificare non devono comparire nella versione pubblicata.
+
+Gli import devono avvenire durante lo sviluppo/build o attraverso uno script controllato, non mediante endpoint pubblici di upload.
+
+---
+
+# 12. RICERCA
+
+Implementa una ricerca globale che permetta di trovare:
+
+- Materie.
+- Capitoli.
+- Argomenti.
+- Titoli delle sezioni.
+- Simulazioni.
+- Esercizi.
+
+Nella prima versione è sufficiente una ricerca locale su un indice generato dai contenuti.
+
+Non è necessario utilizzare servizi di ricerca esterni.
+
+L'interfaccia deve essere rapida e utilizzabile anche da iPad.
+
+---
+
+# 13. STRUTTURA DEL PROGETTO
+
+Organizza il codice con una separazione chiara tra:
+
+- Applicazione Next.js.
+- Componenti UI.
+- Componenti interattivi.
+- Contenuti didattici.
+- Configurazioni delle materie.
+- Sistema di importazione.
+- Schemi di validazione.
+- Script.
+- Documentazione.
+- Test.
+
+Una possibile struttura è:
+
+study-hub/
+- src/
+  - app/
+  - components/
+  - lib/
+  - content/
+  - simulations/
+- public/
+- scripts/
+- staging/
+- docs/
+- tests/
+
+Puoi adattarla alle esigenze tecniche, purché rimanga ordinata e comprensibile.
+
+Non creare directory inutili.
+
+Non duplicare i contenuti didattici in più punti.
+
+---
+
+# 14. CONTENUTI DIMOSTRATIVI
+
+Crea contenuti dimostrativi brevi e tecnicamente corretti per:
+
+**AOS**
+- Introduzione alla virtualizzazione QEMU/KVM.
+- Funzionamento di una VM exit.
+
+**Algoritmi**
+- Introduzione agli alberi AVL.
+- Rotazione semplice con animazione.
+
+**C++**
+- Introduzione a RAII.
+- Esempio con `std::unique_ptr`.
+- Un esercizio pratico con suggerimento e soluzione.
+
+**Ottimizzazione**
+- Soltanto struttura iniziale della materia.
+
+Questi contenuti servono esclusivamente a testare l'applicazione.
+
+Non analizzare né importare automaticamente i PDF personali già presenti in `C:\LM-32`.
+
+Non inventare il programma dei corsi o il contenuto delle lezioni reali.
+
+Contrassegna chiaramente gli esempi come dimostrativi.
+
+---
+
+# 15. RESPONSIVE DESIGN E IPAD
+
+Il progetto deve essere ottimizzato soprattutto per:
+
+- Desktop Windows.
+- Safari su iPad.
+- Utilizzo touch.
+- Orientamento verticale e orizzontale.
+
+Requisiti:
+
+- Sidebar adattabile.
+- Indice capitoli navigabile.
+- Diagrammi che si ridimensionano.
+- Codice scorrevole orizzontalmente se necessario.
+- Pulsanti sufficientemente grandi per il tocco.
+- Nessun hover obbligatorio.
+- Formule matematiche leggibili.
+- Layout senza overflow indesiderati.
+- Apertura dei PDF.
+- Collegamenti stabili alle simulazioni.
+
+Testa le dimensioni responsive disponibili attraverso gli strumenti installati.
+
+---
+
+# 16. WORKFLOW CON LE FUTURE SKILL CODEX
+
+In futuro creeremo quattro skill:
+
+- `studio-fonti`
+- `appunti-aos`
+- `appunti-algoritmi`
+- `appunti-cpp`
+
+Non implementare ora queste skill.
+
+Predisponi invece le interfacce attraverso cui potranno esportare i loro risultati.
+
+Il workflow futuro sarà:
+
+1. La skill legge slide annotate e trascrizioni.
+2. Verifica gli appunti manoscritti e i concetti.
+3. Organizza i contenuti.
+4. Genera una versione strutturata della lezione.
+5. Genera eventuali componenti interattivi.
+6. Genera il PDF.
+7. Esporta tutto in una directory di staging.
+8. La piattaforma valida i contenuti.
+9. L'utente approva la pubblicazione.
+10. I contenuti vengono inseriti nel sito con URL stabili.
+
+Realizza un documento specifico:
+
+`docs/SKILLS_INTEGRATION.md`
+
+Deve spiegare esattamente:
+- Come una skill deve strutturare l'output.
+- Dove deve collocare i file.
+- Come dichiarare un'animazione.
+- Come collegare un PDF.
+- Come aggiornare un argomento.
+- Come gestire gli identificatori stabili.
+- Come invocare la validazione.
+- Come preparare la pubblicazione.
+
+Questo documento sarà il contratto tecnico tra la piattaforma e le nostre future skill.
+
+---
+
+# 17. TEST E QUALITÀ
+
+Prima di terminare:
+
+- Esegui la verifica dei tipi TypeScript.
+- Esegui lint.
+- Esegui build di produzione.
+- Verifica che tutte le route dimostrative funzionino.
+- Verifica il funzionamento dei componenti interattivi.
+- Verifica che i pulsanti non siano puramente decorativi.
+- Verifica i collegamenti interni.
+- Verifica la validazione dei contenuti.
+- Verifica gli stati di errore e le pagine non trovate.
+- Verifica i principali breakpoint responsive.
+- Controlla che non vengano pubblicate accidentalmente le cartelle `materiali` e `trascrizioni audio`.
+
+Se sono disponibili browser automation e test end-to-end, utilizzali.
+
+Non dichiarare come verificato ciò che non hai realmente testato.
+
+---
+
+# 18. DOCUMENTAZIONE
+
+Prepara un README chiaro in italiano.
+
+Deve contenere:
+
+- Descrizione della piattaforma.
+- Tecnologie utilizzate.
+- Struttura del progetto.
+- Comandi di installazione.
+- Comandi di sviluppo locale.
+- Comandi di build.
+- Come aggiungere una materia.
+- Come aggiungere un capitolo.
+- Come importare nuovi appunti.
+- Come associare simulazioni.
+- Come gestire i PDF.
+- Come pubblicare in modo privato.
+- Come verificare la protezione Vercel.
+- Come collegare le future skill.
+
+Prepara anche un file `.env.example` se necessario.
+
+Non inserire credenziali reali.
+
+---
+
+# 19. MODALITÀ DI LAVORO
+
+Procedi in modo autonomo e ordinato.
+
+1. Esamina il filesystem esistente.
+2. Verifica gli strumenti e le dipendenze disponibili.
+3. Definisci l'architettura.
+4. Implementa la piattaforma.
+5. Crea i componenti interattivi dimostrativi.
+6. Realizza il sistema di importazione.
+7. Esegui test, lint e build.
+8. Correggi i problemi riscontrati.
+9. Prepara la documentazione.
+10. Riassumi i risultati.
+
+Non fermarti alla sola pianificazione.
+
+Non interrompere il lavoro per chiedere conferme su scelte implementative ordinarie.
+
+Usa soluzioni semplici, mantenibili e robuste.
+
+Non effettuare azioni irreversibili.
+
+**Non pubblicare nulla online e non creare repository remoti senza mia autorizzazione.**
+
+Se una funzione richiede credenziali, connessioni esterne o configurazioni che non puoi completare autonomamente, prepara il codice e documenta con precisione il passaggio manuale necessario.
+
+---
+
+# 20. RISULTATO ATTESO
+
+Alla fine voglio avere:
+
+- Una piattaforma Next.js funzionante in locale.
+- Dashboard organizzata per materia.
+- Navigazione per capitoli e argomenti.
+- Appunti HTML ben impaginati.
+- Formule matematiche.
+- Blocchi C++.
+- Simulazioni interattive funzionanti.
+- Esercizi con suggerimenti e soluzioni.
+- Sistema di ricerca.
+- Supporto PDF.
+- Architettura per importare appunti generati da Codex.
+- Documentazione per le future skill.
+- Predisposizione al deployment privato su Vercel.
+
+La piattaforma deve essere una base realmente utilizzabile e ampliabile, non una semplice dimostrazione grafica.
+
+Al termine indicami:
+1. Quali funzionalità sono state implementate.
+2. Quali sono state verificate.
+3. Eventuali problemi ancora presenti.
+4. Come avviare il sito in locale.
+5. Quali passaggi saranno necessari per la pubblicazione privata.
+6. Il percorso del documento `SKILLS_INTEGRATION.md`.
+
+**Inizia ora analizzando `C:\LM-32` e implementando LM-32 Study Hub.**
