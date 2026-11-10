@@ -1,17 +1,15 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { ThemeSwitch } from './theme-switch';
 import {
-  BookOpen,
   LayoutDashboard,
   Library,
   Layers,
   Play,
   PenLine,
   Search,
-  Sun,
-  Moon,
   Menu,
   X,
   GraduationCap,
@@ -27,21 +25,7 @@ const links = [
 ] as const;
 export function Shell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname(),
-    [open, setOpen] = useState(false),
-    [dark, setDark] = useState(false);
-  useEffect(() => {
-    const saved = localStorage.getItem('lm32-theme');
-    const value = saved
-      ? saved === 'dark'
-      : window.matchMedia('(prefers-color-scheme: dark)').matches;
-    document.documentElement.dataset.theme = value ? 'dark' : 'light';
-  }, []);
-  function toggle() {
-    const value = document.documentElement.dataset.theme !== 'dark';
-    setDark(value);
-    document.documentElement.dataset.theme = value ? 'dark' : 'light';
-    localStorage.setItem('lm32-theme', value ? 'dark' : 'light');
-  }
+    [open, setOpen] = useState(false);
   return (
     <>
       <a className="skip" href="#main">
@@ -51,6 +35,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
         <Link href="/">
           LM·32 <span>Study Hub</span>
         </Link>
+        <ThemeSwitch />
         <button
           aria-label={open ? 'Chiudi navigazione' : 'Apri navigazione'}
           aria-expanded={open}
@@ -69,7 +54,6 @@ export function Shell({ children }: { children: React.ReactNode }) {
             LM·32 <small>STUDY HUB</small>
           </span>
         </Link>
-        <p className="nav-label">IL TUO SPAZIO DI STUDIO</p>
         <nav aria-label="Navigazione principale">
           {links.map(([href, label, Icon]) => (
             <Link
@@ -84,30 +68,16 @@ export function Shell({ children }: { children: React.ReactNode }) {
             </Link>
           ))}
         </nav>
-        <div className="sidebar-note">
-          <BookOpen size={21} />
-          <strong>Un concetto alla volta.</strong>
-          <p>
-            Appunti, pratica e intuizioni.
-            <br />
-            Tutto nello stesso spazio.
-          </p>
-        </div>
         <div className="sidebar-bottom">
-          <button onClick={toggle} aria-label="Cambia tema">
-            {dark ? <Sun size={18} /> : <Moon size={18} />}Cambia tema
-          </button>
-          <span className="local-dot">Ambiente locale</span>
+          <span className="muted">Il tuo spazio di studio</span>
         </div>
       </aside>
       <div className="workspace">
         <div className="topbar">
-          <span>
-            Laurea magistrale <span className="muted">/</span> Ingegneria Informatica
-          </span>
           <Link href="/ricerca">
             <Search size={17} /> Cerca negli appunti <ArrowUpRight size={15} />
           </Link>
+          <ThemeSwitch />
         </div>
         <main id="main">{children}</main>
         <footer>

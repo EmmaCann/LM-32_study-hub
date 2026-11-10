@@ -3,7 +3,7 @@
   --bg: #f7f8fa;
   --surface: #fff;
   --ink: #202936;
-  --muted: #73808e;
+  --muted: #626e7e;
   --line: #e6e9ee;
   --accent: #5968c8;
   --soft: #eef0ff;
@@ -1237,7 +1237,7 @@ textarea {
   .scrim {
     display: block;
     position: fixed;
-    inset: 0;
+    inset: 0 0 0 260px;
     background: #10162660;
     border: 0;
     z-index: 35;
@@ -1424,5 +1424,170 @@ textarea {
   * {
     transition: none !important;
     animation: none !important;
+  }
+}
+
+/* Compact study interface. */
+.home-heading h1 {
+  font-size: 32px;
+  letter-spacing: -1px;
+}
+.home-heading {
+  margin-bottom: 30px;
+}
+.home-heading p {
+  font-size: 15px;
+}
+.brand {
+  margin-bottom: 32px;
+}
+.sidebar-bottom {
+  font-size: 12px;
+}
+.topbar {
+  height: 72px;
+}
+.topbar > a {
+  font-size: 13px;
+}
+.theme-switch {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--bg);
+}
+.theme-switch button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 40px;
+  padding: 7px 12px;
+  border: 0;
+  border-radius: 6px;
+  color: var(--muted);
+  background: transparent;
+  font-size: 12px;
+}
+.theme-switch button[aria-pressed='true'] {
+  color: var(--ink);
+  background: var(--surface);
+  box-shadow: 0 1px 4px #00000012;
+}
+.subject-card {
+  padding: 20px;
+}
+.subject-card h3 {
+  margin: 0 0 17px;
+}
+.card-top {
+  margin-bottom: 16px;
+}
+.subject-card:hover {
+  transform: none;
+}
+.card-bottom {
+  border-top: 0;
+  padding-top: 0;
+  font-size: 12px;
+}
+.section-heading {
+  margin-top: 30px;
+}
+.list-row .eyebrow {
+  font-size: 10px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.list-row h3 {
+  font-size: 15px;
+}
+.list-row p {
+  font-size: 12px;
+}
+.practice-links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.practice-links a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  font-size: 14px;
+}
+.practice-links a:hover {
+  border-color: var(--accent);
+}
+.practice-links small {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 5px;
+}
+:root[data-theme='dark'] .violet {
+  --tint: #302b43;
+  --tone: #b7a5ec;
+}
+:root[data-theme='dark'] .teal {
+  --tint: #203b36;
+  --tone: #87c8b7;
+}
+:root[data-theme='dark'] .amber {
+  --tint: #3c3225;
+  --tone: #e3b878;
+}
+:root[data-theme='dark'] .blue {
+  --tint: #253449;
+  --tone: #99b9e6;
+}
+@media (max-width: 700px) {
+  .mobile-header {
+    gap: 10px;
+    padding-inline: 15px;
+    height: 72px;
+  }
+  .mobile-header > a {
+    font-size: 19px;
+  }
+  .mobile-header > a span {
+    display: none;
+  }
+  .mobile-header .theme-switch {
+    margin-left: auto;
+  }
+  .mobile-header .theme-switch button {
+    width: auto;
+    height: 40px;
+    min-width: 40px;
+    padding: 7px;
+    border: 0;
+    font-size: 11px;
+  }
+  .mobile-header > button {
+    flex-shrink: 0;
+  }
+  .home-heading h1 {
+    font-size: 29px;
+  }
+  .practice-links {
+    grid-template-columns: 1fr;
+  }
+  .subject-card {
+    padding: 17px 14px;
+  }
+  .subject-card h3 {
+    min-height: 44px;
+  }
+  .list-row p {
+    display: none;
   }
 }

@@ -122,10 +122,19 @@ test('breakpoint desktop, iPad, mobile e tema persistente', async ({ page }) => 
     if (width < 700) {
       await page.getByRole('button', { name: 'Apri navigazione' }).click();
       await expect(page.getByRole('navigation', { name: 'Navigazione principale' })).toBeVisible();
+      await page.getByRole('button', { name: 'Chiudi menu' }).click();
     }
-    await page.getByRole('button', { name: 'Cambia tema' }).click();
-    const theme = await page.locator('html').getAttribute('data-theme');
-    await page.reload();
-    await expect(page.locator('html')).toHaveAttribute('data-theme', theme!);
+    for (const [name, theme] of [
+      ['Tema scuro', 'dark'],
+      ['Tema chiaro', 'light'],
+    ]) {
+      await page.getByRole('button', { name, exact: true }).click();
+      await expect(page.getByRole('button', { name, exact: true })).toHaveAttribute(
+        'aria-pressed',
+        'true',
+      );
+      await page.reload();
+      await expect(page.locator('html')).toHaveAttribute('data-theme', theme);
+    }
   }
 });

@@ -31,7 +31,7 @@ export function PageHeading({
 export function SubjectCards({ topics }: { topics: Topic[] }) {
   return (
     <div className="subject-grid">
-      {subjects.map((s, i) => {
+      {subjects.map((s) => {
         const Icon = icons[s.icon as keyof typeof icons],
           count = topics.filter((t) => t.manifest.subject === s.id).length;
         return (
@@ -40,15 +40,8 @@ export function SubjectCards({ topics }: { topics: Topic[] }) {
               <span className="subject-icon">
                 <Icon size={25} />
               </span>
-              <span className="subject-number">0{i + 1}</span>
             </div>
-            <span className="eyebrow">
-              {s.id === 'algoritmi' || s.id === 'cpp'
-                ? 'ADVANCED PROGRAMMING & AI CODING'
-                : 'LAUREA MAGISTRALE · LM-32'}
-            </span>
             <h3>{s.short}</h3>
-            <p>{s.description}</p>
             <div className="card-bottom">
               <span>{count ? `${count} argomenti` : 'In attesa di contenuti'}</span>
               <ArrowUpRight size={20} />
