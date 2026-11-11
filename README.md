@@ -1,6 +1,6 @@
 # LM·32 Study Hub
 
-Piattaforma personale per studiare Ingegneria Informatica: appunti, formule, codice, simulazioni ed esercizi. Funziona in locale senza account, database o servizi cloud. I sei argomenti iniziali sono **dimostrativi**, non costituiscono il programma ufficiale dei corsi. La materia Ottimizzazione contiene soltanto lo spazio iniziale.
+Piattaforma personale per studiare Ingegneria Informatica: appunti, formule, codice, simulazioni ed esercizi. Funziona in locale senza account, database o servizi cloud. Il catalogo degli appunti approvati parte vuoto: le materie sono pronte ad accogliere i contenuti reali quando saranno generati e revisionati.
 
 Il progetto risiede in `C:\LM-32_study-hub`, nel repository già collegato a GitHub. Le directory universitarie originali in `C:\LM-32` non vengono lette dall’applicazione, copiate o pubblicate.
 
@@ -40,7 +40,7 @@ Il file `.mdx` usa deliberatamente un **sottoinsieme sicuro di MDX: Markdown e f
 
 Dashboard con conteggi ricavati dai contenuti; quattro materie; navigazione materia/capitolo/argomento; breadcrumb e indice; ricerca su materie, capitoli, titoli delle sezioni, testo, simulazioni ed esercizi. La ricerca e il tema funzionano nel browser, senza servizi esterni. Non sono presenti indicatori di avanzamento inventati.
 
-La simulazione VM exit distingue gli eventi risolti da KVM dal percorso che coinvolge QEMU. La rotazione AVL presenta cinque stati con nodi e archi SVG. Entrambe hanno avanti, indietro, pausa, riproduzione e reset. Gli esercizi supportano scelta multipla, vero/falso, risposta breve, programmazione e problemi algoritmici. Le risposte aperte si confrontano autonomamente con la soluzione; non viene simulata una correzione automatica. Le soluzioni sono nascoste nell’interfaccia, non segrete nel bundle: è uno strumento personale, non una piattaforma d’esame.
+Il registro contiene componenti pronti per VM exit e rotazione AVL, ma non sono pubblicati finché un argomento approvato non li dichiara. Gli esercizi supportano scelta multipla, vero/falso, risposta breve, programmazione e problemi algoritmici. Le risposte aperte si confrontano autonomamente con la soluzione; non viene simulata una correzione automatica. Le soluzioni sono nascoste nell’interfaccia, non segrete nel bundle.
 
 ## Struttura
 
@@ -78,7 +78,7 @@ npm.cmd run build
 
 ## PDF e Notes+
 
-Un pacchetto può includere un PDF in `assets/`, dichiararlo in `manifest.assets` e indicarlo con `manifest.pdf`. La pagina offre il pulsante **Apri PDF**. Gli asset sono serviti da una route controllata, non copiati in `public`. Solo file dichiarati nei pacchetti approvati sono accessibili. Il download C++ dimostrativo usa la stessa procedura.
+Un pacchetto può includere un PDF in `assets/`, dichiararlo in `manifest.assets` e indicarlo con `manifest.pdf`. La pagina offre il pulsante **Apri PDF**. Gli asset sono serviti da una route controllata, non copiati in `public`. Solo file dichiarati nei pacchetti approvati sono accessibili.
 
 La generazione dei PDF didattici è affidata alle future skill. Per costruire i link HTTPS da inserire in un PDF:
 
@@ -109,7 +109,7 @@ Nessun deployment o collegamento di account è stato effettuato. Non è presente
 1. Dopo autorizzazione, usare un repository GitHub **privato** e creare il progetto Vercel senza distribuire ancora appunti personali. Selezionare Next.js, installazione `npm ci`, build `npm run build`. Non collegare la cartella madre dei materiali.
 2. Nella configurazione del progetto aprire **Security → Deployment Protection** (in alcune viste **Settings → Deployment Protection**), attivare **Vercel Authentication** e scegliere **All Deployments** prima di caricare contenuti personali. Verificare che non esistano eccezioni, link condivisi o bypass attivi non necessari.
 3. Pubblicare inizialmente soltanto questi esempi, poi verificare sia il dominio di produzione sia ogni dominio personalizzato e URL del deployment. **Standard Protection non è sufficiente** per la produzione.
-4. In navigazione anonima, senza sessione Vercel, visitare homepage, un URL diretto di argomento, `/assets/cpp-unique-ptr/ownership.cpp` e l’URL diretto di un PDF di prova approvato. Tutte le richieste devono incontrare la protezione Vercel. Verificare anche l’HTML dell’argomento e le risorse statiche interessate.
+4. In navigazione anonima, senza sessione Vercel, visitare homepage e un URL diretto di un argomento dopo la prima importazione. Tutte le richieste devono incontrare la protezione Vercel. Verificare anche gli asset PDF approvati.
 5. Autenticarsi come proprietaria: controllare accesso, apertura/download PDF e assenza di credenziali nel repository. Provare di nuovo da un browser non autenticato.
 6. Su Safari iPad, autenticarsi, aprire un argomento, ruotare il dispositivo, provare entrambe le simulazioni e aprire il PDF in Notes+. Toccare nel PDF un link diretto alla simulazione e verificare autenticazione e ancoraggio.
 7. Solo dopo esito positivo importare appunti personali approvati. Le impostazioni di Deployment Protection si gestiscono in Vercel: non sono attivate da `next.config.ts` o da un file di autenticazione fittizio.

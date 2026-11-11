@@ -10,7 +10,7 @@ test('CLI: anteprima isolata, approvazione, aggiornamento, backup e URL stabili'
   try {
     const stage = path.join(root, 'staging/aos-vm-exit');
     fs.mkdirSync(stage, { recursive: true });
-    fs.cpSync(path.join(project, 'src/content/approved/aos-vm-exit'), stage, { recursive: true });
+    fs.cpSync(path.join(project, 'tests/fixtures/import-package'), stage, { recursive: true });
     const file = path.join(stage, 'manifest.json'),
       manifest = JSON.parse(fs.readFileSync(file, 'utf8'));
     const save = () => fs.writeFileSync(file, JSON.stringify(manifest));

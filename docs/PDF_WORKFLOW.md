@@ -4,7 +4,7 @@ Questa versione supporta apertura di PDF approvati e generazione/validazione dei
 
 ## Prova locale con un PDF di test
 
-1. Copiare un pacchetto dimostrativo da `src/content/approved/<id>` a `staging/<id>`.
+1. Creare `staging/<id>` e inserire i quattro file richiesti (`manifest.json`, `content.mdx`, `exercises.json`, `simulations.json`), seguendo lo schema in [SKILLS_INTEGRATION.md](SKILLS_INTEGRATION.md).
 2. Inserire **un PDF di prova non personale** in `staging/<id>/assets/appunti.pdf`. Non copiare slide o PDF universitari originali.
 3. Aggiungere `appunti.pdf` a `manifest.assets`, impostare `manifest.pdf: "appunti.pdf"`, incrementare `revision` e impostare la revisione a draft.
 4. Eseguire `npm.cmd run content -- preview staging/<id>` e revisionare il PDF separatamente.
@@ -15,8 +15,7 @@ Questa versione supporta apertura di PDF approvati e generazione/validazione dei
 Eseguire `npm.cmd run content -- links https://dominio-definitivo` e incorporare gli URL come annotazioni link HTTPS nel PDF usando la futura pipeline. Esempi di destinazioni, sostituendo il dominio:
 
 ```text
-https://dominio-definitivo/aos/virtualizzazione/vm-exit#vm-exit-demo
-https://dominio-definitivo/algoritmi/alberi/rotazioni-avl#avl-demo
+https://dominio-definitivo/<materia>/<capitolo>/<argomento>#<id-simulazione>
 ```
 
 Non inserire `localhost`, IP LAN, percorsi `C:\...` o collegamenti relativi alla memoria iPad nel PDF definitivo. Quando il contenuto viene aggiornato gli ID della lezione e della simulazione devono rimanere invariati.

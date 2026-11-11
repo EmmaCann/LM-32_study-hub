@@ -11,13 +11,10 @@ import {
   headings,
 } from '../src/lib/content';
 import { slug, assetName, stableUrl } from '../src/lib/schema';
-test('demo approvate, riferimenti e capitoli coerenti', () => {
+test('il catalogo parte vuoto ed è pronto per contenuti approvati', () => {
   const topics = getTopics();
-  assert.equal(topics.length, 6);
-  assert.equal(topics.flatMap((t) => t.simulations).length, 2);
-  assert.equal(topics.flatMap((t) => t.exercises).length, 2);
-  assert(topics.every((t) => t.manifest.demo));
-  assert(headings(topics[0].content).length >= 3);
+  assert.equal(topics.length, 0);
+  assert.equal(headings('## Spazio pronto\n\nGli appunti approvati compariranno qui.').length, 1);
 });
 test('identificatori e asset impediscono traversal', () => {
   for (const value of ['../evil', 'a/b', 'AOS', 'foo--bar'])
@@ -36,7 +33,21 @@ test('markup non può importare/eseguire JSX o script', () => {
   assert.doesNotThrow(() => validateMarkup('```cpp\n#include <memory>\n```\nFormula $x_{i}$'));
 });
 test('URL PDF richiedono origine HTTPS e anchor validi', () => {
-  const m = getTopics()[0].manifest;
+  const m = {
+    schemaVersion: 1 as const,
+    id: 'aos-vm-exit',
+    subject: 'aos',
+    chapter: { id: 'virtualizzazione', title: 'Virtualizzazione', order: 1 },
+    slug: 'vm-exit',
+    title: 'VM exit',
+    description: 'Appunti',
+    order: 1,
+    demo: false,
+    updated: '2026-11-11',
+    revision: 1,
+    review: { status: 'approved' as const, reviewer: 'Test', sources: [] },
+    assets: [],
+  };
   assert(stableUrl('https://studio.example', m, 'demo').startsWith('https://studio.example/'));
   for (const url of [
     'http://studio.example',
@@ -50,27 +61,71 @@ test('URL PDF richiedono origine HTTPS e anchor validi', () => {
 });
 test('duplicati e metadati dei capitoli incoerenti sono rifiutati', () => {
   const topics = getTopics();
-  assert.throws(() => validateCollection([...topics, topics[0]]));
-  const copy = structuredClone(topics);
-  copy[1].manifest.chapter.title = 'Altro nome';
-  assert.throws(() => validateCollection(copy));
+  assert.equal(validateCollection(topics).length, 0);
+  assert.throws(() =>
+    validateCollection([
+      {
+        manifest: {
+          schemaVersion: 1,
+          id: 'uno',
+          subject: 'aos',
+          chapter: { id: 'os', title: 'OS', order: 1 },
+          slug: 'argomento',
+          title: 'Uno',
+          description: 'Test',
+          order: 1,
+          demo: false,
+          updated: '2026-11-11',
+          revision: 1,
+          review: { status: 'approved', reviewer: 'Test', sources: [] },
+          assets: [],
+        },
+        content: '',
+        exercises: [],
+        simulations: [],
+      },
+      {
+        manifest: {
+          schemaVersion: 1,
+          id: 'due',
+          subject: 'aos',
+          chapter: { id: 'os', title: 'Nome diverso', order: 1 },
+          slug: 'altro',
+          title: 'Due',
+          description: 'Test',
+          order: 2,
+          demo: false,
+          updated: '2026-11-11',
+          revision: 1,
+          review: { status: 'approved', reviewer: 'Test', sources: [] },
+          assets: [],
+        },
+        content: '',
+        exercises: [],
+        simulations: [],
+      },
+    ]),
+  );
 });
 test('pacchetti draft, asset mancanti e componenti sconosciuti bloccati', () => {
   const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'lm32-test-'));
   try {
-    const topic = getTopics().find((t) => t.manifest.subject === 'cpp' && t.exercises.length)!;
+    const topic = JSON.parse(
+      fs.readFileSync(new URL('./fixtures/import-package/manifest.json', import.meta.url), 'utf8'),
+    );
     const write = (name: string, data: unknown) =>
       fs.writeFileSync(path.join(temp, name), JSON.stringify(data));
-    write('manifest.json', {
-      ...topic.manifest,
-      review: { ...topic.manifest.review, status: 'draft' },
-    });
-    fs.writeFileSync(path.join(temp, 'content.mdx'), topic.content);
-    write('exercises.json', topic.exercises);
+    write('manifest.json', { ...topic, review: { ...topic.review, status: 'draft' } });
+    fs.writeFileSync(
+      path.join(temp, 'content.mdx'),
+      fs.readFileSync(new URL('./fixtures/import-package/content.mdx', import.meta.url), 'utf8'),
+    );
+    write('exercises.json', []);
     write('simulations.json', []);
     assert.throws(() => readPackage(temp, true), /revisione/);
-    write('manifest.json', topic.manifest);
+    write('manifest.json', { ...topic, assets: ['missing.pdf'], pdf: 'missing.pdf' });
     assert.throws(() => readPackage(temp, true), /Asset mancante/);
+    write('manifest.json', topic);
     write('simulations.json', [
       { id: 'unknown', component: 'run-javascript', title: 'X', description: 'X' },
     ]);

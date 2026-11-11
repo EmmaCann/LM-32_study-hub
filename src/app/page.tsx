@@ -53,9 +53,7 @@ export default function Dashboard() {
           ))}
         </div>
       </section>
-      <p className="demo-note">
-        Contenuti dimostrativi · Il programma dei corsi sarà aggiunto con i tuoi appunti.
-      </p>
+      <p className="demo-note">I nuovi appunti appariranno qui dopo la revisione.</p>
     </>
   );
 }

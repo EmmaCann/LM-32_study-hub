@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "aos-vm-exit",
+  "subject": "aos",
+  "chapter": {"id": "virtualizzazione", "title": "Virtualizzazione", "order": 1},
+  "slug": "vm-exit",
+  "title": "VM exit",
+  "description": "Pacchetto minimo fittizio per i test di importazione.",
+  "order": 1,
+  "demo": false,
+  "updated": "2026-11-11",
+  "revision": 1,
+  "review": {"status": "approved", "reviewer": "Test", "sources": []},
+  "assets": []
+}

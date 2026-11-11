@@ -1,8 +1,0 @@
-[
-  {
-    "id": "vm-exit-demo",
-    "component": "vm-exit",
-    "title": "Il percorso di una VM exit",
-    "description": "Dal guest a KVM, con o senza intervento di QEMU."
-  }
-]

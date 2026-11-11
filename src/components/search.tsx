@@ -23,7 +23,7 @@ export function SearchBox({ entries }: { entries: Entry[] }) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           aria-label="Cerca in tutti i contenuti"
-          placeholder="Prova “VM exit”, “AVL” o “ownership”…"
+          placeholder="Cerca un argomento, una sezione o un esercizio…"
         />
       </label>
       <p role="status" className="muted">

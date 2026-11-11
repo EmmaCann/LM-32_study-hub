@@ -11,15 +11,7 @@ test('route, link interni, contenuti approvati e 404', async ({ page, request })
     '/algoritmi',
     '/cpp',
     '/ottimizzazione',
-    '/aos/virtualizzazione',
-    '/algoritmi/alberi',
-    '/cpp/gestione-memoria',
-    '/aos/virtualizzazione/qemu-kvm',
-    '/aos/virtualizzazione/vm-exit',
-    '/algoritmi/alberi/alberi-avl',
-    '/algoritmi/alberi/rotazioni-avl',
-    '/cpp/gestione-memoria/raii',
-    '/cpp/gestione-memoria/smart-pointer',
+    '/ottimizzazione',
   ];
   for (const url of urls) {
     const response = await page.goto(url);
@@ -34,6 +26,15 @@ test('route, link interni, contenuti approvati e 404', async ({ page, request })
     }
   }
   for (const url of [
+    '/aos/virtualizzazione',
+    '/algoritmi/alberi',
+    '/cpp/gestione-memoria',
+    '/aos/virtualizzazione/qemu-kvm',
+    '/aos/virtualizzazione/vm-exit',
+    '/algoritmi/alberi/alberi-avl',
+    '/algoritmi/alberi/rotazioni-avl',
+    '/cpp/gestione-memoria/raii',
+    '/cpp/gestione-memoria/smart-pointer',
     '/non-esiste',
     '/aos/virtualizzazione/inesistente',
     '/staging/private',
@@ -43,61 +44,16 @@ test('route, link interni, contenuti approvati e 404', async ({ page, request })
   ])
     expect((await request.get(url)).status()).toBe(404);
 });
-test('VM exit: percorsi distinti, controlli e riproduzione', async ({ page }) => {
-  await page.goto('/aos/virtualizzazione/vm-exit#vm-exit-demo');
-  const player = page.locator('#vm-exit-demo');
-  await expect(player.getByRole('button', { name: 'Passo precedente' })).toBeDisabled();
-  for (let i = 0; i < 3; i++)
-    await player.getByRole('button', { name: 'Passo successivo' }).click();
-  await expect(player.locator('.step-description')).toContainText('QEMU emula');
-  await player.getByRole('combobox').selectOption('kernel');
-  for (let i = 0; i < 3; i++)
-    await player.getByRole('button', { name: 'Passo successivo' }).click();
-  await expect(player.locator('.step-description')).toContainText('senza coinvolgere QEMU');
-  await player.getByRole('button', { name: 'Riavvia' }).click();
-  await player.getByRole('button', { name: 'Riproduci', exact: true }).click();
-  await expect(player.locator('.badge')).not.toHaveText('1 / 5', { timeout: 5000 });
-  await player.getByRole('button', { name: 'Pausa', exact: true }).click();
-  const state = await player.locator('.badge').textContent();
-  await page.waitForTimeout(2200);
-  await expect(player.locator('.badge')).toHaveText(state!);
-});
-test('AVL, formule, risposte e soluzioni progressive', async ({ page }) => {
-  await page.goto('/algoritmi/alberi/rotazioni-avl');
-  expect(await page.locator('.katex').count()).toBeGreaterThan(0);
-  const player = page.locator('#avl-demo');
-  for (let i = 0; i < 4; i++)
-    await player.getByRole('button', { name: 'Passo successivo' }).click();
-  await expect(player.getByRole('img')).toHaveAttribute(
-    'aria-label',
-    'Albero bilanciato con radice 20',
-  );
-  await expect(player.getByRole('button', { name: 'Passo successivo' })).toBeDisabled();
-  const exercise = page.locator('#avl-esercizio');
-  await expect(exercise.locator('.solution')).toHaveCount(0);
-  await exercise.getByLabel('30', { exact: true }).check();
-  await exercise.getByRole('button', { name: 'Verifica risposta' }).click();
-  await expect(exercise.getByRole('status')).toContainText('Non ancora');
-  await exercise.getByLabel('20', { exact: true }).check();
-  await exercise.getByRole('button', { name: 'Verifica risposta' }).click();
-  await expect(exercise.getByRole('status')).toContainText('Corretto');
-  await exercise.getByRole('button', { name: /Suggerimento/ }).click();
-  await expect(exercise.locator('.callout')).toHaveCount(1);
-  await exercise.getByRole('button', { name: 'Mostra soluzione' }).click();
-  await expect(exercise.locator('.solution')).toBeVisible();
-});
-test('C++, download e ricerca', async ({ page, request }) => {
-  await page.goto('/cpp/gestione-memoria/smart-pointer');
-  await expect(page.locator('.shiki')).toBeVisible();
-  const file = await request.get('/assets/cpp-unique-ptr/ownership.cpp');
-  expect(file.status()).toBe(200);
-  expect(file.headers()['content-disposition']).toContain('attachment');
-  expect(await file.text()).toContain('#include <memory>');
+test('catalogo vuoto, placeholder delle materie e ricerca senza contenuti', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.getByRole('heading', { name: 'Il tuo studio' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Materie' })).toBeVisible();
+  await expect(page.locator('.subject-card')).toHaveCount(4);
+  await expect(page.locator('.list-row')).toHaveCount(0);
+  await expect(page.locator('.practice-links a')).toHaveCount(0);
   await page.goto('/ricerca');
-  await page.getByRole('textbox').fill('ownership');
-  await expect(page.getByRole('status')).not.toHaveText('0 risultati');
-  await page.getByRole('textbox').fill('zzinesistentezz');
-  await expect(page.getByRole('status')).toHaveText('0 risultati');
+  await page.getByRole('textbox').fill('un argomento');
+  await expect(page.getByRole('status')).toContainText('0 risultati');
 });
 test('breakpoint desktop, iPad, mobile e tema persistente', async ({ page }) => {
   for (const [width, height] of [
@@ -107,11 +63,7 @@ test('breakpoint desktop, iPad, mobile e tema persistente', async ({ page }) => 
     [390, 844],
   ]) {
     await page.setViewportSize({ width, height });
-    for (const route of [
-      '/',
-      '/algoritmi/alberi/rotazioni-avl',
-      '/cpp/gestione-memoria/smart-pointer',
-    ]) {
+    for (const route of ['/', '/aos', '/algoritmi', '/cpp', '/ottimizzazione']) {
       await page.goto(route);
       expect(
         await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),

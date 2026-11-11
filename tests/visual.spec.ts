@@ -9,7 +9,7 @@ test('ispezione visuale e assenza di errori client', async ({ page }, testInfo) 
   await page.getByRole('button', { name: 'Tema scuro', exact: true }).click();
   await page.screenshot({ path: testInfo.outputPath('dashboard-dark.png'), fullPage: true });
   await page.setViewportSize({ width: 768, height: 1024 });
-  await page.goto('/algoritmi/alberi/rotazioni-avl');
+  await page.goto('/algoritmi');
   await page.screenshot({ path: testInfo.outputPath('avl-ipad.png'), fullPage: true });
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');

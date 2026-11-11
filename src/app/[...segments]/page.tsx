@@ -93,7 +93,7 @@ export default async function Page({ params }: { params: Promise<{ segments: str
                 >
                   {simulation ? <Play /> : <PenLine />}
                   <span className="eyebrow">
-                    {subjects.find((s) => s.id === t.manifest.subject)?.short} · DEMO
+                    {subjects.find((s) => s.id === t.manifest.subject)?.short}
                   </span>
                   <h2>{r.title}</h2>
                   <p>{'description' in r ? r.description : r.prompt}</p>
@@ -178,9 +178,7 @@ export default async function Page({ params }: { params: Promise<{ segments: str
       <div className="article-layout">
         <article>
           <div className="article-header">
-            <div className="eyebrow">
-              {subject.short} {m.demo && '· CONTENUTO DIMOSTRATIVO'}
-            </div>
+            <div className="eyebrow">{subject.short}</div>
             <h1>{m.title}</h1>
             <p className="lead">{m.description}</p>
             <div className="article-meta">
@@ -214,10 +212,7 @@ export default async function Page({ params }: { params: Promise<{ segments: str
           ))}
           <details className="sources">
             <summary>Fonti e revisione</summary>
-            <p>
-              Revisione: {m.review.reviewer}.{' '}
-              {m.demo ? 'Esempio originale per verificare la piattaforma.' : ''}
-            </p>
+            <p>Revisione: {m.review.reviewer}. </p>
             <ul>
               {m.review.sources.map((s) => (
                 <li key={s}>
