@@ -123,4 +123,23 @@ Per ripristinare una revisione, copiarla in staging, assegnare una revisione num
 
 Il PDF è un asset approvato, non un sorgente universitario importato automaticamente. Aggiungerlo a `assets` e al campo `pdf`. I link incorporati devono usare il dominio HTTPS definitivo e gli ID stabili. Generarli con `npm.cmd run content -- links https://dominio` o con `stableUrl(base, manifest, simulationId)` in `src/lib/schema.ts`. Il generatore rifiuta HTTP, file URL, credenziali e percorsi nella base.
 
-Vercel Authentication deve proteggere **All Deployments**, compresi produzione e URL degli asset. Nessuna skill deve eseguire un deployment, creare repository remoti o modificare protezioni senza autorizzazione della proprietaria.
+
+
+## Estensione laboratori AOS
+
+Componenti revisionati: `aos-flags` (lezione 1), `aos-cpu-cache` (lezione 2), `aos-virtqueue` (lezione 3), `aos-kvm-run` (lezione 4). Identità delle simulazioni stabili nei pacchetti. Parametri scelti nella UI, nessun codice eseguibile nei contenuti. Modelli didattici, non benchmark.
+
+
+## Utilita complementare: aggiornamento del 12 novembre 2026
+
+Creare e pubblicare ogni complemento utile anche se non essenziale, secondo AGENTS.md e il gate Vercel. Valutare 2D/3D, processi e algoritmi passo passo; riusare componenti verificati. Aggiunti: aos-decode, aos-time, aos-interrupts, aos-addresses, aos-memory-slot. Link HTTPS nei PDF solo dopo verifica online; stato e opportunita nel dossier.
+
+## Override corrente: pubblicazione da main senza Authentication
+
+La proprietaria ha esplicitamente disattivato Authentication il 12 novembre 2026:
+non riattivarla ne aggiungere login applicativi. Questa scelta prevale sui precedenti
+requisiti generici di pubblicazione privata. Pubblicare soltanto gli interattivi originali
+rielaborati, mai fonti, trascrizioni, credenziali o copie PDF/HTML degli appunti.
+Merge/aggiornamento e push su main attivano il deploy Git automatico Vercel.
+Niente secondo deploy manuale. Verificare test/build, commit effettivamente distribuito,
+URL di produzione e ancore dei laboratori; poi inserire link HTTPS nei PDF locali.

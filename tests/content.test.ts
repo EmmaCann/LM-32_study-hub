@@ -11,9 +11,10 @@ import {
   headings,
 } from '../src/lib/content';
 import { slug, assetName, stableUrl } from '../src/lib/schema';
-test('il catalogo parte vuoto ed è pronto per contenuti approvati', () => {
+test('il catalogo contiene solo pacchetti approvati e accetta anche zero contenuti', () => {
   const topics = getTopics();
-  assert.equal(topics.length, 0);
+  assert.ok(topics.every(t => t.manifest.review.status === 'approved' && !t.manifest.demo));
+  assert.deepEqual(validateCollection([]), []);
   assert.equal(headings('## Spazio pronto\n\nGli appunti approvati compariranno qui.').length, 1);
 });
 test('identificatori e asset impediscono traversal', () => {
@@ -61,7 +62,7 @@ test('URL PDF richiedono origine HTTPS e anchor validi', () => {
 });
 test('duplicati e metadati dei capitoli incoerenti sono rifiutati', () => {
   const topics = getTopics();
-  assert.equal(validateCollection(topics).length, 0);
+  assert.equal(validateCollection(topics).length, topics.length);
   assert.throws(() =>
     validateCollection([
       {

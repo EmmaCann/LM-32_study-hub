@@ -58,7 +58,7 @@ export const exerciseSchema = z
 export const simulationSchema = z
   .object({
     id: slug,
-    component: z.enum(['vm-exit', 'avl-rotation']),
+    component: z.enum(['vm-exit', 'avl-rotation', 'aos-flags', 'aos-cpu-cache', 'aos-virtqueue', 'aos-kvm-run', 'aos-decode', 'aos-time', 'aos-interrupts', 'aos-addresses', 'aos-memory-slot']),
     title: z.string(),
     description: z.string(),
   })

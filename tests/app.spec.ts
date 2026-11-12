@@ -1,4 +1,6 @@
 import { test, expect } from '@playwright/test';
+import { getTopics } from '../src/lib/content';
+const approved = getTopics();
 test('route, link interni, contenuti approvati e 404', async ({ page, request }) => {
   const urls = [
     '/',
@@ -44,15 +46,15 @@ test('route, link interni, contenuti approvati e 404', async ({ page, request })
   ])
     expect((await request.get(url)).status()).toBe(404);
 });
-test('catalogo vuoto, placeholder delle materie e ricerca senza contenuti', async ({ page }) => {
+test('catalogo e ricerca riflettono i contenuti approvati', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByRole('heading', { name: 'Il tuo studio' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Materie' })).toBeVisible();
   await expect(page.locator('.subject-card')).toHaveCount(4);
-  await expect(page.locator('.list-row')).toHaveCount(0);
-  await expect(page.locator('.practice-links a')).toHaveCount(0);
+  await expect(page.locator('.list-row')).toHaveCount(Math.min(3, approved.length));
+  await expect(page.locator('.practice-links a')).toHaveCount(approved.reduce((n,t) => n+t.simulations.length,0));
   await page.goto('/ricerca');
-  await page.getByRole('textbox').fill('un argomento');
+  await page.getByRole('textbox').fill('contenuto-inesistente-xyz999');
   await expect(page.getByRole('status')).toContainText('0 risultati');
 });
 test('breakpoint desktop, iPad, mobile e tema persistente', async ({ page }) => {
@@ -89,4 +91,34 @@ test('breakpoint desktop, iPad, mobile e tema persistente', async ({ page }) => 
       await expect(page.locator('html')).toHaveAttribute('data-theme', theme);
     }
   }
+});
+
+test('laboratori AOS integrati: route, controlli, tastiera e overflow', async ({ page }, testInfo) => {
+ for (const topic of approved.filter(t => t.manifest.id.startsWith('aos-l0'))) {
+  const m=topic.manifest;
+  const response=await page.goto(`/${m.subject}/${m.chapter.id}/${m.slug}`);
+  expect(response?.status()).toBe(200);
+  const labs=page.locator('.aos-lab');
+  await expect(labs).toHaveCount(topic.simulations.length);
+  for (const lab of await labs.all()) {
+   const id=await lab.getAttribute('id');
+   const back=lab.getByRole('button',{name:'Indietro',exact:true});
+   const next=lab.getByRole('button',{name:'Avanti',exact:true});
+   await expect(back).toBeDisabled(); await next.click(); await expect(back).toBeEnabled();
+   await back.click(); await expect(back).toBeDisabled();
+   await lab.getByRole('slider').focus(); await page.keyboard.press('End'); await expect(next).toBeDisabled();
+   await lab.getByRole('button',{name:'Reset',exact:true}).click(); await expect(back).toBeDisabled();
+   const select=lab.getByRole('combobox').first();
+   if(await select.count()) {
+    await next.click();
+    const value=await select.locator('option').last().getAttribute('value') ?? await select.locator('option').last().innerText();
+    await select.selectOption(value); await expect(back).toBeDisabled();
+   }
+   for(const width of [1024,390]) {
+    await page.setViewportSize({width,height:2000});
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBeTruthy();
+    await lab.screenshot({path:testInfo.outputPath(`${m.id}-${id}-${width}.png`)});
+   }
+  }
+ }
 });

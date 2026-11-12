@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "aos-l01-flags",
+  "subject": "aos",
+  "chapter": {
+    "id": "lezione-01",
+    "title": "Lezione 01",
+    "order": 1
+  },
+  "slug": "flags-virtuali",
+  "title": "POPF e stato virtuale",
+  "description": "Confronta il difetto storico con un ripristino mediato dal monitor.",
+  "order": 1,
+  "demo": false,
+  "updated": "2026-11-12",
+  "revision": 1,
+  "review": {
+    "status": "approved",
+    "reviewer": "Codex: revisione didattica e tecnica su autorizzazione persistente della proprietaria",
+    "sources": [
+      "Appunti AOS, lezione 1: contenuti già revisionati; laboratorio originale complementare."
+    ]
+  },
+  "assets": []
+}

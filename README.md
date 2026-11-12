@@ -102,18 +102,17 @@ npm.cmd audit
 
 Playwright avvia il server di produzione locale oppure riutilizza quello esistente su porta 3000. Verifica route, link, 404, controlli delle simulazioni, esercizi, ricerca, codice, formule, download, tema e overflow ai breakpoint principali. WebKit emula iPad: non sostituisce Safari e Notes+ sul dispositivo fisico. Per aggiornamenti delle librerie verificare nuovamente gli override transitive di KaTeX e minimatch, introdotti per risolvere gli avvisi dell’audit senza retrocedere le librerie principali.
 
-## Pubblicazione privata su Vercel — procedura manuale
+## Pubblicazione corrente: Git main, senza Authentication
 
-Nessun deployment o collegamento di account è stato effettuato. Non è presente un’autenticazione applicativa: un deployment senza protezione Vercel sarebbe accessibile a chiunque. `noindex` non è una protezione di accesso.
+Scelta esplicita della proprietaria del 12 novembre 2026: Authentication disattivata;
+non riattivarla ne introdurre login applicativi. Le indicazioni precedenti di
+pubblicazione privata sono sostituite da questa scelta.
 
-1. Dopo autorizzazione, usare un repository GitHub **privato** e creare il progetto Vercel senza distribuire ancora appunti personali. Selezionare Next.js, installazione `npm ci`, build `npm run build`. Non collegare la cartella madre dei materiali.
-2. Nella configurazione del progetto aprire **Security → Deployment Protection** (in alcune viste **Settings → Deployment Protection**), attivare **Vercel Authentication** e scegliere **All Deployments** prima di caricare contenuti personali. Verificare che non esistano eccezioni, link condivisi o bypass attivi non necessari.
-3. Pubblicare inizialmente soltanto questi esempi, poi verificare sia il dominio di produzione sia ogni dominio personalizzato e URL del deployment. **Standard Protection non è sufficiente** per la produzione.
-4. In navigazione anonima, senza sessione Vercel, visitare homepage e un URL diretto di un argomento dopo la prima importazione. Tutte le richieste devono incontrare la protezione Vercel. Verificare anche gli asset PDF approvati.
-5. Autenticarsi come proprietaria: controllare accesso, apertura/download PDF e assenza di credenziali nel repository. Provare di nuovo da un browser non autenticato.
-6. Su Safari iPad, autenticarsi, aprire un argomento, ruotare il dispositivo, provare entrambe le simulazioni e aprire il PDF in Notes+. Toccare nel PDF un link diretto alla simulazione e verificare autenticazione e ancoraggio.
-7. Solo dopo esito positivo importare appunti personali approvati. Le impostazioni di Deployment Protection si gestiscono in Vercel: non sono attivate da `next.config.ts` o da un file di autenticazione fittizio.
+Il progetto Vercel esistente lm32-study-hub e collegato al repository GitHub
+EmmaCann/LM-32_study-hub. Aggiornamenti e push sul branch main avviano il deploy
+Git di produzione: non eseguire un ulteriore deploy manuale.
 
-Documentazione verificata il 10 novembre 2026: [Vercel Authentication](https://vercel.com/docs/deployment-protection/methods-to-protect-deployments/vercel-authentication), [Deployment Protection](https://vercel.com/docs/deployment-protection), [annuncio del 9 settembre 2026](https://vercel.com/changelog/protect-production-deployments-for-free-on-every-plan). L’annuncio più recente indica All Deployments disponibile senza sovrapprezzo su ogni piano; verificare comunque le opzioni effettive nell’account al momento della pubblicazione.
-
-Riferimenti tecnici: [Next.js](https://nextjs.org/docs/app/getting-started/installation), [react-markdown](https://github.com/remarkjs/react-markdown), [Shiki](https://shiki.style/guide/install), [KVM API](https://docs.kernel.org/virt/kvm/api.html).
+Prima del push revisionare contenuti e codice, eseguire o riutilizzare test/build
+validi per quello stesso codice, escludere fonti, trascrizioni, PDF e credenziali.
+Dopo verificare in Vercel il commit distribuito, stato READY e URL reali dei laboratori.
+Solo dopo aggiornare i PDF locali con i link alle sezioni interattive.

@@ -1,0 +1,11 @@
+## Come esplorare
+Dopo la prima exit risolta nel kernel, scegli se anche la seconda resta in KVM oppure richiede il VMM userspace. Confronta tre contatori distinti.
+
+## Ambito del modello
+Una vCPU e due eventi scelti; esclusi segnali, errori e rischedulazione. Per l’I/O userspace il VMM legge exit_reason e richiama KVM_RUN: non modifica indiscriminatamente RIP. Il percorso di una causa dipende dalla configurazione.
+
+## Altre esplorazioni della lezione
+
+Memory slot: stessi byte, indirizzi diversi: Controlla i limiti dello slot e calcola il corrispondente puntatore host virtuale.
+
+Valori e percorsi didattici coerenti con gli appunti: non sono benchmark o misure del sistema reale.

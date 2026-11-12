@@ -1,0 +1,20 @@
+[
+  {
+    "id": "esecuzione-riscv",
+    "component": "aos-cpu-cache",
+    "title": "Interprete, cache e chaining",
+    "description": "Esegui lo stesso programma e confronta lavoro guest e lavoro del motore."
+  },
+  {
+    "id": "campi-riscv",
+    "component": "aos-decode",
+    "title": "Decodificare i campi di ADD",
+    "description": "Scegli una parola ADD e segui shift, maschere e campi del formato R."
+  },
+  {
+    "id": "tempo-virtuale-timer",
+    "component": "aos-time",
+    "title": "Tempo virtuale, TIM2 e LED",
+    "description": "Varia MIPS e periodo timer: distingui carico, update e ciclo del LED."
+  }
+]

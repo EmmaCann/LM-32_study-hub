@@ -1,5 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { AosLab } from './aos-labs';
+import { AosExtraLab } from './aos-extra-labs';
 import { ChevronLeft, ChevronRight, Play, Pause, RotateCcw } from 'lucide-react';
 import type { Simulation } from '@/lib/schema';
 const vmKernel = [
@@ -116,6 +118,15 @@ function AvlDiagram({ step }: { step: number }) {
 // Components must be reviewed and registered in application code, never loaded from content.
 export const registry = { 'vm-exit': VmDiagram, 'avl-rotation': AvlDiagram };
 export function SimulationPlayer({ simulation: s }: { simulation: Simulation }) {
+  if (s.component === 'aos-decode' || s.component === 'aos-time' || s.component === 'aos-interrupts' || s.component === 'aos-addresses' || s.component === 'aos-memory-slot') {
+    return <AosExtraLab id={s.id} title={s.title} component={s.component} />;
+  }
+  if (s.component === 'aos-flags' || s.component === 'aos-cpu-cache' || s.component === 'aos-virtqueue' || s.component === 'aos-kvm-run') {
+    return <AosLab id={s.id} title={s.title} component={s.component} />;
+  }
+  return <LegacySimulationPlayer simulation={{...s, component: s.component}} />;
+}
+function LegacySimulationPlayer({ simulation: s }: { simulation: Omit<Simulation, 'component'> & {component: 'vm-exit' | 'avl-rotation'} }) {
   const [step, setStep] = useState(0),
     [playing, setPlaying] = useState(false),
     [user, setUser] = useState(true);

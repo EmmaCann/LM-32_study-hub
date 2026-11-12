@@ -3,3 +3,9 @@ backups
 tests
 prompt_iniziale.txt
 .preview
+
+.env*
+
+test-results
+
+playwright-report

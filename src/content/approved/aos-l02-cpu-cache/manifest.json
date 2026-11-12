@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "aos-l02-cpu-cache",
+  "subject": "aos",
+  "chapter": {
+    "id": "lezione-02",
+    "title": "Lezione 02",
+    "order": 2
+  },
+  "slug": "interprete-cache",
+  "title": "Interprete, cache e chaining",
+  "description": "Esegui lo stesso programma e confronta lavoro guest e lavoro del motore.",
+  "order": 1,
+  "demo": false,
+  "updated": "2026-11-12",
+  "revision": 2,
+  "review": {
+    "status": "approved",
+    "reviewer": "Codex: revisione didattica e tecnica su autorizzazione persistente della proprietaria",
+    "sources": [
+      "Appunti AOS, lezione 2: contenuti già revisionati; laboratorio originale complementare."
+    ]
+  },
+  "assets": []
+}
