@@ -147,6 +147,11 @@ URL di produzione e ancore dei laboratori; poi inserire link HTTPS nei PDF local
 
 ## Qualita visiva dei player
 
+Lezione 6: `aos-partition`, `aos-ivshmem`, `aos-ring` e `aos-cache-colors` mostrano
+proprietà dei core, payload/notifica, sovrascrittura con indici privati e contesa LLC.
+Il cockpit usa polling; doorbell è un'alternativa. Ring e cache usano capacità ridotte
+esplicitamente illustrative; nessuna misura hardware o esecuzione delle fonti.
+
 Lezione 5: `aos-elf-loader`, `aos-pit-read` e `aos-vcpu-gaps` aggiungono caricamento,
 latch/lettura PIT e pause della vCPU. Modelli deterministici separati dalle scene,
 player condiviso; tempi illustrativi, nessun benchmark o sorgente universitario caricato.

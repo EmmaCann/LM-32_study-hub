@@ -1,0 +1,7 @@
+## Quattro meccanismi del partizionamento
+
+Le scene rendono visibili proprietà delle risorse e percorsi di comunicazione. Lo spostamento delle icone dei core rappresenta l'assegnazione a una cella; i core fisici non si muovono. Un fault della cella IVI non cede il core del cluster. Il riavvio richiede una politica di supervisione.
+
+Il cockpit usa polling: il doorbell è una modalità alternativa di notifica. Il messaggio rimane nella regione condivisa; solo la notifica raggiunge il peer. Nel ring lo scrittore non attende e non cambia l'indice privato del lettore. Il lettore lento rileva i frame persi e si riallinea secondo la politica illustrativa scelta.
+
+Il modello cache riduce la LLC a quattro gruppi con una linea ciascuno per mostrare le espulsioni. I colori disgiunti riservano gruppi diversi; non sono una garanzia su bus, DRAM o tempi hardware. Tutte le scale e capacità ridotte servono a spiegare, non a misurare la piattaforma.

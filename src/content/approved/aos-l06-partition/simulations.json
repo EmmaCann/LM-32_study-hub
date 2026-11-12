@@ -1,0 +1,26 @@
+[
+  {
+    "id": "celle-e-core",
+    "component": "aos-partition",
+    "title": "Da Linux alle celle: chi possiede i core?",
+    "description": "Create, load, start e contenimento di un accesso vietato."
+  },
+  {
+    "id": "dati-e-doorbell",
+    "component": "aos-ivshmem",
+    "title": "Il payload resta in RAM, la notifica viaggia",
+    "description": "Confronta polling del cockpit e doorbell IVSHMEM."
+  },
+  {
+    "id": "ring-e-lettori",
+    "component": "aos-ring",
+    "title": "Un ring e un lettore che resta indietro",
+    "description": "Indici progressivi, slot circolari e frame sovrascritti."
+  },
+  {
+    "id": "colori-cache",
+    "component": "aos-cache-colors",
+    "title": "Stessi core separati, cache ancora condivisa",
+    "description": "Confronta espulsioni incrociate e colori disgiunti nel modello."
+  }
+]
