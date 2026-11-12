@@ -147,6 +147,10 @@ URL di produzione e ancore dei laboratori; poi inserire link HTTPS nei PDF local
 
 ## Qualita visiva dei player
 
+Lezione 5: `aos-elf-loader`, `aos-pit-read` e `aos-vcpu-gaps` aggiungono caricamento,
+latch/lettura PIT e pause della vCPU. Modelli deterministici separati dalle scene,
+player condiviso; tempi illustrativi, nessun benchmark o sorgente universitario caricato.
+
 Usare scene adatte al meccanismo: oggetti persistenti, movimento interpolato,
 collegamenti e proprieta sincronizzati. La sola variazione di numeri/testi non
 soddisfa il requisito. Le nove scene AOS mantengono ID, route e schemi esistenti.

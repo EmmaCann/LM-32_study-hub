@@ -1,0 +1,20 @@
+[
+  {
+    "id": "elf-in-memoria",
+    "component": "aos-elf-loader",
+    "title": "ELF: dal file alla CPU",
+    "description": "Segui la copia, lo zero-fill e il punto di ingresso: il caricamento precede l’esecuzione."
+  },
+  {
+    "id": "lettura-pit",
+    "component": "aos-pit-read",
+    "title": "PIT: un latch, due byte, tre accessi",
+    "description": "Osserva il contatore vivo e la copia stabile; confronta il gestore KVM con il modello TCG."
+  },
+  {
+    "id": "pause-vcpu",
+    "component": "aos-vcpu-gaps",
+    "title": "Il clock avanza, la vCPU si ferma",
+    "description": "Il tempo host prosegue anche senza campioni guest. Una pausa lunga rende ambiguo il conteggio a 16 bit."
+  }
+]
