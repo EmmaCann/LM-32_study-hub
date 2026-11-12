@@ -8,7 +8,7 @@
   {
     "id": "interrupt-pendente-consegnato",
     "component": "aos-interrupts",
-    "title": "Dall?interrupt fisico all?handler guest",
+    "title": "Dall’interrupt fisico all’handler guest",
     "description": "Segui attesa, consegna e EOI nel modello senza accelerazione del controller."
   },
   {

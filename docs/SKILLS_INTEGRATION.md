@@ -143,3 +143,12 @@ rielaborati, mai fonti, trascrizioni, credenziali o copie PDF/HTML degli appunti
 Merge/aggiornamento e push su main attivano il deploy Git automatico Vercel.
 Niente secondo deploy manuale. Verificare test/build, commit effettivamente distribuito,
 URL di produzione e ancore dei laboratori; poi inserire link HTTPS nei PDF locali.
+
+
+## Qualita visiva dei player
+
+Usare scene adatte al meccanismo: oggetti persistenti, movimento interpolato,
+collegamenti e proprieta sincronizzati. La sola variazione di numeri/testi non
+soddisfa il requisito. Le nove scene AOS mantengono ID, route e schemi esistenti.
+La revisione deve includere movimento osservato nel browser, pausa/reset,
+zoom/espansione e resa su WebKit/iPad, non soltanto screenshot statici.

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Shell } from '@/components/shell';
 import 'katex/dist/katex.min.css';
 import './globals.css';
+import '../simulations/aos-visual.css';
 export const metadata: Metadata = {
   title: { default: 'LM·32 Study Hub', template: '%s · LM·32' },
   description:

@@ -116,3 +116,15 @@ Prima del push revisionare contenuti e codice, eseguire o riutilizzare test/buil
 validi per quello stesso codice, escludere fonti, trascrizioni, PDF e credenziali.
 Dopo verificare in Vercel il commit distribuito, stato READY e URL reali dei laboratori.
 Solo dopo aggiornare i PDF locali con i link alle sezioni interattive.
+
+
+## Laboratori AOS: scene animate
+
+Le nove esplorazioni usano scene SVG dedicate: architetture e passaggi guest/host,
+registri e cache, descrittori nelle virtqueue, campi binari, timer e LED, interrupt,
+traduzioni CPU/DMA e memory slot. Gli oggetti persistenti si spostano tra stati
+coerenti; le relazioni osservabili e la spiegazione restano sincronizzate.
+Controlli: riproduzione/pausa, ritmo, avanti/indietro, reset, timeline, zoom e
+vista espansa. I contatori secondari sono disponibili nei dettagli.
+Le animazioni sono rappresentazioni didattiche, non misure temporali dell'hardware.
+I modelli tecnici restano testati separatamente dalla resa grafica.

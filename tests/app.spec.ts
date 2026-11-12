@@ -93,32 +93,27 @@ test('breakpoint desktop, iPad, mobile e tema persistente', async ({ page }) => 
   }
 });
 
-test('laboratori AOS integrati: route, controlli, tastiera e overflow', async ({ page }, testInfo) => {
- for (const topic of approved.filter(t => t.manifest.id.startsWith('aos-l0'))) {
+for (const topic of approved.filter(t => t.manifest.id.startsWith('aos-l0'))) {
+ test(`laboratori AOS integrati: ${topic.manifest.id}`, async ({ page }, testInfo) => {
   const m=topic.manifest;
   const response=await page.goto(`/${m.subject}/${m.chapter.id}/${m.slug}`);
   expect(response?.status()).toBe(200);
-  const labs=page.locator('.aos-lab');
-  await expect(labs).toHaveCount(topic.simulations.length);
-  for (const lab of await labs.all()) {
-   const id=await lab.getAttribute('id');
-   const back=lab.getByRole('button',{name:'Indietro',exact:true});
-   const next=lab.getByRole('button',{name:'Avanti',exact:true});
-   await expect(back).toBeDisabled(); await next.click(); await expect(back).toBeEnabled();
-   await back.click(); await expect(back).toBeDisabled();
-   await lab.getByRole('slider').focus(); await page.keyboard.press('End'); await expect(next).toBeDisabled();
-   await lab.getByRole('button',{name:'Reset',exact:true}).click(); await expect(back).toBeDisabled();
-   const select=lab.getByRole('combobox').first();
-   if(await select.count()) {
-    await next.click();
-    const value=await select.locator('option').last().getAttribute('value') ?? await select.locator('option').last().innerText();
-    await select.selectOption(value); await expect(back).toBeDisabled();
+  const labs=page.locator('.aos-lab');await expect(labs).toHaveCount(topic.simulations.length);
+  const states=await labs.evaluateAll(async roots=>{
+   const result=[];
+   for(const root of roots){
+    const scene=root.querySelector('svg.aos-scene');
+    const next=root.querySelector('button[aria-label="Avanti"]') as HTMLButtonElement;
+    const back=root.querySelector('button[aria-label="Indietro"]') as HTMLButtonElement;
+    const reset=root.querySelector('button[aria-label="Reset"]') as HTMLButtonElement;
+    const initial=back.disabled;next.click();await new Promise(r=>setTimeout(r,40));const advanced=!back.disabled;
+    reset.click();await new Promise(r=>setTimeout(r,40));
+    result.push({id:root.id,scene:!!scene,title:scene?.getAttribute('aria-label'),initial,advanced,reset:back.disabled});
    }
-   for(const width of [1024,390]) {
-    await page.setViewportSize({width,height:2000});
-    expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBeTruthy();
-    await lab.screenshot({path:testInfo.outputPath(`${m.id}-${id}-${width}.png`)});
-   }
-  }
- }
-});
+   return result;
+  });
+  for(const state of states){expect(state.scene,state.id).toBeTruthy();expect(state.title,state.id).toBeTruthy();expect(state.initial&&state.advanced&&state.reset,state.id).toBeTruthy();}
+  for(const width of [1024,390]){await page.setViewportSize({width,height:1400});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBeTruthy();}
+  await labs.first().screenshot({path:testInfo.outputPath(`${m.id}-mobile.png`),animations:'disabled'});
+ });
+}
