@@ -1,0 +1,13 @@
+.container-experiments .theatre-layout{grid-template-columns:minmax(0,1fr)}
+.container-experiments .theatre-inspector{border-left:0;display:grid;grid-template-columns:1fr 1fr;gap:0 24px;border-top:1px solid var(--line)}
+.container-experiments .theatre-inspector>.eyebrow{grid-column:1/-1}
+.container-experiments .theatre-step-title{grid-column:1;margin-bottom:8px}
+.container-experiments .theatre-description{grid-column:1;font-size:13px;line-height:1.65}
+.container-experiments .theatre-checks{grid-column:2;grid-row:2/4;margin:0;border:0;border-left:1px solid var(--line);padding:12px 20px}
+.container-experiments .exp-title{font:600 21px Arial,sans-serif;fill:#1d344d}
+.container-experiments .exp-label{font:600 18px Arial,sans-serif;fill:#1d344d}
+.container-experiments .exp-small{font:15px Arial,sans-serif;fill:#29445f}
+.container-experiments .exp-mono{font:17px monospace;fill:#203146}
+.container-experiments .exp-console{font:16px monospace;fill:#f2f6ff}
+.container-experiments .exp-run{align-self:end;background:#5264ba;color:white;border-color:#5264ba;font-weight:600}
+@media(max-width:600px){.container-experiments .theatre-viewport svg.aos-scene{min-width:680px}.container-experiments .theatre-inspector{display:block}.container-experiments .theatre-checks{border:0;padding:12px 0}.container-experiments .theatre-options{display:grid;grid-template-columns:1fr}.container-experiments .theatre-options label{min-width:0}.container-experiments .theatre-options select{width:100%;max-width:100%}}
