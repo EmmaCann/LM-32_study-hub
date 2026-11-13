@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ArrowLeft, ArrowRight, Download, Play, PenLine } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Download, FileText, Library, Play, PenLine } from 'lucide-react';
 import { getTopics, subjects, headings, searchEntries } from '@/lib/content';
 import { topicPath, assetPath } from '@/lib/schema';
-import { PageHeading, SubjectCards, TopicList } from '@/components/catalog';
+import { EmptyState, PageHeading, SubjectCards, TopicList } from '@/components/catalog';
 import { Notes } from '@/components/markdown';
 import { ExerciseCard } from '@/components/exercise';
 import { SimulationPlayer } from '@/simulations/registry';
@@ -41,9 +41,9 @@ export default async function Page({ params }: { params: Promise<{ segments: str
       return (
         <>
           <PageHeading
-            eyebrow="LA TUA BIBLIOTECA"
-            title="Le tue materie"
-            description="Quattro spazi di studio, un unico percorso."
+            eyebrow="LA TUA RACCOLTA"
+            title="Materie"
+            description="Ogni corso ha il suo spazio: appunti, capitoli e attività raccolti insieme."
           />
           <SubjectCards topics={topics} />
         </>
@@ -56,7 +56,17 @@ export default async function Page({ params }: { params: Promise<{ segments: str
             title="Tutti gli argomenti"
             description="Appunti e percorsi di lettura, organizzati per capitolo."
           />
-          <TopicList topics={topics} />
+          {topics.length ? (
+            <TopicList topics={topics} />
+          ) : (
+            <EmptyState
+              icon={<FileText size={22} />}
+              title="Gli appunti arriveranno qui"
+              description="La raccolta si popolerà con gli argomenti approvati, ordinati per materia e capitolo."
+              actionHref="/materie"
+              actionLabel="Esplora le materie"
+            />
+          )}
         </>
       );
     if (first === 'ricerca')
@@ -72,6 +82,9 @@ export default async function Page({ params }: { params: Promise<{ segments: str
       );
     if (first === 'simulazioni' || first === 'esercizi') {
       const simulation = first === 'simulazioni';
+      const resources = topics.flatMap((t) =>
+        (simulation ? t.simulations : t.exercises).map((resource) => ({ topic: t, resource })),
+      );
       return (
         <>
           <PageHeading
@@ -83,27 +96,39 @@ export default async function Page({ params }: { params: Promise<{ segments: str
                 : 'Prova da sola, poi scopri suggerimenti e soluzioni.'
             }
           />
-          <div className="resource-grid">
-            {topics.flatMap((t) =>
-              (simulation ? t.simulations : t.exercises).map((r) => (
+          {resources.length ? (
+            <div className="resource-grid">
+              {resources.map(({ topic, resource }) => (
                 <Link
                   className="panel resource-card"
-                  href={`${topicPath(t.manifest)}#${r.id}`}
-                  key={`${t.manifest.id}-${r.id}`}
+                  href={`${topicPath(topic.manifest)}#${resource.id}`}
+                  key={`${topic.manifest.id}-${resource.id}`}
                 >
                   {simulation ? <Play /> : <PenLine />}
                   <span className="eyebrow">
-                    {subjects.find((s) => s.id === t.manifest.subject)?.short}
+                    {subjects.find((s) => s.id === topic.manifest.subject)?.short}
                   </span>
-                  <h2>{r.title}</h2>
-                  <p>{'description' in r ? r.description : r.prompt}</p>
+                  <h2>{resource.title}</h2>
+                  <p>{'description' in resource ? resource.description : resource.prompt}</p>
                   <span className="text-link">
                     {simulation ? 'Apri simulazione' : 'Prova l’esercizio'} <ArrowRight size={17} />
                   </span>
                 </Link>
-              )),
-            )}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <EmptyState
+              icon={simulation ? <Play size={22} /> : <PenLine size={22} />}
+              title={simulation ? 'Nessuna simulazione per ora' : 'Nessun esercizio per ora'}
+              description={
+                simulation
+                  ? 'Le simulazioni appariranno qui collegate ai rispettivi appunti.'
+                  : 'Gli esercizi appariranno qui insieme alle spiegazioni e alle soluzioni.'
+              }
+              actionHref="/materie"
+              actionLabel="Vai alle materie"
+            />
+          )}
         </>
       );
     }
@@ -138,10 +163,13 @@ export default async function Page({ params }: { params: Promise<{ segments: str
           description={subject.description}
         />
         {!filtered.length ? (
-          <div className="empty">
-            <h2>Questo spazio è pronto per i tuoi appunti.</h2>
-            <p>I capitoli saranno aggiunti a partire dai materiali del corso, dopo la revisione.</p>
-          </div>
+          <EmptyState
+            icon={<Library size={22} />}
+            title="Questo spazio è pronto per i tuoi appunti"
+            description="I capitoli verranno aggiunti a partire dai materiali del corso, dopo la revisione."
+            actionHref="/materie"
+            actionLabel="Torna alle materie"
+          />
         ) : (
           chapters.map((c) => (
             <section key={c.id}>

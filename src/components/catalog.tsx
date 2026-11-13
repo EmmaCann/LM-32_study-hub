@@ -8,6 +8,7 @@ import {
   ArrowRight,
   FileText,
 } from 'lucide-react';
+import type { ReactNode } from 'react';
 import { subjects } from '@/lib/content';
 import { topicPath, type Topic } from '@/lib/schema';
 const icons = { cpu: Cpu, network: Network, code: Code2, chart: ChartNoAxesCombined };
@@ -31,24 +32,60 @@ export function PageHeading({
 export function SubjectCards({ topics }: { topics: Topic[] }) {
   return (
     <div className="subject-grid">
-      {subjects.map((s) => {
-        const Icon = icons[s.icon as keyof typeof icons],
-          count = topics.filter((t) => t.manifest.subject === s.id).length;
+      {subjects.map((s, index) => {
+        const Icon = icons[s.icon as keyof typeof icons];
+        const subjectTopics = topics.filter((t) => t.manifest.subject === s.id);
+        const chapters = new Set(subjectTopics.map((t) => t.manifest.chapter.id)).size;
         return (
           <Link href={`/${s.id}`} className={`subject-card ${s.color}`} key={s.id}>
-            <div className="card-top">
+            <div className="subject-card-top">
               <span className="subject-icon">
-                <Icon size={25} />
+                <Icon size={22} strokeWidth={1.8} />
               </span>
+              <span className="subject-index">{String(index + 1).padStart(2, '0')}</span>
             </div>
             <h3>{s.short}</h3>
-            <div className="card-bottom">
-              <span>{count ? `${count} argomenti` : 'In attesa di contenuti'}</span>
-              <ArrowUpRight size={20} />
+            <p>{s.description}</p>
+            <div className="subject-card-meta">
+              <span>{subjectTopics.length} {subjectTopics.length === 1 ? 'appunto' : 'appunti'}</span>
+              <span aria-hidden="true">·</span>
+              <span>{chapters} {chapters === 1 ? 'capitolo' : 'capitoli'}</span>
+            </div>
+            <div className="subject-card-action">
+              <span>Apri materia</span>
+              <ArrowUpRight size={17} />
             </div>
           </Link>
         );
       })}
+    </div>
+  );
+}
+export function EmptyState({
+  icon,
+  title,
+  description,
+  actionHref,
+  actionLabel,
+  compact = false,
+}: {
+  icon: ReactNode;
+  title: string;
+  description: string;
+  actionHref?: string;
+  actionLabel?: string;
+  compact?: boolean;
+}) {
+  return (
+    <div className={`empty-state${compact ? ' compact' : ''}`}>
+      <span className="empty-state-icon" aria-hidden="true">{icon}</span>
+      <h2>{title}</h2>
+      <p>{description}</p>
+      {actionHref && actionLabel && (
+        <Link className="empty-state-action" href={actionHref}>
+          {actionLabel} <ArrowRight size={16} />
+        </Link>
+      )}
     </div>
   );
 }

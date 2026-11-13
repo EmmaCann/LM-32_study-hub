@@ -5,27 +5,53 @@ import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { ThemeSwitch } from './theme-switch';
 import {
-  LayoutDashboard,
+  ChevronRight,
+  BookOpen,
+  House,
   Library,
-  Layers,
-  Play,
-  PenLine,
-  Search,
   Menu,
+  PenLine,
+  Play,
+  Search,
   X,
-  ArrowUpRight,
 } from 'lucide-react';
-const links = [
-  ['/', 'Dashboard', LayoutDashboard],
-  ['/materie', 'Materie', Library],
-  ['/argomenti', 'Tutti gli argomenti', Layers],
-  ['/simulazioni', 'Simulazioni', Play],
-  ['/esercizi', 'Esercizi', PenLine],
-  ['/ricerca', 'Ricerca', Search],
-] as const;
+import subjects from '@/content/subjects.json';
+
+const groups = [
+  { title: 'SPAZIO', links: [{ href: '/', label: 'Panoramica', Icon: House }] },
+  {
+    title: 'RACCOLTA',
+    links: [
+      { href: '/materie', label: 'Materie', Icon: Library },
+      { href: '/argomenti', label: 'Appunti', Icon: BookOpen },
+    ],
+  },
+  {
+    title: 'PRATICA',
+    links: [
+      { href: '/simulazioni', label: 'Simulazioni', Icon: Play },
+      { href: '/esercizi', label: 'Esercizi', Icon: PenLine },
+      { href: '/ricerca', label: 'Ricerca', Icon: Search },
+    ],
+  },
+];
+
 export function Shell({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname(),
-    [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+  const segments = pathname.split('/').filter(Boolean);
+  const isSubjectPath = subjects.some((subject) => subject.id === segments[0]);
+  const isTopicPath = isSubjectPath && segments.length >= 3;
+
+  function isActive(href: string) {
+    if (href === '/') return pathname === '/';
+    if (href === '/materie') return pathname === href || (isSubjectPath && !isTopicPath);
+    if (href === '/argomenti') return pathname === href || isTopicPath;
+    return pathname === href;
+  }
+
+  const activeLabel = groups.flatMap((group) => group.links).find((link) => isActive(link.href))?.label;
+
   return (
     <>
       <a className="skip" href="#main">
@@ -42,13 +68,14 @@ export function Shell({ children }: { children: React.ReactNode }) {
         <button
           aria-label={open ? 'Chiudi navigazione' : 'Apri navigazione'}
           aria-expanded={open}
+          aria-controls="primary-navigation"
           onClick={() => setOpen(!open)}
         >
           {open ? <X /> : <Menu />}
         </button>
       </header>
       {open && <button className="scrim" aria-label="Chiudi menu" onClick={() => setOpen(false)} />}
-      <aside className={`sidebar ${open ? 'open' : ''}`}>
+      <aside className={`sidebar${open ? ' open' : ''}`}>
         <Link className="brand" href="/" onClick={() => setOpen(false)}>
           <span className="brand-icon">
             <Image src="/study-hub-icon.png" alt="" width={43} height={43} />
@@ -57,34 +84,48 @@ export function Shell({ children }: { children: React.ReactNode }) {
             LM·32 <small>STUDY HUB</small>
           </span>
         </Link>
-        <nav aria-label="Navigazione principale">
-          {links.map(([href, label, Icon]) => (
-            <Link
-              onClick={() => setOpen(false)}
-              className={pathname === href ? 'active' : ''}
-              href={href}
-              key={href}
-              aria-current={pathname === href ? 'page' : undefined}
-            >
-              <Icon size={19} />
-              {label}
-            </Link>
+        <nav id="primary-navigation" aria-label="Navigazione principale">
+          {groups.map((group) => (
+            <div className="nav-group" key={group.title}>
+              <div className="nav-group-title">{group.title}</div>
+              {group.links.map(({ href, label, Icon }) => (
+                <Link
+                  onClick={() => setOpen(false)}
+                  className={isActive(href) ? 'active' : ''}
+                  href={href}
+                  key={href}
+                  aria-current={isActive(href) ? 'page' : undefined}
+                >
+                  <Icon size={18} strokeWidth={1.8} />
+                  {label}
+                </Link>
+              ))}
+            </div>
           ))}
         </nav>
         <div className="sidebar-bottom">
-          <span className="muted">Il tuo spazio di studio</span>
+          <span className="sidebar-bottom-mark"><span /> Spazio personale</span>
+          <span>LM·32 · Ingegneria Informatica</span>
         </div>
       </aside>
       <div className="workspace">
         <div className="topbar">
-          <Link href="/ricerca">
-            <Search size={17} /> Cerca negli appunti <ArrowUpRight size={15} />
-          </Link>
-          <ThemeSwitch />
+          <div className="topbar-location" aria-label={`Sezione attuale: ${activeLabel ?? 'Studio'}`}>
+            <span>STUDY HUB</span>
+            <ChevronRight size={14} aria-hidden="true" />
+            <strong>{activeLabel ?? 'Studio'}</strong>
+          </div>
+          <div className="topbar-actions">
+            <Link className="topbar-search" href="/ricerca">
+              <Search size={17} /> <span>Cerca nella raccolta</span>
+            </Link>
+            <ThemeSwitch />
+          </div>
         </div>
         <main id="main">{children}</main>
         <footer>
-          LM·32 Study Hub <span>Il tuo spazio personale per imparare.</span>
+          <span>LM·32 Study Hub</span>
+          <span>Il tuo spazio personale per imparare.</span>
         </footer>
       </div>
     </>
