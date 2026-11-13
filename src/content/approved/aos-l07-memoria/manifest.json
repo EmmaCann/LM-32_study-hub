@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "aos-l07-memoria",
+  "subject": "aos",
+  "chapter": {
+    "id": "lezione-07",
+    "title": "Lezione 7 — Gestione della memoria",
+    "order": 7
+  },
+  "slug": "laboratori-memoria",
+  "title": "Memoria: traduzioni, allocazione e latenza",
+  "description": "Scene animate per shootdown, buddy, walk annidati, ballooning, COW e deadline.",
+  "order": 1,
+  "demo": false,
+  "updated": "2026-11-13",
+  "revision": 1,
+  "review": {
+    "status": "approved",
+    "reviewer": "Codex: fonti verificate, modello e movimento controllati in Chromium/WebKit; pubblicazione autorizzata dalla proprietaria.",
+    "sources": [
+      "Lezione 7: gestione della memoria. Modelli didattici originali, non benchmark."
+    ]
+  },
+  "assets": []
+}

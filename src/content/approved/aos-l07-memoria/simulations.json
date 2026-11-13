@@ -1,0 +1,8 @@
+[
+  {
+    "id": "memoria",
+    "component": "aos-memory",
+    "title": "Memoria: traduzioni, allocazione e latenza",
+    "description": "Scene animate per shootdown, buddy, walk annidati, ballooning, COW e deadline."
+  }
+]

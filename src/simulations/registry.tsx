@@ -1,4 +1,5 @@
 'use client';
+import { AosMemoryLab } from './aos-memory-lab';
 import { useEffect, useState } from 'react';
 import { AosLab } from './aos-labs';
 import { AosExtraLab } from './aos-extra-labs';
@@ -121,6 +122,7 @@ function AvlDiagram({ step }: { step: number }) {
 // Components must be reviewed and registered in application code, never loaded from content.
 export const registry = { 'vm-exit': VmDiagram, 'avl-rotation': AvlDiagram };
 export function SimulationPlayer({ simulation: s }: { simulation: Simulation }) {
+  if(s.component === 'aos-memory') return <AosMemoryLab id={s.id} title={s.title}/>;
   if (s.component === 'algoritmi-insertion' || s.component === 'algoritmi-merge') {
     return <AlgoritmiSortingLab id={s.id} title={s.title} mode={s.component === 'algoritmi-insertion' ? 'insertion' : 'merge'} />;
   }
