@@ -6,6 +6,10 @@ export const metadata: Metadata = {
   title: { default: 'LM·32 Study Hub', template: '%s · LM·32' },
   description:
     'Uno spazio personale per appunti, simulazioni ed esercizi di Ingegneria Informatica.',
+  icons: {
+    icon: '/study-hub-icon.png',
+    apple: '/study-hub-icon.png',
+  },
   robots: { index: false, follow: false },
 };
 export default function Layout({ children }: { children: React.ReactNode }) {

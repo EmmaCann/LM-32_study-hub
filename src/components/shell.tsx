@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { ThemeSwitch } from './theme-switch';
@@ -12,7 +13,6 @@ import {
   Search,
   Menu,
   X,
-  GraduationCap,
   ArrowUpRight,
 } from 'lucide-react';
 const links = [
@@ -32,8 +32,11 @@ export function Shell({ children }: { children: React.ReactNode }) {
         Vai al contenuto
       </a>
       <header className="mobile-header">
-        <Link href="/">
-          LM·32 <span>Study Hub</span>
+        <Link href="/" aria-label="LM·32 Study Hub, home">
+          <Image className="mobile-brand-icon" src="/study-hub-icon.png" alt="" width={36} height={36} />
+          <span className="mobile-brand-name">
+            LM·32 <span>Study Hub</span>
+          </span>
         </Link>
         <ThemeSwitch />
         <button
@@ -48,7 +51,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
       <aside className={`sidebar ${open ? 'open' : ''}`}>
         <Link className="brand" href="/" onClick={() => setOpen(false)}>
           <span className="brand-icon">
-            <GraduationCap size={25} />
+            <Image src="/study-hub-icon.png" alt="" width={43} height={43} />
           </span>
           <span>
             LM·32 <small>STUDY HUB</small>
