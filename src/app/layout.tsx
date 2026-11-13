@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Shell } from '@/components/shell';
 import 'katex/dist/katex.min.css';
 import './globals.css';
+import './cpp/playground/playground.css';
 import '../simulations/aos-visual.css';
 import '../simulations/algoritmi-sorting.css';
 export const metadata: Metadata = {

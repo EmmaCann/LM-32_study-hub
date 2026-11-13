@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { manifestSchema, exerciseSchema, simulationSchema, topicPath, type Topic } from './schema';
 import subjects from '../content/subjects.json';
+import { cppDigest, cppReceiptSchema } from './cpp-publication';
 export { subjects };
 export const approvedRoot = path.join(process.cwd(), 'src/content/approved');
 const withoutCode = (content: string) => content.replace(/^```[^\n]*\n[\s\S]*?^```\s*$/gm, '');
@@ -38,6 +39,24 @@ export function readPackage(dir: string, approved = false): Topic {
   const content = read('content.mdx');
   validateMarkup(content);
   const exercises = exerciseSchema.array().parse(JSON.parse(read('exercises.json')));
+  const cppExercises = exercises.filter((e) => e.type === 'cpp');
+  if (cppExercises.length && manifest.subject !== 'cpp')
+    throw new Error('Esercizi C++ ammessi soltanto nella materia cpp');
+  if (approved && (manifest.pdf || manifest.assets.some((a) => a.endsWith('.pdf'))))
+    throw new Error('I PDF completi restano locali: non possono essere pubblicati su Study Hub');
+  if (approved && cppExercises.length) {
+    if (cppExercises.some((e) => e.cpp?.execution !== 'browser'))
+      throw new Error(
+        'Esercizio C++ non verificabile nel browser: revisione locale necessaria, pubblicazione automatica bloccata',
+      );
+    const receipt = cppReceiptSchema.parse(JSON.parse(read('cpp-verification.json')));
+    if (
+      receipt.digest !== cppDigest(manifest, exercises) ||
+      receipt.exercises !== cppExercises.length ||
+      receipt.tests !== cppExercises.reduce((n, e) => n + (e.cpp?.tests.length ?? 0), 0)
+    )
+      throw new Error('Verifica C++ mancante o non aggiornata: eseguire npm run cpp:verify');
+  }
   const simulations = simulationSchema.array().parse(JSON.parse(read('simulations.json')));
   const anchors = [...exercises, ...simulations, ...headings(content)].map((x) => x.id);
   if (new Set(anchors).size !== anchors.length)

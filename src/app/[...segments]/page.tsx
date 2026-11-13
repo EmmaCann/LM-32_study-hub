@@ -2,7 +2,8 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, ArrowRight, Download, FileText, Library, Play, PenLine } from 'lucide-react';
 import { getTopics, subjects, headings, searchEntries } from '@/lib/content';
-import { topicPath, assetPath } from '@/lib/schema';
+import { topicPath, assetPath, cppExercisePath } from '@/lib/schema';
+import { CppNavigation } from '@/components/cpp-navigation';
 import { EmptyState, PageHeading, SubjectCards, TopicList } from '@/components/catalog';
 import { Notes } from '@/components/markdown';
 import { ExerciseCard } from '@/components/exercise';
@@ -162,6 +163,7 @@ export default async function Page({ params }: { params: Promise<{ segments: str
           title={chapter ? filtered[0].manifest.chapter.title : subject.short}
           description={subject.description}
         />
+        {subject.id === 'cpp' && <CppNavigation />}
         {!filtered.length ? (
           <EmptyState
             icon={<Library size={22} />}
@@ -235,6 +237,7 @@ export default async function Page({ params }: { params: Promise<{ segments: str
             <ExerciseCard
               key={e.id}
               exercise={e}
+              playgroundHref={e.type === 'cpp' ? cppExercisePath(m, e.id) : undefined}
               download={e.download ? assetPath(m, e.download) : undefined}
             />
           ))}

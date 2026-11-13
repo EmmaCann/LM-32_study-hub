@@ -1,0 +1,140 @@
+/*
+ * Copyright 2018 The Emscripten Authors.  All rights reserved.
+ * Emscripten is available under two separate licenses, the MIT license and the
+ * University of Illinois/NCSA Open Source License.  Both these licenses can be
+ * found in the LICENSE file.
+ *
+ * Simple minimalistic but efficient sbrk()-based malloc/free that works in
+ * singlethreaded and multithreaded builds.
+ *
+ * Assumptions:
+ *
+ *  - sbrk() is used to claim new memory (sbrk handles geometric/linear
+ *  - overallocation growth)
+ *  - sbrk() can be used by other code outside emmalloc.
+ *  - sbrk() is very fast in most cases (internal wasm call).
+ *  - sbrk() returns pointers with an alignment of alignof(max_align_t)
+ *
+ * Invariants:
+ *
+ *  - Per-allocation header overhead is 8 bytes, smallest allocated payload
+ *    amount is 8 bytes, and a multiple of 4 bytes.
+ *  - Acquired memory blocks are subdivided into disjoint regions that lie
+ *    next to each other.
+ *  - A region is either in used or free.
+ *    Used regions may be adjacent, and a used and unused region
+ *    may be adjacent, but not two unused ones - they would be
+ *    merged.
+ *  - Memory allocation takes constant time, unless the alloc needs to sbrk()
+ *    or memory is very close to being exhausted.
+ *
+ * Debugging:
+ *
+ *  - If not NDEBUG, runtime assert()s are in use.
+ *  - If EMMALLOC_MEMVALIDATE is defined, a large amount of extra checks are done.
+ *  - If EMMALLOC_VERBOSE is defined, a lot of operations are logged
+ *    out, in addition to EMMALLOC_MEMVALIDATE.
+ *  - Debugging and logging directly uses console.log via uses EM_ASM, not
+ *    printf etc., to minimize any risk of debugging or logging depending on
+ *    malloc.
+ */
+
+#include <stdalign.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <unistd.h>
+#include <memory.h>
+#include <assert.h>
+#include <malloc.h>
+#include <limits.h>
+#include <stdlib.h>
+
+#ifdef __EMSCRIPTEN_TRACING__
+#include <emscripten/trace.h>
+#endif
+
+// Defind by the linker to have the address of the start of the heap.
+extern unsigned char __heap_base;
+extern unsigned char __heap_end;
+
+// Behavior of right shifting a signed integer is compiler implementation defined.
+static_assert((((int32_t)0x80000000U) >> 31) == -1, "This malloc implementation requires that right-shifting a signed integer produces a sign-extending (arithmetic) shift!");
+
+// Configuration: specifies the minimum alignment that malloc()ed memory outputs. Allocation requests with smaller alignment
+// than this will yield an allocation with this much alignment.
+#define MALLOC_ALIGNMENT alignof(max_align_t)
+static_assert(alignof(max_align_t) == 16, "max_align_t must be correct");
+
+#define EMMALLOC_EXPORT __attribute__((weak))
+
+#define MIN(x, y) ((x) < (y) ? (x) : (y))
+#define MAX(x, y) ((x) > (y) ? (x) : (y))
+
+#define NUM_FREE_BUCKETS 64
+#define BUCKET_BITMASK_T uint64_t
+
+// Dynamic memory is subdivided into regions, in the format
+
+// <size:uint32_t> ..... <size:uint32_t> | <size:uint32_t> ..... <size:uint32_t> | <size:uint32_t> ..... <size:uint32_t> | .....
+
+// That is, at the bottom and top end of each memory region, the size of that region is stored. That allows traversing the
+// memory regions backwards and forwards. Because each allocation must be at least a multiple of 4 bytes, the lowest two bits of
+// each size field is unused. Free regions are distinguished by used regions by having the FREE_REGION_FLAG bit present
+// in the size field. I.e. for free regions, the size field is odd, and for used regions, the size field reads even.
+#define FREE_REGION_FLAG 0x1u
+
+// Attempts to malloc() more than this many bytes would cause an overflow when calculating the size of a region,
+// therefore allocations larger than this are short-circuited immediately on entry.
+#define MAX_ALLOC_SIZE 0xFFFFFFC7u
+
+// A free region has the following structure:
+// <size:size_t> <prevptr> <nextptr> ... <size:size_t>
+
+typedef struct Region
+{
+  size_t size;
+  // Use a circular doubly linked list to represent free region data.
+  struct Region *prev, *next;
+  // ... N bytes of free data
+  size_t _at_the_end_of_this_struct_size; // do not dereference, this is present for convenient struct sizeof() computation only
+} Region;
+
+// Each memory block starts with a RootRegion at the beginning.
+// The RootRegion specifies the size of the region block, and forms a linked
+// list of all RootRegions in the program, starting with `listOfAllRegions`
+// below.
+typedef struct RootRegion
+{
+  uint32_t size;
+  struct RootRegion *next;
+  uint8_t* endPtr;
+} RootRegion;
+
+#if defined(__EMSCRIPTEN_PTHREADS__)
+// In multithreaded builds, use a simple global spinlock strategy to acquire/release access to the memory allocator.
+static volatile uint8_t multithreadingLock = 0;
+#define MALLOC_ACQUIRE() while(__sync_lock_test_and_set(&multithreadingLock, 1)) { while(multithreadingLock) { /*nop*/ } }
+#define MALLOC_RELEASE() __sync_lock_release(&multithreadingLock)
+// Test code to ensure we have tight malloc acquire/release guards in place.
+#define ASSERT_MALLOC_IS_ACQUIRED() assert(multithreadingLock == 1)
+#else
+// In singlethreaded builds, no need for locking.
+#define MALLOC_ACQUIRE() ((void)0)
+#define MALLOC_RELEASE() ((void)0)
+#define ASSERT_MALLOC_IS_ACQUIRED() ((void)0)
+#endif
+
+#define IS_POWER_OF_2(val) (((val) & ((val)-1)) == 0)
+#define ALIGN_UP(ptr, alignment) ((uint8_t*)((((uintptr_t)(ptr)) + ((alignment)-1)) & ~((alignment)-1)))
+#define HAS_ALIGNMENT(ptr, alignment) ((((uintptr_t)(ptr)) & ((alignment)-1)) == 0)
+
+static_assert(IS_POWER_OF_2(MALLOC_ALIGNMENT), "MALLOC_ALIGNMENT must be a power of two value!");
+static_assert(MALLOC_ALIGNMENT >= 4, "Smallest possible MALLOC_ALIGNMENT if 4!");
+
+// A region that contains as payload a single forward linked list of pointers to
+// root regions of each disjoint region blocks.
+static RootRegion *listOfAllRegions = NULL;
+
+// For each of the buckets, maintain a linked list head node. The head node for each
+// free region is a sentinel node that does not actually represent any free space, but

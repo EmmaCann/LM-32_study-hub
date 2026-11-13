@@ -55,6 +55,20 @@ test('CLI: anteprima isolata, approvazione, aggiornamento, backup e URL stabili'
     assert.equal(fs.readdirSync(path.join(root, 'backups')).length, 1);
     result = run('validate');
     assert.equal(result.status, 0, result.stderr);
+    manifest.revision++;
+    save();
+    const exercisesFile = path.join(stage, 'exercises.json');
+    const exercises = [{id:'ancora-stabile',type:'short',title:'Test',prompt:'Domanda',answer:'A',hints:[],solution:'A',explanation:'Esempio originale'}];
+    fs.writeFileSync(exercisesFile, JSON.stringify(exercises));
+    result = run('import', 'staging/aos-vm-exit', '--approve');
+    assert.equal(result.status, 0, result.stderr);
+    manifest.revision++;
+    save();
+    exercises[0].id = 'ancora-rinominata';
+    fs.writeFileSync(exercisesFile, JSON.stringify(exercises));
+    result = run('import', 'staging/aos-vm-exit', '--approve');
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, /ID di esercizi e simulazioni/);
   } finally {
     fs.rmSync(root, { recursive: true, force: true });
   }

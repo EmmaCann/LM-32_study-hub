@@ -6,7 +6,8 @@ test('Le sei scene mantengono moto, pausa, reset e scenari sul sito integrato',a
   await lab.getByLabel('Scena memoria',{exact:true}).selectOption(mode);
   await lab.getByLabel('Passaggio',{exact:true}).fill(String(start));
   await lab.getByRole('button',{name:'Riproduci animazione',exact:true}).click();
-  const sample=()=>lab.evaluate(async root=>{const transforms:string[]=[];await new Promise<void>(resolve=>{const begin=performance.now();function frame(now:number){transforms.push(root.querySelector('[data-memory-token],[data-block]')?.getAttribute('transform')??'');if(now-begin<220)requestAnimationFrame(frame);else resolve();}requestAnimationFrame(frame);});return new Set(transforms).size;});
+  // Allow throttled WebKit enough frames; still require several distinct positions, not a target FPS.
+  const sample=()=>lab.evaluate(async root=>{const transforms:string[]=[];await new Promise<void>(resolve=>{const begin=performance.now();function frame(now:number){transforms.push(root.querySelector('[data-memory-token],[data-block]')?.getAttribute('transform')??'');if(now-begin<600)requestAnimationFrame(frame);else resolve();}requestAnimationFrame(frame);});return new Set(transforms).size;});
   expect(await sample(),mode).toBeGreaterThan(3);
   await lab.getByRole('button',{name:'Pausa',exact:true}).click();expect(await sample()).toBe(1);
   await lab.getByRole('button',{name:'Reset',exact:true}).click();await expect(lab.locator('[data-time]')).toHaveAttribute('data-time','0.0000');

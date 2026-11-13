@@ -1,11 +1,41 @@
 'use client';
 import { useState } from 'react';
+import Link from 'next/link';
 import type { Exercise } from '@/lib/schema';
-export function ExerciseCard({ exercise: e, download }: { exercise: Exercise; download?: string }) {
+export function ExerciseCard({
+  exercise: e,
+  download,
+  playgroundHref,
+}: {
+  exercise: Exercise;
+  download?: string;
+  playgroundHref?: string;
+}) {
   const [hints, setHints] = useState(0),
     [solution, setSolution] = useState(false),
     [answer, setAnswer] = useState(''),
     [feedback, setFeedback] = useState('');
+  if (e.type === 'cpp')
+    return (
+      <section id={e.id} className="exercise panel">
+        <div className="eyebrow">
+          ESERCITAZIONE C++ · {e.cpp?.difficulty} · {e.cpp?.standard}
+        </div>
+        <h3>{e.title}</h3>
+        <p>{e.prompt}</p>
+        <p>{e.cpp?.tests.length} casi di verifica disponibili.</p>
+        {playgroundHref && (
+          <Link className="button primary" href={playgroundHref}>
+            Apri nel Playground C++
+          </Link>
+        )}
+        {download && (
+          <a className="button secondary" href={download} download>
+            Scarica codice iniziale .cpp
+          </a>
+        )}
+      </section>
+    );
   return (
     <section id={e.id} className="exercise panel">
       <div className="eyebrow">METTI ALLA PROVA LE IDEE</div>

@@ -43,6 +43,36 @@ export async function writePreview(topic: Topic, source: string) {
           <section key={e.id}>
             <h3>{e.title}</h3>
             <p>{e.prompt}</p>
+            {e.cpp && (
+              <>
+                <p>
+                  C++ · {e.cpp.standard} · {e.cpp.difficulty} · {e.cpp.execution}
+                </p>
+                <h4>Codice iniziale</h4>
+                <pre>{e.cpp.starterCode}</pre>
+                {e.cpp.files.map((f) => (
+                  <details key={f.name}>
+                    <summary>{f.name}</summary>
+                    <pre>{f.content}</pre>
+                  </details>
+                ))}
+                <h4>Test da revisionare (inclusi gli aggiuntivi)</h4>
+                {e.cpp.tests.map((t) => (
+                  <details key={t.id}>
+                    <summary>
+                      {t.title} · {t.visibility} · {t.comparison}
+                    </summary>
+                    <p>stdin</p>
+                    <pre>{t.stdin}</pre>
+                    <p>stdout atteso</p>
+                    <pre>{t.stdout}</pre>
+                    <p>stderr atteso</p>
+                    <pre>{t.stderr}</pre>
+                    <p>Uscita attesa: {t.exitCode}</p>
+                  </details>
+                ))}
+              </>
+            )}
             <details>
               <summary>Soluzione e spiegazione</summary>
               <pre>{e.solution}</pre>

@@ -1,8 +1,14 @@
 # LM·32 Study Hub
 
-Piattaforma personale per studiare Ingegneria Informatica: appunti, formule, codice, simulazioni ed esercizi. Funziona in locale senza account, database o servizi cloud. Il catalogo degli appunti approvati parte vuoto: le materie sono pronte ad accogliere i contenuti reali quando saranno generati e revisionati.
+Piattaforma pubblica per gli interattivi originali di Ingegneria Informatica: codice, simulazioni ed esercizi. Funziona anche in locale senza account o database. Appunti teorici completi, PDF e fonti universitarie rimangono nelle cartelle locali; il catalogo del sito contiene soltanto schede sintetiche necessarie alle attività interattive approvate.
 
 Il progetto risiede in `C:\LM-32_study-hub`, nel repository già collegato a GitHub. Le directory universitarie originali in `C:\LM-32` non vengono lette dall’applicazione, copiate o pubblicate.
+
+## C++ Playground
+
+Editor e compilazione C++ reali nel browser: `/cpp/playground`; catalogo degli esercizi: `/cpp/esercitazioni`. Tre esercitazioni originali progressive con test, aiuti e soluzioni su richiesta. La prima compilazione carica circa 100 MiB della toolchain dal sito; nessun codice viene eseguito sul server. I PDF e le fonti universitarie rimangono locali.
+
+Dettagli: [toolchain, limiti e verifica](docs/CPP_PLAYGROUND.md), [contratto per le skill C++](docs/CPP_SKILLS_CONTRACT.md). `npm run cpp:verify -- staging/<id>` verifica codice e test prima dell'importazione; la build blocca pacchetti C++ con ricevuta mancante o non aggiornata. Pubblicazione tramite il deployment Git Vercel esistente, dopo merge su main.
 
 ## Avvio locale
 
@@ -78,7 +84,7 @@ npm.cmd run build
 
 ## PDF e Notes+
 
-Un pacchetto può includere un PDF in `assets/`, dichiararlo in `manifest.assets` e indicarlo con `manifest.pdf`. La pagina offre il pulsante **Apri PDF**. Gli asset sono serviti da una route controllata, non copiati in `public`. Solo file dichiarati nei pacchetti approvati sono accessibili.
+I PDF completi non vengono pubblicati: il validatore rifiuta pacchetti approvati con `manifest.pdf` o asset PDF. I campi legacy rimangono leggibili nelle anteprime locali per compatibilità. Le schede del sito ospitano soltanto gli interattivi e le istruzioni essenziali, senza copie HTML integrali della teoria. Gli asset interattivi dichiarati sono serviti da una route controllata.
 
 La generazione dei PDF didattici è affidata alle future skill. Per costruire i link HTTPS da inserire in un PDF:
 

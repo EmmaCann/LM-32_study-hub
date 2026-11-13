@@ -1,0 +1,176 @@
+[
+  {
+    "id": "somma-interi",
+    "type": "cpp",
+    "title": "Somma di due interi",
+    "prompt": "Leggi due interi con segno e stampa la loro somma, seguita da un a capo. I valori e la somma rientrano in long long.",
+    "hints": [
+      "Leggi due valori da std::cin.",
+      "Usa long long per non limitarti al range di int.",
+      "Scrivi a + b con std::cout, poi un carattere di a capo."
+    ],
+    "solution": "#include <iostream>\nint main() {\n    long long a, b;\n    std::cin >> a >> b;\n    // La somma viene calcolata nel tipo long long.\n    std::cout << a + b << \"\\n\";\n}\n",
+    "explanation": "I casi verificano valori positivi, negativi e valori oltre il range di int. Non costituiscono una prova per ogni input possibile.",
+    "download": "somma.cpp",
+    "cpp": {
+      "files": [],
+      "execution": "browser",
+      "referenceLesson": {
+        "title": "Fondamenti e ownership · scheda delle esercitazioni",
+        "url": "/cpp/fondamenti/esercitazioni-guidate"
+      },
+      "difficulty": "base",
+      "tags": [
+        "stdin",
+        "stdout",
+        "tipi interi"
+      ],
+      "standard": "c++17",
+      "starterCode": "#include <iostream>\nint main() {\n    long long a, b;\n    std::cin >> a >> b;\n    // TODO: stampa la somma.\n    std::cout << 0 << \"\\n\";\n}\n",
+      "tests": [
+        {
+          "id": "positivi",
+          "title": "Due numeri positivi",
+          "stdin": "4 7\n",
+          "stdout": "11\n",
+          "visibility": "public",
+          "comparison": "trim"
+        },
+        {
+          "id": "negativi",
+          "title": "Numeri con segno",
+          "stdin": "-9 4\n",
+          "stdout": "-5\n",
+          "visibility": "additional",
+          "comparison": "trim"
+        },
+        {
+          "id": "grandi",
+          "title": "Oltre il range di int",
+          "stdin": "3000000000 2000000000\n",
+          "stdout": "5000000000\n",
+          "visibility": "additional",
+          "comparison": "trim"
+        }
+      ]
+    }
+  },
+  {
+    "id": "statistiche-vettore",
+    "type": "cpp",
+    "title": "Statistiche di una sequenza",
+    "prompt": "Leggi n (0–100), poi n interi. Stampa somma e massimo separati da uno spazio. Per la sequenza vuota stampa 0 0. Usa la funzione stampa del file di supporto.",
+    "hints": [
+      "Memorizza i valori in std::vector<long long>.",
+      "Gestisci prima il caso vuoto: non dereferenziare max_element su un vettore vuoto.",
+      "Puoi usare std::accumulate con valore iniziale 0LL e std::max_element."
+    ],
+    "solution": "#include <vector>\n#include <numeric>\n#include <algorithm>\n#include \"formato.hpp\"\nint main() {\n    int n; std::cin >> n;\n    std::vector<long long> valori(n);\n    for (auto& v : valori) std::cin >> v;\n    // Il massimo non esiste nella sequenza vuota.\n    if (valori.empty()) { stampa(0, 0); return 0; }\n    stampa(std::accumulate(valori.begin(), valori.end(), 0LL),\n           *std::max_element(valori.begin(), valori.end()));\n}\n",
+    "explanation": "Il caso vuoto viene gestito prima di cercare il massimo. Il tipo dell’accumulatore è long long.",
+    "download": "statistiche.cpp",
+    "cpp": {
+      "files": [
+        {
+          "name": "formato.hpp",
+          "content": "#pragma once\n#include <iostream>\ninline void stampa(long long somma, long long massimo) {\n    std::cout << somma << \" \" << massimo << \"\\n\";\n}\n"
+        }
+      ],
+      "execution": "browser",
+      "referenceLesson": {
+        "title": "Fondamenti e ownership · scheda delle esercitazioni",
+        "url": "/cpp/fondamenti/esercitazioni-guidate"
+      },
+      "difficulty": "intermedio",
+      "tags": [
+        "vector",
+        "algoritmi STL",
+        "casi limite"
+      ],
+      "standard": "c++17",
+      "starterCode": "#include <vector>\n#include \"formato.hpp\"\nint main() {\n    int n; std::cin >> n;\n    std::vector<long long> valori(n);\n    for (auto& v : valori) std::cin >> v;\n    // TODO: calcola somma e massimo; tratta anche n == 0.\n    stampa(0, 0);\n}\n",
+      "tests": [
+        {
+          "id": "sequenza",
+          "title": "Sequenza non vuota",
+          "stdin": "4\n2 9 1 3\n",
+          "stdout": "15 9\n",
+          "visibility": "public",
+          "comparison": "trim"
+        },
+        {
+          "id": "vuota",
+          "title": "Sequenza vuota",
+          "stdin": "0\n",
+          "stdout": "0 0\n",
+          "visibility": "additional",
+          "comparison": "trim"
+        },
+        {
+          "id": "tutti-negativi",
+          "title": "Massimo negativo",
+          "stdin": "3\n-8 -2 -5\n",
+          "stdout": "-15 -2\n",
+          "visibility": "additional",
+          "comparison": "trim"
+        }
+      ]
+    }
+  },
+  {
+    "id": "lista-ownership",
+    "type": "cpp",
+    "title": "Una lista con ownership esclusiva",
+    "prompt": "Leggi n (0–100), poi n interi. Costruisci una lista di nodi collegati da std::unique_ptr e stampa numero di nodi e somma. Il main deve conservare l’ownership della testa; non usare new/delete espliciti.",
+    "hints": [
+      "Ogni nodo contiene il valore e un unique_ptr al nodo successivo.",
+      "Crea il nodo con make_unique, trasferisci la vecchia testa in next e poi aggiorna la testa con std::move.",
+      "Per visitare senza trasferire ownership usa un puntatore osservatore ottenuto con get()."
+    ],
+    "solution": "#include <iostream>\n#include <memory>\n#include <utility>\nstruct Nodo {\n    long long valore;\n    std::unique_ptr<Nodo> next;\n    explicit Nodo(long long v) : valore(v) {}\n};\nint main() {\n    int n; std::cin >> n;\n    std::unique_ptr<Nodo> testa;\n    for (int i = 0; i < n; ++i) {\n        long long v; std::cin >> v;\n        auto nuovo = std::make_unique<Nodo>(v);\n        nuovo->next = std::move(testa);\n        testa = std::move(nuovo); // Trasferimento di ownership.\n    }\n    long long somma = 0; int contati = 0;\n    for (auto* p = testa.get(); p; p = p->next.get()) {\n        somma += p->valore; ++contati;\n    }\n    std::cout << contati << \" \" << somma << \"\\n\";\n    // Il distruttore di unique_ptr libera la catena all’uscita.\n}\n",
+    "explanation": "I test controllano l’output, non provano da soli l’uso corretto di RAII. Verifica nel codice l’ownership, i trasferimenti e l’assenza di new/delete espliciti.",
+    "download": "ownership.cpp",
+    "cpp": {
+      "files": [],
+      "execution": "browser",
+      "referenceLesson": {
+        "title": "Fondamenti e ownership · scheda delle esercitazioni",
+        "url": "/cpp/fondamenti/esercitazioni-guidate"
+      },
+      "difficulty": "avanzato",
+      "tags": [
+        "unique_ptr",
+        "RAII",
+        "liste",
+        "move semantics"
+      ],
+      "standard": "c++20",
+      "starterCode": "#include <iostream>\n#include <memory>\nstruct Nodo {\n    long long valore;\n    std::unique_ptr<Nodo> next;\n    explicit Nodo(long long v) : valore(v) {}\n};\nint main() {\n    int n; std::cin >> n;\n    std::unique_ptr<Nodo> testa;\n    // TODO: costruisci e visita la lista.\n    std::cout << \"0 0\\n\";\n}\n",
+      "tests": [
+        {
+          "id": "tre-nodi",
+          "title": "Lista di tre nodi",
+          "stdin": "3\n2 4 6\n",
+          "stdout": "3 12\n",
+          "visibility": "public",
+          "comparison": "trim"
+        },
+        {
+          "id": "lista-vuota",
+          "title": "Lista vuota",
+          "stdin": "0\n",
+          "stdout": "0 0\n",
+          "visibility": "additional",
+          "comparison": "trim"
+        },
+        {
+          "id": "segni-misti",
+          "title": "Valori con segno",
+          "stdin": "4\n-4 1 -2 10\n",
+          "stdout": "4 5\n",
+          "visibility": "additional",
+          "comparison": "trim"
+        }
+      ]
+    }
+  }
+]

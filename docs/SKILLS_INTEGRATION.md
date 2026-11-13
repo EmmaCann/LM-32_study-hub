@@ -1,5 +1,9 @@
 # Contratto di integrazione per le future skill — schema 1
 
+Estensione compatibile C++: il formato base resta schema 1. I pacchetti AOS e Algoritmi continuano a usare manifest, simulazioni ed esercizi precedenti. Per il nuovo tipo `cpp` si aggiunge una specifica strutturata e, dopo verifica tecnica, `cpp-verification.json`.
+
+**Per le skill C++ è obbligatorio seguire [CPP_SKILLS_CONTRACT.md](CPP_SKILLS_CONTRACT.md)**: descrive esercizi, file iniziali/supporto, test pubblici e aggiuntivi, suggerimenti, soluzioni, download e ricevuta tecnica. [CPP_PLAYGROUND.md](CPP_PLAYGROUND.md) documenta toolchain e limiti. La pubblicazione resta pubblica senza autenticazione; i PDF completi restano locali.
+
 Le skill `studio-fonti`, `appunti-aos`, `appunti-algoritmi`, `appunti-cpp` non vengono implementate qui. Questo contratto definisce il loro output. I materiali originali restano nelle directory universitarie; la piattaforma non li importa automaticamente.
 
 ## Pacchetto
@@ -36,8 +40,7 @@ Non esportare registrazioni, slide sorgenti, trascrizioni o credenziali. Staging
     "reviewer": "",
     "sources": ["Riferimento bibliografico o URL HTTPS approvato"]
   },
-  "assets": ["appunti.pdf", "schema.png"],
-  "pdf": "appunti.pdf"
+  "assets": ["schema.png"]
 }
 ```
 
@@ -121,7 +124,7 @@ Per ripristinare una revisione, copiarla in staging, assegnare una revisione num
 
 ## PDF e URL
 
-Il PDF è un asset approvato, non un sorgente universitario importato automaticamente. Aggiungerlo a `assets` e al campo `pdf`. I link incorporati devono usare il dominio HTTPS definitivo e gli ID stabili. Generarli con `npm.cmd run content -- links https://dominio` o con `stableUrl(base, manifest, simulationId)` in `src/lib/schema.ts`. Il generatore rifiuta HTTP, file URL, credenziali e percorsi nella base.
+I PDF completi rimangono esclusivamente nelle cartelle universitarie locali. La pubblicazione di manifest con `pdf` o asset PDF viene ora rifiutata dal validatore pubblico. I campi legacy rimangono nello schema per leggere anteprime locali già esistenti; questo non ne autorizza la pubblicazione. Non esportare copie HTML integrali della teoria. Esportare soltanto istruzioni sintetiche necessarie agli interattivi originali. I collegamenti da inserire nei PDF locali devono usare il dominio HTTPS definitivo e gli ID stabili: `npm.cmd run content -- links https://dominio` include simulazioni ed esercizi. Il generatore rifiuta HTTP, file URL, credenziali e percorsi nella base.
 
 
 

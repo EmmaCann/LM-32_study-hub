@@ -23,6 +23,21 @@ async function main() {
         old = topics.find((t) => t.manifest.id === m.id);
       if (old && topicPath(old.manifest) !== topicPath(m))
         throw new Error('Aggiornamento rifiutato: gli URL devono restare stabili');
+      if (
+        old &&
+        (old.exercises.some(
+          (item) =>
+            !candidate.exercises.some(
+              (next) => next.id === item.id && (item.type !== 'cpp' || next.type === 'cpp'),
+            ),
+        ) ||
+          old.simulations.some(
+            (item) => !candidate.simulations.some((next) => next.id === item.id),
+          ))
+      )
+        throw new Error(
+          'Aggiornamento rifiutato: mantenere gli ID di esercizi e simulazioni già pubblicati',
+        );
       if (old && m.revision <= old.manifest.revision)
         throw new Error('Incrementare revision per aggiornare un argomento');
       validateCollection([...topics.filter((t) => t.manifest.id !== m.id), candidate]);
@@ -52,6 +67,11 @@ async function main() {
         fs.mkdirSync(temp);
         for (const f of ['manifest.json', 'content.mdx', 'exercises.json', 'simulations.json'])
           fs.copyFileSync(path.join(source, f), path.join(temp, f));
+        if (candidate.exercises.some((e) => e.type === 'cpp'))
+          fs.copyFileSync(
+            path.join(source, 'cpp-verification.json'),
+            path.join(temp, 'cpp-verification.json'),
+          );
         if (m.assets.length) {
           fs.mkdirSync(path.join(temp, 'assets'));
           for (const f of m.assets)
@@ -79,6 +99,7 @@ async function main() {
           .flatMap((t) => [
             stableUrl(arg, t.manifest),
             ...t.simulations.map((s) => stableUrl(arg, t.manifest, s.id)),
+            ...t.exercises.map((e) => stableUrl(arg, t.manifest, e.id)),
           ])
           .join('\n'),
       );

@@ -1,30 +1,25 @@
-# Contratto PDF / Notes+
+# PDF locali e collegamenti a Study Hub
 
-Questa versione supporta apertura di PDF approvati e generazione/validazione dei link; non produce automaticamente i PDF degli appunti.
+Gli appunti teorici completi rimangono in PDF nelle cartelle universitarie di `C:\LM-32`. Study Hub è pubblico, senza autenticazione, e serve soltanto contenuti interattivi originali e istruzioni sintetiche. Non caricare PDF, slide annotate, trascrizioni, ZIP originali o copie HTML integrali della teoria.
 
-## Prova locale con un PDF di test
+Il validatore rifiuta manifest approvati con `pdf` o asset PDF. I campi legacy rimangono leggibili in un'anteprima locale per compatibilità, ma non autorizzano un import pubblico. La piattaforma non genera, copia o modifica i PDF universitari automaticamente.
 
-1. Creare `staging/<id>` e inserire i quattro file richiesti (`manifest.json`, `content.mdx`, `exercises.json`, `simulations.json`), seguendo lo schema in [SKILLS_INTEGRATION.md](SKILLS_INTEGRATION.md).
-2. Inserire **un PDF di prova non personale** in `staging/<id>/assets/appunti.pdf`. Non copiare slide o PDF universitari originali.
-3. Aggiungere `appunti.pdf` a `manifest.assets`, impostare `manifest.pdf: "appunti.pdf"`, incrementare `revision` e impostare la revisione a draft.
-4. Eseguire `npm.cmd run content -- preview staging/<id>` e revisionare il PDF separatamente.
-5. Dopo approvazione, impostare reviewer/status ed eseguire l’import con `--approve`. Ricostruire e avviare l’app: il pulsante **Apri PDF** deve aprire il documento tramite `/assets/<id>/appunti.pdf`.
+## Link nel documento locale
 
-## Link nel documento finale
+Eseguire `npm.cmd run content -- links https://lm32-study-hub.vercel.app` per ottenere URL di schede, simulazioni ed esercizi. Le future skill possono inserire annotazioni link HTTPS nei PDF locali soltanto dopo verifica del relativo deploy.
 
-Eseguire `npm.cmd run content -- links https://dominio-definitivo` e incorporare gli URL come annotazioni link HTTPS nel PDF usando la futura pipeline. Esempi di destinazioni, sostituendo il dominio:
+Esempi:
 
 ```text
-https://dominio-definitivo/<materia>/<capitolo>/<argomento>#<id-simulazione>
+https://lm32-study-hub.vercel.app/<materia>/<capitolo>/<argomento>#<id-simulazione>
+https://lm32-study-hub.vercel.app/<materia>/<capitolo>/<argomento>#<id-esercizio>
+https://lm32-study-hub.vercel.app/cpp/playground/<topic-id>/<exercise-id>
 ```
 
-Non inserire `localhost`, IP LAN, percorsi `C:\...` o collegamenti relativi alla memoria iPad nel PDF definitivo. Quando il contenuto viene aggiornato gli ID della lezione e della simulazione devono rimanere invariati.
+Non inserire localhost, IP LAN, percorsi Windows o link relativi alla memoria iPad nei PDF definitivi. Mantenere ID e URL quando si aggiornano le attività. L'import rifiuta modifiche all'URL dell'argomento e rimozioni/rinomine di esercizi o simulazioni già pubblicati.
 
-## Verifica manuale su iPad
+## Verifica su iPad
 
-- Dopo deployment autorizzato e protetto, aprire il PDF dalla piattaforma con Safari autenticato.
-- Importarlo in Notes+, toccare ciascun link e verificare che apra Safari sulla lezione e sull’ancoraggio corretti.
-- Ripetere senza sessione Vercel: prima del contenuto deve apparire l’autenticazione. Verificare che il ritorno dopo il login conservi la destinazione e l’ancoraggio; se l’app elimina il frammento, usare anche un link all’argomento e l’indice di pagina.
-- Testare orientamento verticale/orizzontale, apertura del PDF, zoom, ritorno a Notes+ e link dopo un aggiornamento della lezione.
+Aprire il PDF locale in Notes+ o nell'app abituale; toccare ogni link e controllare destinazione, ancora ed esercizio. Provare verticale/orizzontale, ritorno al PDF e collegamenti dopo un aggiornamento. Il sito non richiede login. Il Playground carica la toolchain soltanto quando viene richiesta una compilazione; richiede memoria e può essere chiuso dal sistema su dispositivi con poche risorse. Download .cpp e ambiente locale fidato sono l'alternativa per feature non supportate.
 
-La compatibilità specifica di Notes+ e il flusso di autenticazione tra app non sono stati verificati su un iPad fisico. Un file PDF già scaricato resta sul dispositivo: la protezione Vercel controlla i download dal sito, non revoca copie locali.
+Le prove WebKit/iPad emulate non equivalgono alla verifica fisica di Notes+ o di ogni modello iPad. La generazione e la modifica dei PDF restano attività delle skill universitarie autorizzate separatamente.

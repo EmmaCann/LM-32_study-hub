@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "node scripts/prepare-cpp-runtime.mjs",
+    "prebuild": "node scripts/prepare-cpp-runtime.mjs",
+    "cpp:verify": "tsx scripts/verify-cpp.ts",
     "dev": "next dev --hostname 127.0.0.1",
     "build": "tsx scripts/content.ts validate && next build",
     "start": "next start --hostname 127.0.0.1",
@@ -13,6 +16,13 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
+    "@bjorn3/browser_wasi_shim": "0.4.2",
+    "@codemirror/commands": "6.11.1",
+    "@codemirror/lang-cpp": "6.0.3",
+    "@codemirror/language": "6.13.1",
+    "@codemirror/state": "6.7.6",
+    "@codemirror/view": "6.43.15",
+    "@yowasp/clang": "22.0.0-git20542-10",
     "katex": "0.19.1",
     "lucide-react": "1.71.0",
     "next": "16.4.6",

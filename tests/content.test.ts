@@ -125,6 +125,8 @@ test('pacchetti draft, asset mancanti e componenti sconosciuti bloccati', () => 
     write('simulations.json', []);
     assert.throws(() => readPackage(temp, true), /revisione/);
     write('manifest.json', { ...topic, assets: ['missing.pdf'], pdf: 'missing.pdf' });
+    assert.throws(() => readPackage(temp, true), /PDF completi restano locali/);
+    write('manifest.json', { ...topic, assets: ['missing.png'] });
     assert.throws(() => readPackage(temp, true), /Asset mancante/);
     write('manifest.json', topic);
     write('simulations.json', [

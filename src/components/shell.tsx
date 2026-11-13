@@ -7,6 +7,7 @@ import { ThemeSwitch } from './theme-switch';
 import {
   ChevronRight,
   BookOpen,
+  Code2,
   House,
   Library,
   Menu,
@@ -33,6 +34,7 @@ const groups = [
     links: [
       { href: '/simulazioni', label: 'Simulazioni', Icon: Play },
       { href: '/esercizi', label: 'Esercizi', Icon: PenLine },
+      { href: '/cpp/playground', label: 'Playground C++', Icon: Code2 },
       { href: '/ricerca', label: 'Ricerca', Icon: Search },
     ],
   },
@@ -45,11 +47,14 @@ export function Shell({ children }: { children: React.ReactNode }) {
   const segments = pathname.split('/').filter(Boolean);
   const isSubjectPath = subjects.some((subject) => subject.id === segments[0]);
   const isTopicPath = isSubjectPath && segments.length >= 3;
+  const isCppToolPath = /^\/cpp\/(playground|esercitazioni|simulazioni)(\/|$)/.test(pathname);
 
   function isActive(href: string) {
     if (href === '/') return pathname === '/';
-    if (href === '/materie') return pathname === href || (isSubjectPath && !isTopicPath);
-    if (href === '/argomenti') return pathname === href || isTopicPath;
+    if (href === '/materie')
+      return pathname === href || (isSubjectPath && !isTopicPath && !isCppToolPath);
+    if (href === '/argomenti') return pathname === href || (isTopicPath && !isCppToolPath);
+    if (href === '/cpp/playground') return isCppToolPath;
     return pathname === href;
   }
 

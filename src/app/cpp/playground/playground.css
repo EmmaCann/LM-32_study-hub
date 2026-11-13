@@ -1,0 +1,228 @@
+.cpp-navigation {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 24px;
+}
+.cpp-navigation a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  font-size: 12px;
+  color: var(--accent);
+}
+.cpp-playground {
+  min-width: 0;
+}
+.cpp-intro p {
+  font-size: 14px;
+  color: var(--muted);
+}
+.cpp-meta {
+  text-transform: capitalize;
+}
+.cpp-intro a {
+  color: var(--accent);
+  text-decoration: underline;
+}
+.cpp-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 18px 0;
+}
+.cpp-toolbar .button {
+  font-size: 12px;
+  min-height: 44px;
+}
+.cpp-status {
+  padding: 12px 15px;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+  background: var(--surface);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+  min-height: 48px;
+}
+.cpp-workbench {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+.cpp-source-pane,
+.cpp-console > section,
+.cpp-stdin {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  overflow: hidden;
+}
+.cpp-pane-title {
+  display: flex;
+  gap: 15px;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 10px 13px;
+  border-bottom: 1px solid var(--line);
+  font-size: 12px;
+}
+.cpp-pane-title label {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+}
+.cpp-pane-title select {
+  min-height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--ink);
+  padding: 4px;
+}
+.cpp-editor {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+.cpp-editor .cm-editor {
+  min-width: 0;
+}
+.cpp-editor .cm-scroller {
+  font-family: ui-monospace, monospace;
+}
+.cpp-console {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+.cpp-stdin {
+  display: grid;
+  padding: 12px;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.cpp-stdin textarea {
+  display: block;
+  resize: vertical;
+  min-height: 110px;
+  width: 100%;
+  max-width: 100%;
+  padding: 10px;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font:
+    13px/1.6 ui-monospace,
+    monospace;
+}
+.cpp-console h2 {
+  margin: 0;
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--line);
+  font-size: 12px;
+  letter-spacing: 0;
+}
+.cpp-playground pre {
+  margin: 0;
+  padding: 12px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font:
+    13px/1.6 ui-monospace,
+    monospace;
+  max-height: 360px;
+  overflow: auto;
+  background: var(--bg);
+  color: var(--ink);
+}
+.cpp-small {
+  font-size: 11px;
+  color: var(--muted);
+  padding: 0 12px;
+  margin: 12px 0;
+}
+.cpp-tests,
+.cpp-help,
+.cpp-limits {
+  margin-top: 28px;
+}
+.cpp-tests > h2,
+.cpp-help > h2 {
+  font-size: 20px;
+}
+.cpp-playground details {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  margin-top: 10px;
+  padding: 12px;
+  font-size: 13px;
+}
+.cpp-playground summary {
+  min-height: 32px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.cpp-playground details p {
+  color: var(--muted);
+  font-size: 12px;
+}
+.cpp-playground details pre {
+  margin: 8px 0;
+}
+.cpp-tests .cpp-pass {
+  border-left: 3px solid #348969;
+}
+.cpp-tests .cpp-fail {
+  border-left: 3px solid #bf6860;
+}
+.cpp-solution {
+  border: 1px solid var(--line);
+  padding: 15px;
+  border-radius: 8px;
+  background: var(--surface);
+}
+.cpp-solution p {
+  font-size: 13px;
+}
+.cpp-limits a {
+  color: var(--accent);
+  text-decoration: underline;
+}
+@media (max-width: 1000px) {
+  .cpp-workbench {
+    grid-template-columns: 1fr;
+  }
+  .cpp-editor .cm-scroller {
+    max-height: 440px !important;
+  }
+  .cpp-toolbar {
+    gap: 6px;
+  }
+}
+@media (max-width: 700px) {
+  .cpp-toolbar .button {
+    flex: 1 1 135px;
+    padding: 9px;
+  }
+  .cpp-navigation {
+    gap: 6px;
+  }
+  .cpp-navigation a {
+    flex: 1 1 130px;
+    justify-content: center;
+  }
+  .cpp-intro p {
+    font-size: 13px;
+  }
+}

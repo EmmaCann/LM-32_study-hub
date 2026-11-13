@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "cpp-esercitazioni-guidate",
+  "subject": "cpp",
+  "chapter": {
+    "id": "fondamenti",
+    "title": "Fondamenti e ownership",
+    "order": 1
+  },
+  "slug": "esercitazioni-guidate",
+  "title": "Tre esercitazioni guidate",
+  "description": "Esercizi originali: input/output, sequenze e ownership con unique_ptr.",
+  "order": 1,
+  "demo": false,
+  "updated": "2026-11-13",
+  "revision": 1,
+  "review": {
+    "status": "approved",
+    "reviewer": "Study Hub · esercizi originali revisionati e verificati con Clang WebAssembly",
+    "sources": [
+      "https://en.cppreference.com/w/cpp/memory/unique_ptr.html",
+      "https://github.com/YoWASP/clang"
+    ]
+  },
+  "assets": [
+    "somma.cpp",
+    "statistiche.cpp",
+    "ownership.cpp"
+  ]
+}
