@@ -1,17 +1,20 @@
 import {test,expect} from '@playwright/test';
-test('Le sei scene mantengono moto, pausa, reset e scenari sul sito integrato',async({page})=>{
- await page.goto('/aos/lezione-07/laboratori-memoria#memoria');
- const lab=page.locator('#memoria');await expect(lab).toBeVisible();
- for(const[mode,start]of[['shootdown',0],['buddy',0],['walk',1],['balloon',2],['ksm',0],['latency',0]]as const){
-  await lab.getByLabel('Scena memoria',{exact:true}).selectOption(mode);
-  await lab.getByLabel('Passaggio',{exact:true}).fill(String(start));
-  await lab.getByRole('button',{name:'Riproduci animazione',exact:true}).click();
-  const sample=()=>lab.evaluate(async root=>{const transforms:string[]=[];await new Promise<void>(resolve=>{const begin=performance.now();function frame(now:number){transforms.push(root.querySelector('[data-memory-token],[data-block]')?.getAttribute('transform')??'');if(now-begin<220)requestAnimationFrame(frame);else resolve();}requestAnimationFrame(frame);});return new Set(transforms).size;});
-  expect(await sample(),mode).toBeGreaterThan(3);
-  await lab.getByRole('button',{name:'Pausa',exact:true}).click();expect(await sample()).toBe(1);
-  await lab.getByRole('button',{name:'Reset',exact:true}).click();await expect(lab.locator('[data-time]')).toHaveAttribute('data-time','0.0000');
-  if(['buddy','walk','latency'].includes(mode)){await lab.getByLabel('Scenario memoria').selectOption('alternativo');await expect(lab.locator('[data-time]')).toHaveAttribute('data-time','0.0000');}
+test('Sei esperimenti: movimento, controlli e contrasti causali',async({page},info)=>{
+ const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('/aos/lezione-07/laboratori-memoria#memoria');const lab=page.locator('#memoria');
+ const mode=async(m:string,s:string)=>{await lab.getByLabel('Scena memoria',{exact:true}).selectOption(m);await lab.getByLabel('Esperimento memoria').selectOption(s);};
+ const end=async()=>{const slider=lab.getByLabel('Passaggio',{exact:true});await slider.fill((await slider.getAttribute('max'))!);};
+ for(const[m,s,start]of [['shootdown','early',3],['buddy','fragmented',1],['walk','nested',1],['balloon','6',2],['ksm','same',1],['latency','pressure',0]]as const){
+  await mode(m,s);await lab.getByLabel('Passaggio',{exact:true}).fill(String(start));await lab.getByRole('button',{name:'Riproduci animazione',exact:true}).click();
+  const sample=()=>lab.evaluate(async root=>{const positions:string[]=[];await new Promise<void>(resolve=>{const start=performance.now();function frame(now:number){positions.push([...root.querySelectorAll('[data-memory-probe]')].map(el=>el.getAttribute('transform')).join('|'));if(now-start<250)requestAnimationFrame(frame);else resolve();}requestAnimationFrame(frame);});return new Set(positions).size;});
+  expect(await sample(),m).toBeGreaterThan(3);await lab.getByRole('button',{name:'Pausa',exact:true}).click();expect(await sample()).toBe(1);
+  await lab.screenshot({path:info.outputPath(m+'-mid.png')});await lab.getByRole('button',{name:'Reset',exact:true}).click();await expect(lab.locator('[data-time]')).toHaveAttribute('data-time','0.0000');
  }
- await page.setViewportSize({width:390,height:844});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
- await page.emulateMedia({reducedMotion:'reduce'});await lab.getByRole('button',{name:'Riproduci animazione',exact:true}).click();await page.waitForTimeout(150);expect(Number(await lab.locator('[data-time]').getAttribute('data-time'))%1).toBe(0);
+ await mode('shootdown','early');await lab.getByLabel('Passaggio',{exact:true}).fill('4');await expect(lab.locator('[data-memory-result]')).toContainText('SEGRETO');await end();await expect(lab.locator('[data-memory-result]')).toContainText('NON SICURO');await mode('shootdown','wait');await end();await expect(lab.locator('[data-memory-result]')).toContainText('SICURO:');
+ await mode('buddy','fragmented');await end();await expect(lab.locator('[data-memory-result]')).toContainText('RIUSCITA');await mode('buddy','pinned');await end();await expect(lab.locator('[data-memory-result]')).toContainText('FALLITA');await lab.getByLabel('Frame richiesti').selectOption('2');await end();await expect(lab.locator('[data-memory-result]')).toContainText('RIUSCITA');
+ for(const[s,n]of [['nested',24],['native',4],['guestHuge',19],['bothHuge',15],['hit',0]]as const){await mode('walk',s);await end();await expect(lab.locator('[data-memory-result]')).toContainText(n+' letture di traduzione');}
+ await mode('balloon','6');await lab.getByLabel('Passaggio',{exact:true}).fill('4');await expect(lab.locator('[data-memory-result]')).toContainText('NON RAGGIUNTO');await lab.screenshot({path:info.outputPath('balloon-target.png')});await end();await expect(lab.locator('[data-memory-result]')).toContainText('4/6 NON raggiunto');await lab.screenshot({path:info.outputPath('balloon-final.png')});await mode('balloon','4');await lab.getByLabel('Passaggio',{exact:true}).fill('4');await expect(lab.locator('[data-memory-result]')).toContainText('TARGET RAGGIUNTO: 4');
+ await mode('ksm','same');await end();await expect(lab.locator('[data-memory-result]')).toContainText('A = XYZ; B = ABC');await lab.getByLabel('Mapping che scrive').selectOption('B');await end();await expect(lab.locator('[data-memory-result]')).toContainText('A = ABC; B = XYZ');await lab.getByLabel('Mapping che scrive').selectOption('none');await end();await expect(lab.locator('[data-memory-result]')).toContainText('frame usati = 1');await mode('ksm','different');await end();await expect(lab.locator('[data-memory-result]')).toContainText('frame usati = 2');
+ await mode('latency','pressure');await end();await expect(lab.locator('[data-memory-result]')).toContainText('SUPERATA');await lab.getByLabel('Deadline',{exact:true}).selectOption('9');await end();await expect(lab.locator('[data-memory-result]')).toContainText('RISPETTATA');await mode('latency','prepared');await end();await expect(lab.locator('[data-memory-result]')).toContainText('RISPETTATA');
+ await page.setViewportSize({width:390,height:844});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);expect(await lab.locator('.theatre-viewport').evaluate(el=>el.scrollWidth>el.clientWidth)).toBe(true);await lab.screenshot({path:info.outputPath('small.png')});
+ await page.emulateMedia({reducedMotion:'reduce'});await lab.getByRole('button',{name:'Prova configurazione'}).click();await page.waitForTimeout(150);expect(Number(await lab.locator('[data-time]').getAttribute('data-time'))%1).toBe(0);await lab.getByRole('button',{name:'Pausa',exact:true}).click();expect(errors).toEqual([]);
 });
