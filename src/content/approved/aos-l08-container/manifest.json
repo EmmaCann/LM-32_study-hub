@@ -9,11 +9,11 @@
   },
   "slug": "laboratori-container",
   "title": "Container: viste, collegamenti e privilegi",
-  "description": "Task con due PID, cambio del root mount, pacchetti sulla coppia veth e attivazione controllata delle capabilities.",
+  "description": "Esperimenti confrontabili: procfs e PID, risoluzione dei percorsi, routing e veth, copia cap_t e permessi effettivi.",
   "order": 1,
   "demo": false,
   "updated": "2026-11-13",
-  "revision": 1,
+  "revision": 2,
   "review": {
     "status": "approved",
     "reviewer": "Codex: revisione fonti, modelli, interazione e movimento Chromium/WebKit; autorizzazione persistente della proprietaria.",

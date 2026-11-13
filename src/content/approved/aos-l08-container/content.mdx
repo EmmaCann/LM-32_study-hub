@@ -1,3 +1,5 @@
-## Esplora isolamento e privilegi
+## Cambia una condizione e osserva l’esito
 
-Scegli una scena: segui lo stesso task nelle viste PID, il cambio della radice dei mount, una richiesta e risposta sulla coppia veth oppure la capability necessaria al bind. Confronta rete configurata, endpoint DOWN e destinazione senza rotta. Le animazioni sono modelli: nessun comando viene eseguito sul dispositivo.
+Scegli un esperimento, prevedi il risultato e premi **Prova configurazione**. Poi cambia una condizione e confronta: stesso `getpid()` ma `ps` diverso con la vecchia procfs; file HOST o BOX secondo la root; `ping` bloccato dal link o dalla rotta; `bind` negato con la sola copia `cap_t` modificata e consentito dopo l’applicazione al thread.
+
+I tag A/B conservano le identità dei task. Le richieste seguono riferimenti, file e collegamenti visibili nel diagramma. Per la rete esterna funzionante il modello assume predisposti anche inoltro e percorso di ritorno. Nessun comando o privilegio reale viene eseguito sul dispositivo. Su schermi piccoli il diagramma si può scorrere o ingrandire.
