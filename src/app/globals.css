@@ -1605,6 +1605,67 @@ textarea {
   }
 }
 
+.sidebar-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+.sidebar-heading .brand {
+  flex: 1;
+  margin-bottom: 0;
+}
+.sidebar-dismiss {
+  display: none;
+}
+.topbar-leading {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-width: 0;
+}
+.sidebar-toggle,
+.sidebar-dismiss {
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--muted);
+}
+.sidebar-toggle {
+  display: inline-flex;
+}
+.sidebar-toggle:hover,
+.sidebar-dismiss:hover {
+  color: var(--ink);
+  background: var(--soft);
+}
+@media (min-width: 701px) {
+  .sidebar.desktop-collapsed {
+    transform: translateX(-100%);
+    visibility: hidden;
+  }
+  .workspace.sidebar-collapsed {
+    margin-left: 0;
+  }
+}
+@media (min-width: 701px) and (max-width: 1000px) {
+  .topbar-search span,
+  .topbar-location > span,
+  .topbar-location > svg {
+    display: none;
+  }
+}
+@media (max-width: 700px) {
+  .sidebar-dismiss {
+    display: inline-flex;
+  }
+}
+
 /* Study Hub interface refresh */
 :root {
   --bg: #f5f6f8;

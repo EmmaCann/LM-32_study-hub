@@ -10,6 +10,8 @@ import {
   House,
   Library,
   Menu,
+  PanelLeftClose,
+  PanelLeftOpen,
   PenLine,
   Play,
   Search,
@@ -39,6 +41,7 @@ const groups = [
 export function Shell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
   const segments = pathname.split('/').filter(Boolean);
   const isSubjectPath = subjects.some((subject) => subject.id === segments[0]);
   const isTopicPath = isSubjectPath && segments.length >= 3;
@@ -50,7 +53,9 @@ export function Shell({ children }: { children: React.ReactNode }) {
     return pathname === href;
   }
 
-  const activeLabel = groups.flatMap((group) => group.links).find((link) => isActive(link.href))?.label;
+  const activeLabel = groups
+    .flatMap((group) => group.links)
+    .find((link) => isActive(link.href))?.label;
 
   return (
     <>
@@ -59,7 +64,13 @@ export function Shell({ children }: { children: React.ReactNode }) {
       </a>
       <header className="mobile-header">
         <Link href="/" aria-label="LM·32 Study Hub, home">
-          <Image className="mobile-brand-icon" src="/study-hub-icon.png" alt="" width={36} height={36} />
+          <Image
+            className="mobile-brand-icon"
+            src="/study-hub-icon.png"
+            alt=""
+            width={36}
+            height={36}
+          />
           <span className="mobile-brand-name">
             LM·32 <span>Study Hub</span>
           </span>
@@ -68,22 +79,35 @@ export function Shell({ children }: { children: React.ReactNode }) {
         <button
           aria-label={open ? 'Chiudi navigazione' : 'Apri navigazione'}
           aria-expanded={open}
-          aria-controls="primary-navigation"
+          aria-controls="study-sidebar"
           onClick={() => setOpen(!open)}
         >
           {open ? <X /> : <Menu />}
         </button>
       </header>
       {open && <button className="scrim" aria-label="Chiudi menu" onClick={() => setOpen(false)} />}
-      <aside className={`sidebar${open ? ' open' : ''}`}>
-        <Link className="brand" href="/" onClick={() => setOpen(false)}>
-          <span className="brand-icon">
-            <Image src="/study-hub-icon.png" alt="" width={43} height={43} />
-          </span>
-          <span>
-            LM·32 <small>STUDY HUB</small>
-          </span>
-        </Link>
+      <aside
+        id="study-sidebar"
+        className={`sidebar${open ? ' open' : ''}${collapsed ? ' desktop-collapsed' : ''}`}
+      >
+        <div className="sidebar-heading">
+          <Link className="brand" href="/" onClick={() => setOpen(false)}>
+            <span className="brand-icon">
+              <Image src="/study-hub-icon.png" alt="" width={43} height={43} />
+            </span>
+            <span>
+              LM·32 <small>STUDY HUB</small>
+            </span>
+          </Link>
+          <button
+            type="button"
+            className="sidebar-dismiss"
+            aria-label="Chiudi navigazione"
+            onClick={() => setOpen(false)}
+          >
+            <X size={19} />
+          </button>
+        </div>
         <nav id="primary-navigation" aria-label="Navigazione principale">
           {groups.map((group) => (
             <div className="nav-group" key={group.title}>
@@ -104,16 +128,34 @@ export function Shell({ children }: { children: React.ReactNode }) {
           ))}
         </nav>
         <div className="sidebar-bottom">
-          <span className="sidebar-bottom-mark"><span /> Spazio personale</span>
+          <span className="sidebar-bottom-mark">
+            <span /> Spazio personale
+          </span>
           <span>LM·32 · Ingegneria Informatica</span>
         </div>
       </aside>
-      <div className="workspace">
+      <div className={`workspace${collapsed ? ' sidebar-collapsed' : ''}`}>
         <div className="topbar">
-          <div className="topbar-location" aria-label={`Sezione attuale: ${activeLabel ?? 'Studio'}`}>
-            <span>STUDY HUB</span>
-            <ChevronRight size={14} aria-hidden="true" />
-            <strong>{activeLabel ?? 'Studio'}</strong>
+          <div className="topbar-leading">
+            <button
+              type="button"
+              className="sidebar-toggle"
+              aria-label={collapsed ? 'Apri sidebar' : 'Chiudi sidebar'}
+              title={collapsed ? 'Apri sidebar' : 'Chiudi sidebar'}
+              aria-expanded={!collapsed}
+              aria-controls="study-sidebar"
+              onClick={() => setCollapsed((value) => !value)}
+            >
+              {collapsed ? <PanelLeftOpen size={20} /> : <PanelLeftClose size={20} />}
+            </button>
+            <div
+              className="topbar-location"
+              aria-label={`Sezione attuale: ${activeLabel ?? 'Studio'}`}
+            >
+              <span>STUDY HUB</span>
+              <ChevronRight size={14} aria-hidden="true" />
+              <strong>{activeLabel ?? 'Studio'}</strong>
+            </div>
           </div>
           <div className="topbar-actions">
             <Link className="topbar-search" href="/ricerca">
