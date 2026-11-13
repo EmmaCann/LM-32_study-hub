@@ -9,11 +9,11 @@
   },
   "slug": "laboratori-memoria",
   "title": "Memoria: traduzioni, allocazione e latenza",
-  "description": "Scene animate per shootdown, buddy, walk annidati, ballooning, COW e deadline.",
+  "description": "Esperimenti confrontabili su ACK e riuso, frammentazione, traduzioni, balloon, KSM e deadline.",
   "order": 1,
   "demo": false,
   "updated": "2026-11-13",
-  "revision": 1,
+  "revision": 2,
   "review": {
     "status": "approved",
     "reviewer": "Codex: fonti verificate, modello e movimento controllati in Chromium/WebKit; pubblicazione autorizzata dalla proprietaria.",

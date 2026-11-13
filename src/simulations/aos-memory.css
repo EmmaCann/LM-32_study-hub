@@ -1,0 +1,18 @@
+﻿.memory-experiments .theatre-layout{grid-template-columns:minmax(0,1fr)}
+.memory-experiments .theatre-inspector{border-left:0;display:grid;grid-template-columns:1fr 1fr;gap:0 24px;border-top:1px solid var(--line)}
+.memory-experiments .theatre-inspector>.eyebrow{grid-column:1/-1}
+.memory-experiments .theatre-step-title{grid-column:1;margin-bottom:8px}
+.memory-experiments .theatre-description{grid-column:1;font-size:13px;line-height:1.65}
+.memory-experiments .theatre-checks{grid-column:2;grid-row:2/4;margin:0;border:0;border-left:1px solid var(--line);padding:12px 20px}
+.memory-experiments .mem-title{font:600 21px Arial,sans-serif;fill:#1d344d}
+.memory-experiments .mem-label{font:600 18px Arial,sans-serif;fill:#1d344d}
+.memory-experiments .mem-small{font:15px Arial,sans-serif;fill:#29445f}
+.memory-experiments .mem-mono{font:17px monospace;fill:#203146}
+.memory-experiments .mem-console{font:16px monospace;fill:#f2f6ff}
+.memory-experiments .mem-run{align-self:end;background:#5264ba;color:white;border-color:#5264ba;font-weight:600}
+@media(max-width:600px){.memory-experiments .theatre-viewport svg.aos-scene{min-width:680px}.memory-experiments .theatre-inspector{display:block}.memory-experiments .theatre-checks{border:0;padding:12px 0}.memory-experiments .theatre-options{display:grid;grid-template-columns:1fr}.memory-experiments .theatre-options label{min-width:0}.memory-experiments .theatre-options select{width:100%;max-width:100%}}
+
+.memory-experiments .mem-title{font:600 21px Arial,sans-serif;fill:#20384f}
+.memory-experiments .mem-label{font:600 17px Arial,sans-serif;fill:#20384f}
+.memory-experiments .mem-small{font:15px Arial,sans-serif;fill:#29445f}
+.memory-experiments .mem-result{font:600 17px Arial,sans-serif;fill:#20384f}
