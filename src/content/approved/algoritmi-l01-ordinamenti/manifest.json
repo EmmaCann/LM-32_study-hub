@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "algoritmi-l01-ordinamenti",
+  "subject": "algoritmi",
+  "chapter": {"id": "ordinamento", "title": "Ordinamento", "order": 1},
+  "slug": "insertion-merge",
+  "title": "Insertion Sort e Merge: gli elementi in movimento",
+  "description": "Chiave estratta e scorrimenti; confronto delle teste e fusione stabile.",
+  "order": 1,
+  "demo": false,
+  "updated": "2026-11-13",
+  "revision": 1,
+  "review": {"status": "approved", "reviewer": "Codex: revisione tecnica; pubblicazione richiesta dalla proprietaria", "sources": ["Lezione del 7 ottobre 2026: algoritmi di ordinamento; rielaborazione originale."]},
+  "assets": []
+}

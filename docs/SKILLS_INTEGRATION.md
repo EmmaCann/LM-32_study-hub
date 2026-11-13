@@ -161,3 +161,14 @@ collegamenti e proprieta sincronizzati. La sola variazione di numeri/testi non
 soddisfa il requisito. Le nove scene AOS mantengono ID, route e schemi esistenti.
 La revisione deve includere movimento osservato nel browser, pausa/reset,
 zoom/espansione e resa su WebKit/iPad, non soltanto screenshot statici.
+
+## Algoritmi: ordinamenti, lezione del 7 ottobre 2026
+
+Componenti registrati: `algoritmi-insertion` e `algoritmi-merge`, con modelli
+deterministici e player React/SVG in `src/simulations/algoritmi-sorting-*`.
+Pacchetto `algoritmi-l01-ordinamenti`, percorso `/algoritmi/ordinamento/insertion-merge`,
+ancore `insertion-sort` e `merge`. Array modificabili, identità persistenti, spostamenti
+interpolati, pseudocodice sincronizzato e controlli touch/tastiera; tempi illustrativi.
+La regola comune della skill `animazioni-didattiche` autorizza anche Algoritmi e tutte
+le altre materie alla pubblicazione pubblica senza Authentication, come AOS.
+Le fonti e i PDF restano locali; pubblicazione via push su main e verifica del deploy Git.

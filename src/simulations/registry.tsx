@@ -4,6 +4,7 @@ import { AosLab } from './aos-labs';
 import { AosExtraLab } from './aos-extra-labs';
 import { AosBaremetalLab } from './aos-baremetal-labs';
 import { AosPartitionLab } from './aos-partition-labs';
+import { AlgoritmiSortingLab } from './algoritmi-sorting-lab';
 import { ChevronLeft, ChevronRight, Play, Pause, RotateCcw } from 'lucide-react';
 import type { Simulation } from '@/lib/schema';
 const vmKernel = [
@@ -120,6 +121,9 @@ function AvlDiagram({ step }: { step: number }) {
 // Components must be reviewed and registered in application code, never loaded from content.
 export const registry = { 'vm-exit': VmDiagram, 'avl-rotation': AvlDiagram };
 export function SimulationPlayer({ simulation: s }: { simulation: Simulation }) {
+  if (s.component === 'algoritmi-insertion' || s.component === 'algoritmi-merge') {
+    return <AlgoritmiSortingLab id={s.id} title={s.title} mode={s.component === 'algoritmi-insertion' ? 'insertion' : 'merge'} />;
+  }
   if (s.component === 'aos-partition' || s.component === 'aos-ivshmem' || s.component === 'aos-ring' || s.component === 'aos-cache-colors') {
     return <AosPartitionLab id={s.id} title={s.title} component={s.component} />;
   }

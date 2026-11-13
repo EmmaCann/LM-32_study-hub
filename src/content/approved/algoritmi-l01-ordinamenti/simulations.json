@@ -1,0 +1,4 @@
+[
+  {"id":"insertion-sort","component":"algoritmi-insertion","title":"Insertion Sort: una chiave alla volta","description":"Estrai key, sposta gli elementi maggiori e osserva il prefisso ordinato."},
+  {"id":"merge","component":"algoritmi-merge","title":"Merge: due corsie, un risultato","description":"Confronta le teste, trasferisci il minimo e verifica la stabilità a parità di chiave."}
+]
