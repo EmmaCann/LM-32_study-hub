@@ -1,4 +1,6 @@
 import { test, expect } from '@playwright/test';
+import { getTopics } from '../src/lib/content';
+const approved = getTopics();
 test('route, link interni, contenuti approvati e 404', async ({ page, request }) => {
   const urls = [
     '/',
@@ -44,16 +46,38 @@ test('route, link interni, contenuti approvati e 404', async ({ page, request })
   ])
     expect((await request.get(url)).status()).toBe(404);
 });
-test('catalogo vuoto, placeholder delle materie e ricerca senza contenuti', async ({ page }) => {
+test('catalogo e ricerca riflettono i contenuti approvati', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('heading', { name: 'Il tuo studio' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Materie' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Il tuo studio,/ })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Scegli una materia' })).toBeVisible();
   await expect(page.locator('.subject-card')).toHaveCount(4);
-  await expect(page.locator('.list-row')).toHaveCount(0);
-  await expect(page.locator('.practice-links a')).toHaveCount(0);
+  await expect(page.locator('.list-row')).toHaveCount(Math.min(3, approved.length));
+  await expect(page.locator('.study-tool-link')).toHaveCount(3);
+  await expect(page.locator('.study-tool-link').first()).toContainText(`${approved.reduce((n,t) => n+t.simulations.length,0)} disponibili`);
   await page.goto('/ricerca');
-  await page.getByRole('textbox').fill('un argomento');
+  await page.getByRole('textbox').fill('contenuto-inesistente-xyz999');
   await expect(page.getByRole('status')).toContainText('0 risultati');
+});
+test('sidebar chiudibile, navigazione e menu mobile', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('/');
+  const sidebar = page.locator('#study-sidebar');
+  const workspace = page.locator('.workspace');
+  await page.getByRole('button', { name: 'Chiudi sidebar', exact: true }).click();
+  await expect(sidebar).toBeHidden();
+  await expect(workspace).toHaveCSS('margin-left', '0px');
+  await page.getByRole('main').getByRole('link', { name: 'Tutte le materie' }).click();
+  await expect(page).toHaveURL(/\/materie$/);
+  await expect(sidebar).toBeHidden();
+  await page.getByRole('button', { name: 'Apri sidebar', exact: true }).click();
+  await expect(sidebar).toBeVisible();
+  await expect(workspace).not.toHaveCSS('margin-left', '0px');
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(sidebar).toBeHidden();
+  await page.getByRole('button', { name: 'Apri navigazione', exact: true }).click();
+  await expect(sidebar).toBeVisible();
+  await sidebar.getByRole('button', { name: 'Chiudi navigazione', exact: true }).click();
+  await expect(sidebar).toBeHidden();
 });
 test('breakpoint desktop, iPad, mobile e tema persistente', async ({ page }) => {
   for (const [width, height] of [
@@ -90,3 +114,28 @@ test('breakpoint desktop, iPad, mobile e tema persistente', async ({ page }) => 
     }
   }
 });
+
+for (const topic of approved.filter(t => t.manifest.id.startsWith('aos-l0'))) {
+ test(`laboratori AOS integrati: ${topic.manifest.id}`, async ({ page }, testInfo) => {
+  const m=topic.manifest;
+  const response=await page.goto(`/${m.subject}/${m.chapter.id}/${m.slug}`);
+  expect(response?.status()).toBe(200);
+  const labs=page.locator('.aos-lab');await expect(labs).toHaveCount(topic.simulations.length);
+  const states=await labs.evaluateAll(async roots=>{
+   const result=[];
+   for(const root of roots){
+    const scene=root.querySelector('svg.aos-scene');
+    const next=root.querySelector('button[aria-label="Avanti"]') as HTMLButtonElement;
+    const back=root.querySelector('button[aria-label="Indietro"]') as HTMLButtonElement;
+    const reset=root.querySelector('button[aria-label="Reset"]') as HTMLButtonElement;
+    const initial=back.disabled;next.click();await new Promise(r=>setTimeout(r,40));const advanced=!back.disabled;
+    reset.click();await new Promise(r=>setTimeout(r,40));
+    result.push({id:root.id,scene:!!scene,title:scene?.getAttribute('aria-label'),initial,advanced,reset:back.disabled});
+   }
+   return result;
+  });
+  for(const state of states){expect(state.scene,state.id).toBeTruthy();expect(state.title,state.id).toBeTruthy();expect(state.initial&&state.advanced&&state.reset,state.id).toBeTruthy();}
+  for(const width of [1024,390]){await page.setViewportSize({width,height:1400});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBeTruthy();}
+  await labs.first().screenshot({path:testInfo.outputPath(`${m.id}-mobile.png`),animations:'disabled'});
+ });
+}

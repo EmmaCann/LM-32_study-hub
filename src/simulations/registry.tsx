@@ -1,5 +1,10 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { AosLab } from './aos-labs';
+import { AosExtraLab } from './aos-extra-labs';
+import { AosBaremetalLab } from './aos-baremetal-labs';
+import { AosPartitionLab } from './aos-partition-labs';
+import { AlgoritmiSortingLab } from './algoritmi-sorting-lab';
 import { ChevronLeft, ChevronRight, Play, Pause, RotateCcw } from 'lucide-react';
 import type { Simulation } from '@/lib/schema';
 const vmKernel = [
@@ -116,6 +121,24 @@ function AvlDiagram({ step }: { step: number }) {
 // Components must be reviewed and registered in application code, never loaded from content.
 export const registry = { 'vm-exit': VmDiagram, 'avl-rotation': AvlDiagram };
 export function SimulationPlayer({ simulation: s }: { simulation: Simulation }) {
+  if (s.component === 'algoritmi-insertion' || s.component === 'algoritmi-merge') {
+    return <AlgoritmiSortingLab id={s.id} title={s.title} mode={s.component === 'algoritmi-insertion' ? 'insertion' : 'merge'} />;
+  }
+  if (s.component === 'aos-partition' || s.component === 'aos-ivshmem' || s.component === 'aos-ring' || s.component === 'aos-cache-colors') {
+    return <AosPartitionLab id={s.id} title={s.title} component={s.component} />;
+  }
+  if (s.component === 'aos-elf-loader' || s.component === 'aos-pit-read' || s.component === 'aos-vcpu-gaps') {
+    return <AosBaremetalLab id={s.id} title={s.title} component={s.component} />;
+  }
+  if (s.component === 'aos-decode' || s.component === 'aos-time' || s.component === 'aos-interrupts' || s.component === 'aos-addresses' || s.component === 'aos-memory-slot') {
+    return <AosExtraLab id={s.id} title={s.title} component={s.component} />;
+  }
+  if (s.component === 'aos-flags' || s.component === 'aos-cpu-cache' || s.component === 'aos-virtqueue' || s.component === 'aos-kvm-run') {
+    return <AosLab id={s.id} title={s.title} component={s.component} />;
+  }
+  return <LegacySimulationPlayer simulation={{...s, component: s.component}} />;
+}
+function LegacySimulationPlayer({ simulation: s }: { simulation: Omit<Simulation, 'component'> & {component: 'vm-exit' | 'avl-rotation'} }) {
   const [step, setStep] = useState(0),
     [playing, setPlaying] = useState(false),
     [user, setUser] = useState(true);

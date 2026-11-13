@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "aos-l03-virtqueue",
+  "subject": "aos",
+  "chapter": {
+    "id": "lezione-03",
+    "title": "Lezione 03",
+    "order": 3
+  },
+  "slug": "virtqueue-batching",
+  "title": "Split virtqueue e batching",
+  "description": "Osserva pubblicazione, completamenti e recupero dei buffer.",
+  "order": 1,
+  "demo": false,
+  "updated": "2026-11-12",
+  "revision": 3,
+  "review": {
+    "status": "approved",
+    "reviewer": "Codex: revisione didattica e tecnica su autorizzazione persistente della proprietaria",
+    "sources": [
+      "Appunti AOS, lezione 3: contenuti già revisionati; laboratorio originale complementare."
+    ]
+  },
+  "assets": []
+}

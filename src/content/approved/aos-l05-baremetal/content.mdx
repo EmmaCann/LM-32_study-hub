@@ -1,0 +1,7 @@
+## Tre meccanismi da vedere
+
+Queste scene accompagnano la lezione 5: seguono gli oggetti del caricamento, gli accessi al timer e la disponibilità della CPU. I tempi delle animazioni sono rallentati e illustrativi; non rappresentano misure della macchina.
+
+Nel primo laboratorio separa i byte nel file, il backing RAM e la CPU. Nel secondo il latch conserva una copia mentre il contatore continua a scendere. Nel terzo confronta tempo trascorso e lavoro eseguito: gli interrupt guest disabilitati non impediscono una sospensione esterna.
+
+La pausa da 80 ms supera il periodo del contatore PIT del modello. La differenza modulare perde un giro completo: il valore ricostruito dal solo contatore è inferiore all’intervallo reale. Un massimo osservato non garantisce il caso peggiore futuro.

@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "aos-l05-baremetal",
+  "subject": "aos",
+  "chapter": {
+    "id": "lezione-05",
+    "title": "Lezione 05",
+    "order": 5
+  },
+  "slug": "firmware-tempo",
+  "title": "Dal firmware alle pause della vCPU",
+  "description": "Caricamento ELF, lettura del PIT e tempo che avanza senza esecuzione guest.",
+  "order": 1,
+  "demo": false,
+  "updated": "2026-11-12",
+  "revision": 1,
+  "review": {
+    "status": "approved",
+    "reviewer": "Codex: revisione didattica su autorizzazione persistente della proprietaria",
+    "sources": [
+      "Lezione AOS 5: laboratorio originale rielaborato da contenuti verificati.",
+      "https://docs.kernel.org/virt/kvm/api.html",
+      "https://docs.kernel.org/virt/kvm/x86/timekeeping.html"
+    ]
+  },
+  "assets": []
+}

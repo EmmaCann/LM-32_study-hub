@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "aos-l04-kvm-run",
+  "subject": "aos",
+  "chapter": {
+    "id": "lezione-04",
+    "title": "Lezione 04",
+    "order": 4
+  },
+  "slug": "cicli-kvm-run",
+  "title": "I due cicli di KVM_RUN",
+  "description": "Distingui VM exit hardware, ritorni userspace e invocazioni della ioctl.",
+  "order": 1,
+  "demo": false,
+  "updated": "2026-11-12",
+  "revision": 2,
+  "review": {
+    "status": "approved",
+    "reviewer": "Codex: revisione didattica e tecnica su autorizzazione persistente della proprietaria",
+    "sources": [
+      "Appunti AOS, lezione 4: contenuti già revisionati; laboratorio originale complementare."
+    ]
+  },
+  "assets": []
+}

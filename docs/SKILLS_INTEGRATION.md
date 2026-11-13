@@ -123,4 +123,52 @@ Per ripristinare una revisione, copiarla in staging, assegnare una revisione num
 
 Il PDF è un asset approvato, non un sorgente universitario importato automaticamente. Aggiungerlo a `assets` e al campo `pdf`. I link incorporati devono usare il dominio HTTPS definitivo e gli ID stabili. Generarli con `npm.cmd run content -- links https://dominio` o con `stableUrl(base, manifest, simulationId)` in `src/lib/schema.ts`. Il generatore rifiuta HTTP, file URL, credenziali e percorsi nella base.
 
-Vercel Authentication deve proteggere **All Deployments**, compresi produzione e URL degli asset. Nessuna skill deve eseguire un deployment, creare repository remoti o modificare protezioni senza autorizzazione della proprietaria.
+
+
+## Estensione laboratori AOS
+
+Componenti revisionati: `aos-flags` (lezione 1), `aos-cpu-cache` (lezione 2), `aos-virtqueue` (lezione 3), `aos-kvm-run` (lezione 4). Identità delle simulazioni stabili nei pacchetti. Parametri scelti nella UI, nessun codice eseguibile nei contenuti. Modelli didattici, non benchmark.
+
+
+## Utilita complementare: aggiornamento del 12 novembre 2026
+
+Creare e pubblicare ogni complemento utile anche se non essenziale, secondo AGENTS.md e il gate Vercel. Valutare 2D/3D, processi e algoritmi passo passo; riusare componenti verificati. Aggiunti: aos-decode, aos-time, aos-interrupts, aos-addresses, aos-memory-slot. Link HTTPS nei PDF solo dopo verifica online; stato e opportunita nel dossier.
+
+## Override corrente: pubblicazione da main senza Authentication
+
+La proprietaria ha esplicitamente disattivato Authentication il 12 novembre 2026:
+non riattivarla ne aggiungere login applicativi. Questa scelta prevale sui precedenti
+requisiti generici di pubblicazione privata. Pubblicare soltanto gli interattivi originali
+rielaborati, mai fonti, trascrizioni, credenziali o copie PDF/HTML degli appunti.
+Merge/aggiornamento e push su main attivano il deploy Git automatico Vercel.
+Niente secondo deploy manuale. Verificare test/build, commit effettivamente distribuito,
+URL di produzione e ancore dei laboratori; poi inserire link HTTPS nei PDF locali.
+
+
+## Qualita visiva dei player
+
+Lezione 6: `aos-partition`, `aos-ivshmem`, `aos-ring` e `aos-cache-colors` mostrano
+proprietà dei core, payload/notifica, sovrascrittura con indici privati e contesa LLC.
+Il cockpit usa polling; doorbell è un'alternativa. Ring e cache usano capacità ridotte
+esplicitamente illustrative; nessuna misura hardware o esecuzione delle fonti.
+
+Lezione 5: `aos-elf-loader`, `aos-pit-read` e `aos-vcpu-gaps` aggiungono caricamento,
+latch/lettura PIT e pause della vCPU. Modelli deterministici separati dalle scene,
+player condiviso; tempi illustrativi, nessun benchmark o sorgente universitario caricato.
+
+Usare scene adatte al meccanismo: oggetti persistenti, movimento interpolato,
+collegamenti e proprieta sincronizzati. La sola variazione di numeri/testi non
+soddisfa il requisito. Le nove scene AOS mantengono ID, route e schemi esistenti.
+La revisione deve includere movimento osservato nel browser, pausa/reset,
+zoom/espansione e resa su WebKit/iPad, non soltanto screenshot statici.
+
+## Algoritmi: ordinamenti, lezione del 7 ottobre 2026
+
+Componenti registrati: `algoritmi-insertion` e `algoritmi-merge`, con modelli
+deterministici e player React/SVG in `src/simulations/algoritmi-sorting-*`.
+Pacchetto `algoritmi-l01-ordinamenti`, percorso `/algoritmi/ordinamento/insertion-merge`,
+ancore `insertion-sort` e `merge`. Array modificabili, identità persistenti, spostamenti
+interpolati, pseudocodice sincronizzato e controlli touch/tastiera; tempi illustrativi.
+La regola comune della skill `animazioni-didattiche` autorizza anche Algoritmi e tutte
+le altre materie alla pubblicazione pubblica senza Authentication, come AOS.
+Le fonti e i PDF restano locali; pubblicazione via push su main e verifica del deploy Git.

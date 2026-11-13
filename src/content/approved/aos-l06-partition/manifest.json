@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "aos-l06-partition",
+  "subject": "aos",
+  "chapter": {
+    "id": "lezione-06",
+    "title": "Lezione 06",
+    "order": 6
+  },
+  "slug": "partizioni-e-comunicazione",
+  "title": "Partizioni, memoria condivisa e cache",
+  "description": "Segui la proprietà dei core, distingui payload e notifica, osserva ring e interferenza nella cache.",
+  "order": 1,
+  "demo": false,
+  "updated": "2026-11-12",
+  "revision": 1,
+  "review": {
+    "status": "approved",
+    "reviewer": "Codex: revisione didattica e tecnica su autorizzazione persistente della proprietaria",
+    "sources": [
+      "Lezione AOS6: laboratorio originale da contenuti verificati.",
+      "https://github.com/siemens/jailhouse",
+      "https://github.com/bao-project/bao-hypervisor"
+    ]
+  },
+  "assets": []
+}

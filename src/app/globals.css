@@ -2163,6 +2163,9 @@ footer {
     min-width: 38px;
     padding: 6px;
   }
+  .mobile-header .theme-switch button span {
+    display: none;
+  }
   main {
     min-height: calc(100vh - 135px);
     padding: 24px 17px 42px;
@@ -2238,3 +2241,32 @@ footer {
     transition: none;
   }
 }
+/* Laboratori AOS */
+.aos-lab { scroll-margin-top: 90px; }
+.aos-lab h3 { margin: .4rem 0; }
+.aos-lab h4 { margin: 0 0 .6rem; font-size: 1.1rem; }
+.aos-options { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1rem 0; }
+.aos-options label { display: grid; gap: .4rem; min-width: 0; max-width: 100%; font-size: .88rem; }
+.aos-options select { max-width: 100%; min-height: 44px; padding: .5rem; background: var(--surface,white); color: inherit; border: 1px solid var(--line,#ccc); border-radius: 7px; }
+.aos-flow { display: flex; flex-wrap: wrap; list-style: none; padding: 0; gap: .5rem; margin: 1.2rem 0; }
+.aos-flow li { padding: .65rem .8rem; border: 1px solid var(--line,#ccc); border-radius: 8px; font-size: .85rem; }
+.aos-flow li[aria-current] { background: var(--tint,#ebe8f5); border-color: var(--accent,#67509a); font-weight: 700; }
+.aos-state { padding: 1rem; border-left: 3px solid var(--accent,#67509a); background: var(--surface,#fff); }
+.aos-state p { line-height: 1.65; }
+.aos-values { display: grid; grid-template-columns: repeat(auto-fit,minmax(135px,1fr)); gap: .6rem; margin: 1rem 0 0; }
+.aos-values div { border: 1px solid var(--line,#ccc); border-radius: 8px; padding: .65rem; }
+.aos-values dt { font-size: .78rem; color: var(--muted,#555); }
+.aos-values dd { margin: .3rem 0 0; font-size: 1.3rem; font-variant-numeric: tabular-nums; }
+.aos-items { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
+.aos-items span { padding: .4rem .6rem; background: var(--tint,#ebe8f5); border-radius: 5px; font-size: .8rem; }
+.aos-controls { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1rem 0; }
+.aos-controls button { min-height: 44px; min-width: 70px; }
+.aos-controls button:disabled { opacity: .45; }
+.aos-scrub { display: grid; gap: .5rem; font-size: .85rem; }
+.aos-scrub input { width: 100%; min-height: 44px; accent-color: var(--accent,#67509a); }
+.aos-note { font-size: .8rem; color: var(--muted,#555); }
+.aos-lab :focus-visible { outline: 3px solid var(--accent,#67509a); outline-offset: 3px; }
+@media(max-width: 480px) { .aos-values { grid-template-columns: repeat(2,minmax(0,1fr)); } .aos-options label { width: 100%; } .aos-state { padding: .7rem; } }
+
+.aos-extra-lab dd { font-size: 1rem; overflow-wrap: anywhere; }
+.aos-extra-lab .aos-items span { max-width: 100%; overflow-wrap: anywhere; }

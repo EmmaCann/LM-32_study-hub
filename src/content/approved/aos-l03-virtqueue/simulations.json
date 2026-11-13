@@ -1,0 +1,20 @@
+[
+  {
+    "id": "code-e-notifiche",
+    "component": "aos-virtqueue",
+    "title": "Split virtqueue e batching",
+    "description": "Osserva pubblicazione, completamenti e recupero dei buffer."
+  },
+  {
+    "id": "interrupt-pendente-consegnato",
+    "component": "aos-interrupts",
+    "title": "Dall’interrupt fisico all’handler guest",
+    "description": "Segui attesa, consegna e EOI nel modello senza accelerazione del controller."
+  },
+  {
+    "id": "indirizzi-cpu-dma",
+    "component": "aos-addresses",
+    "title": "CPU e DMA: percorsi distinti",
+    "description": "Confronta GVA/GPA/HPA e IOVA, con accesso DMA consentito oppure bloccato."
+  }
+]

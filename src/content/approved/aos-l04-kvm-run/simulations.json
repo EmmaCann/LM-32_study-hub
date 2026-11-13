@@ -1,0 +1,14 @@
+[
+  {
+    "id": "kernel-e-userspace",
+    "component": "aos-kvm-run",
+    "title": "I due cicli di KVM_RUN",
+    "description": "Distingui VM exit hardware, ritorni userspace e invocazioni della ioctl."
+  },
+  {
+    "id": "memory-slot",
+    "component": "aos-memory-slot",
+    "title": "Memory slot: stessi byte, indirizzi diversi",
+    "description": "Controlla i limiti dello slot e calcola il corrispondente puntatore host virtuale."
+  }
+]

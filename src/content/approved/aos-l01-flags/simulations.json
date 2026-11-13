@@ -1,0 +1,8 @@
+[
+  {
+    "id": "if-fisico-virtuale",
+    "component": "aos-flags",
+    "title": "POPF e stato virtuale",
+    "description": "Confronta il difetto storico con un ripristino mediato dal monitor."
+  }
+]

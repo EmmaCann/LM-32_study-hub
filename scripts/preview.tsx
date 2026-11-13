@@ -16,7 +16,7 @@ export async function writePreview(topic: Topic, source: string) {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <meta name="robots" content="noindex,nofollow" />
-        <title>Anteprima · {topic.manifest.title}</title>
+        <title>{`Anteprima · ${topic.manifest.title}`}</title>
         <link rel="stylesheet" href="katex/katex.min.css" />
         <style>
           {
