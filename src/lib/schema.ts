@@ -58,7 +58,7 @@ export const exerciseSchema = z
 export const simulationSchema = z
   .object({
     id: slug,
-    component: z.enum(['vm-exit', 'avl-rotation', 'aos-memory', 'aos-flags', 'aos-cpu-cache', 'aos-virtqueue', 'aos-kvm-run', 'aos-decode', 'aos-time', 'aos-interrupts', 'aos-addresses', 'aos-memory-slot', 'aos-elf-loader', 'aos-pit-read', 'aos-vcpu-gaps', 'aos-partition', 'aos-ivshmem', 'aos-ring', 'aos-cache-colors', 'algoritmi-insertion', 'algoritmi-merge']),
+    component: z.enum(['vm-exit', 'avl-rotation', 'aos-memory', 'aos-container', 'aos-flags', 'aos-cpu-cache', 'aos-virtqueue', 'aos-kvm-run', 'aos-decode', 'aos-time', 'aos-interrupts', 'aos-addresses', 'aos-memory-slot', 'aos-elf-loader', 'aos-pit-read', 'aos-vcpu-gaps', 'aos-partition', 'aos-ivshmem', 'aos-ring', 'aos-cache-colors', 'algoritmi-insertion', 'algoritmi-merge']),
     title: z.string(),
     description: z.string(),
   })

@@ -172,3 +172,8 @@ interpolati, pseudocodice sincronizzato e controlli touch/tastiera; tempi illust
 La regola comune della skill `animazioni-didattiche` autorizza anche Algoritmi e tutte
 le altre materie alla pubblicazione pubblica senza Authentication, come AOS.
 Le fonti e i PDF restano locali; pubblicazione via push su main e verifica del deploy Git.
+
+
+## Laboratorio AOS 8
+
+`aos-container` riusa il player comune con quattro scene: identita PID/UTS, cambio del root mount, veth con scenari UP/DOWN/rotta assente, capability P/E/B. Modelli in `aos-container-model.ts`; `execCaps` descrive il caso ordinario non-root, non tutte le regole Linux. Il solo DROP Bounding non revoca E/P. Nessun comando delle fonti viene eseguito dal laboratorio.

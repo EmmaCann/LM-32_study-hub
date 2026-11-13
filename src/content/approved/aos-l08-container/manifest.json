@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "aos-l08-container",
+  "subject": "aos",
+  "chapter": {
+    "id": "lezione-08",
+    "title": "Lezione 08",
+    "order": 8
+  },
+  "slug": "laboratori-container",
+  "title": "Container: viste, collegamenti e privilegi",
+  "description": "Task con due PID, cambio del root mount, pacchetti sulla coppia veth e attivazione controllata delle capabilities.",
+  "order": 1,
+  "demo": false,
+  "updated": "2026-11-13",
+  "revision": 1,
+  "review": {
+    "status": "approved",
+    "reviewer": "Codex: revisione fonti, modelli, interazione e movimento Chromium/WebKit; autorizzazione persistente della proprietaria.",
+    "sources": [
+      "Lezione AOS8: namespace e capabilities; rielaborazione originale da fonti verificate."
+    ]
+  },
+  "assets": []
+}

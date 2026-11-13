@@ -1,0 +1,8 @@
+[
+  {
+    "id": "container",
+    "component": "aos-container",
+    "title": "Container: viste, collegamenti e privilegi",
+    "description": "Task con due PID, cambio del root mount, pacchetti sulla coppia veth e attivazione controllata delle capabilities."
+  }
+]
