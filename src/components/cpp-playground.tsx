@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import { CheckCircle2, CircleAlert, ArrowRight, ArrowLeft } from 'lucide-react';
 import { CppEditor } from './cpp-editor';
 import { CppRuntime, type CppStandard, type CompileResult } from '@/lib/cpp-runtime';
 import { passesTest, type RunResult } from '@/lib/cpp-check';
@@ -9,12 +10,20 @@ import type { Exercise } from '@/lib/schema';
 const initialCode =
   '#include <iostream>\n\nint main() {\n    int numero;\n    std::cin >> numero;\n    std::cout << "Hai scritto: " << numero << "\\n";\n    return 0;\n}\n';
 type Check = { id: string; title: string; passed: boolean; result: RunResult; expected: string };
+export type ExerciseNavigation = {
+  position: number;
+  total: number;
+  previous?: { href: string; title: string };
+  next?: { href: string; title: string };
+};
 export function CppPlayground({
   exercise,
   referenceHref,
+  exerciseNavigation,
 }: {
   exercise?: Exercise;
   referenceHref?: string;
+  exerciseNavigation?: ExerciseNavigation;
 }) {
   const spec = exercise?.cpp;
   const [code, setCode] = useState(spec?.starterCode ?? initialCode);
@@ -37,6 +46,13 @@ export function CppPlayground({
     null,
   );
   const active = useRef(true);
+  const verificationComplete = Boolean(
+    spec && checkedCode !== undefined && checks.length === spec.tests.length,
+  );
+  const verificationStale = verificationComplete && checkedCode !== code;
+  const passedCount = checks.filter((check) => check.passed).length;
+  const exercisePassed =
+    verificationComplete && !verificationStale && passedCount === checks.length;
   useEffect(() => {
     active.current = true;
     return () => {
@@ -131,7 +147,7 @@ export function CppPlayground({
         if (active.current) {
           setCheckedCode(snapshot);
           setStatus(
-            `${results.filter((r) => r.passed).length}/${results.length} casi verificati superati. Questo non dimostra la correttezza per tutti gli input.`,
+            `${results.every((r) => r.passed) ? 'Esercizio superato.' : 'Esercizio da rivedere.'} ${results.filter((r) => r.passed).length}/${results.length} casi verificati superati. Questo non dimostra la correttezza per tutti gli input.`,
           );
         }
       }
@@ -157,6 +173,34 @@ export function CppPlayground({
 
   return (
     <div className="cpp-playground">
+      {exerciseNavigation && (
+        <nav className="cpp-exercise-navigation" aria-label="Passa a un altro esercizio">
+          <div>
+            <strong>
+              Esercizio {exerciseNavigation.position} di {exerciseNavigation.total}
+            </strong>
+            <Link href="/cpp/esercitazioni">Tutti gli esercizi</Link>
+          </div>
+          <div className="cpp-exercise-navigation-links">
+            {exerciseNavigation.previous && (
+              <Link
+                href={exerciseNavigation.previous.href}
+                aria-label={`Esercizio precedente: ${exerciseNavigation.previous.title}`}
+              >
+                <ArrowLeft size={16} /> Precedente
+              </Link>
+            )}
+            {exerciseNavigation.next && (
+              <Link
+                href={exerciseNavigation.next.href}
+                aria-label={`Esercizio successivo: ${exerciseNavigation.next.title}`}
+              >
+                Successivo <ArrowRight size={16} />
+              </Link>
+            )}
+          </div>
+        </nav>
+      )}
       <div className="cpp-intro">
         <p>
           {exercise?.prompt ??
@@ -241,10 +285,72 @@ export function CppPlayground({
       <p className="cpp-status" role="status" aria-live="polite" aria-busy={busy}>
         {status}
       </p>
-      {checkedCode !== undefined && checkedCode !== code && (
-        <p className="callout">
-          Il codice è cambiato: i risultati si riferiscono alla versione verificata precedente.
-        </p>
+      {verificationComplete && (
+        <section
+          className={`cpp-verification-result ${exercisePassed ? 'is-passed' : verificationStale ? 'is-stale' : 'is-failed'}`}
+          aria-labelledby="cpp-verification-title"
+        >
+          <span className="cpp-verification-icon" aria-hidden="true">
+            {exercisePassed ? <CheckCircle2 size={28} /> : <CircleAlert size={28} />}
+          </span>
+          <div className="cpp-verification-content">
+            <h2 id="cpp-verification-title">
+              {verificationStale
+                ? 'Codice modificato: verifica di nuovo'
+                : exercisePassed
+                  ? 'Esercizio superato'
+                  : 'Esercizio da rivedere'}
+            </h2>
+            <p>
+              {verificationStale
+                ? 'I risultati si riferiscono alla versione precedente. Verifica il codice attuale per aggiornare l’esito.'
+                : exercisePassed
+                  ? `Hai superato tutti i ${checks.length} casi di verifica disponibili.`
+                  : `Hai superato ${passedCount} di ${checks.length} casi. Apri i casi non superati per confrontare il risultato con quello atteso.`}
+            </p>
+            {exercisePassed && (
+              <p className="cpp-verification-note">
+                Il risultato riguarda i casi verificati e non dimostra la correttezza per ogni
+                possibile input.
+              </p>
+            )}
+            <div className="cpp-verification-actions">
+              {verificationStale ? (
+                <button
+                  className="button secondary"
+                  disabled={busy}
+                  onClick={() => void perform('verify')}
+                >
+                  Verifica di nuovo
+                </button>
+              ) : exercisePassed && exerciseNavigation?.next ? (
+                <Link className="button primary" href={exerciseNavigation.next.href}>
+                  Passa al prossimo esercizio <ArrowRight size={17} />
+                </Link>
+              ) : !exercisePassed ? (
+                <a className="button secondary" href="#cpp-tests-title">
+                  Vedi i casi non superati
+                </a>
+              ) : null}
+              {exercisePassed && (
+                <Link className="button secondary" href="/cpp/esercitazioni">
+                  Scegli un altro esercizio
+                </Link>
+              )}
+            </div>
+            {exercisePassed && exerciseNavigation?.next && (
+              <p className="cpp-verification-next">
+                Il prossimo: <strong>{exerciseNavigation.next.title}</strong>
+              </p>
+            )}
+            {exercisePassed && exerciseNavigation && !exerciseNavigation.next && (
+              <p className="cpp-verification-next">
+                Questo è l’ultimo esercizio dell’elenco. Puoi scegliere un’altra attività dalle
+                esercitazioni.
+              </p>
+            )}
+          </div>
+        </section>
       )}
       <div className="cpp-workbench">
         <section aria-label="Editor C++" className="cpp-source-pane">

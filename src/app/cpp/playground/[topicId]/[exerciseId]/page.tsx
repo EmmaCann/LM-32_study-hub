@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getTopics } from '@/lib/content';
-import { topicPath } from '@/lib/schema';
+import { topicPath, cppExercisePath } from '@/lib/schema';
 import { CppPlayground } from '@/components/cpp-playground';
 import { CppNavigation } from '@/components/cpp-navigation';
 import { PageHeading } from '@/components/catalog';
@@ -35,9 +35,20 @@ export default async function ExercisePage({
   params: Promise<{ topicId: string; exerciseId: string }>;
 }) {
   const { topicId, exerciseId } = await params;
-  const topic = getTopics().find((t) => t.manifest.subject === 'cpp' && t.manifest.id === topicId);
+  const topics = getTopics().filter((t) => t.manifest.subject === 'cpp');
+  const topic = topics.find((t) => t.manifest.id === topicId);
   const exercise = topic?.exercises.find((e) => e.id === exerciseId && e.type === 'cpp');
   if (!topic || !exercise) notFound();
+  const exercises = topics.flatMap((t) =>
+    t.exercises.filter((e) => e.type === 'cpp').map((e) => ({ topic: t, exercise: e })),
+  );
+  const index = exercises.findIndex(
+    (item) => item.topic.manifest.id === topicId && item.exercise.id === exerciseId,
+  );
+  const link = (item: (typeof exercises)[number] | undefined) =>
+    item
+      ? { href: cppExercisePath(item.topic.manifest, item.exercise.id), title: item.exercise.title }
+      : undefined;
   return (
     <>
       <CppNavigation />
@@ -59,6 +70,12 @@ export default async function ExercisePage({
         key={`${topicId}/${exerciseId}`}
         exercise={exercise}
         referenceHref={topicPath(topic.manifest)}
+        exerciseNavigation={{
+          position: index + 1,
+          total: exercises.length,
+          previous: link(exercises[index - 1]),
+          next: link(exercises[index + 1]),
+        }}
       />
     </>
   );

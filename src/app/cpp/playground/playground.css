@@ -49,6 +49,116 @@
   overflow-wrap: anywhere;
   min-height: 48px;
 }
+.cpp-exercise-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 14px 16px;
+  margin-bottom: 22px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  font-size: 12px;
+}
+.cpp-exercise-navigation > div:first-child {
+  display: grid;
+  gap: 4px;
+}
+.cpp-exercise-navigation a {
+  color: var(--accent);
+}
+.cpp-exercise-navigation-links {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.cpp-exercise-navigation-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+}
+.cpp-verification-result {
+  --result-tone: #9c4037;
+  --result-bg: #fff2ef;
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 22px;
+  margin: 18px 0 24px;
+  border: 2px solid var(--result-tone);
+  border-radius: 12px;
+  background: var(--result-bg);
+}
+.cpp-verification-result.is-passed {
+  --result-tone: #26734f;
+  --result-bg: #eff9f2;
+}
+.cpp-verification-result.is-stale {
+  --result-tone: #8c641b;
+  --result-bg: #fff8e9;
+}
+:root[data-theme='dark'] .cpp-verification-result {
+  --result-tone: #f2a59a;
+  --result-bg: #352321;
+}
+:root[data-theme='dark'] .cpp-verification-result.is-passed {
+  --result-tone: #87d4ac;
+  --result-bg: #183329;
+}
+:root[data-theme='dark'] .cpp-verification-result.is-stale {
+  --result-tone: #e9c47c;
+  --result-bg: #352f22;
+}
+.cpp-verification-icon {
+  display: flex;
+  flex-shrink: 0;
+  color: var(--result-tone);
+}
+.cpp-verification-content {
+  min-width: 0;
+}
+.cpp-verification-content h2 {
+  margin: 0 0 8px;
+  color: var(--result-tone);
+  font-size: 23px;
+}
+.cpp-verification-content p {
+  margin: 0 0 9px;
+  font-size: 14px;
+}
+.cpp-verification-content .cpp-verification-note,
+.cpp-verification-content .cpp-verification-next {
+  font-size: 12px;
+}
+.cpp-verification-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin: 15px 0 10px;
+}
+.cpp-verification-result.is-passed .button.primary {
+  background: #26734f;
+  border-color: #26734f;
+  color: white;
+}
+@media (max-width: 700px) {
+  .cpp-exercise-navigation {
+    flex-wrap: wrap;
+  }
+  .cpp-verification-result {
+    padding: 16px;
+    gap: 11px;
+  }
+  .cpp-verification-content h2 {
+    font-size: 20px;
+  }
+  .cpp-verification-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
 .cpp-workbench {
   display: grid;
   grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);

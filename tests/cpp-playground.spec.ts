@@ -78,8 +78,8 @@ test('C++ reale: stdin, stdout, stderr, errori, timeout, interruzione e limiti',
   await page.getByRole('button', { name: 'Scarica .cpp', exact: true }).click();
   expect((await download).suggestedFilename()).toBe('main.cpp');
 });
-for (const exercise of topic.exercises) {
-  test(`C++ verifica reale, aiuti e soluzione: ${exercise.id}`, async ({ page }) => {
+for (const [exerciseIndex, exercise] of topic.exercises.entries()) {
+  test(`C++ verifica reale, aiuti e soluzione: ${exercise.id}`, async ({ page }, testInfo) => {
     await page.goto(`/cpp/playground/${topic.manifest.id}/${exercise.id}`);
     const editor = page.locator('.cm-content');
     await expect(editor).toContainText('TODO');
@@ -90,6 +90,12 @@ for (const exercise of topic.exercises) {
       timeout: 120000,
     });
     await expect(page.getByRole('status')).not.toContainText('3/3');
+    await expect(
+      page.getByRole('heading', { name: 'Esercizio da rivedere', exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: 'Esercizio superato', exact: true }),
+    ).toHaveCount(0);
     expect(await editor.innerText()).toBe(before);
     await page.getByRole('button', { name: /Suggerimento 1/ }).click();
     await expect(page.getByText(`Indizio 1: ${exercise.hints[0]}`, { exact: true })).toBeVisible();
@@ -102,6 +108,37 @@ for (const exercise of topic.exercises) {
       timeout: 30000,
     });
     await expect(page.getByTestId('cpp-test-result')).toHaveCount(3);
+    await expect(
+      page.getByRole('heading', { name: 'Esercizio superato', exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('navigation', { name: 'Passa a un altro esercizio' }),
+    ).toContainText(`Esercizio ${exerciseIndex + 1} di 3`);
+    const nextExercise = topic.exercises[exerciseIndex + 1];
+    const nextAction = page.getByRole('link', { name: 'Passa al prossimo esercizio', exact: true });
+    if (nextExercise) {
+      await expect(nextAction).toHaveAttribute(
+        'href',
+        `/cpp/playground/${topic.manifest.id}/${nextExercise.id}`,
+      );
+    } else {
+      await expect(nextAction).toHaveCount(0);
+      await expect(
+        page.getByText('Questo è l’ultimo esercizio dell’elenco.', { exact: false }),
+      ).toBeVisible();
+    }
+    await editor.fill(exercise.solution + '\n// modifica dopo la verifica');
+    await expect(
+      page.getByRole('heading', { name: 'Codice modificato: verifica di nuovo', exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: 'Esercizio superato', exact: true }),
+    ).toHaveCount(0);
+    await expect(nextAction).toHaveCount(0);
+    await editor.fill(exercise.solution);
+    await expect(
+      page.getByRole('heading', { name: 'Esercizio superato', exact: true }),
+    ).toBeVisible();
     await page.setViewportSize({ width: 768, height: 1024 });
     expect(
       await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
@@ -110,5 +147,24 @@ for (const exercise of topic.exercises) {
     expect(
       await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
     ).toBeTruthy();
+    await page
+      .locator('.cpp-verification-result')
+      .screenshot({ path: testInfo.outputPath('exercise-result-mobile.png') });
+    if (nextExercise) {
+      await nextAction.click();
+      await expect(page).toHaveURL(
+        new RegExp(`/cpp/playground/${topic.manifest.id}/${nextExercise.id}$`),
+      );
+      await expect(
+        page.getByRole('heading', { name: nextExercise.title, exact: true }),
+      ).toBeVisible();
+      await expect(page.locator('.cm-content')).toContainText('TODO');
+    } else {
+      await page.getByRole('link', { name: 'Scegli un altro esercizio', exact: true }).click();
+      await expect(page).toHaveURL(/\/cpp\/esercitazioni$/);
+      await expect(
+        page.getByRole('heading', { name: 'Esercitazioni C++', exact: true }),
+      ).toBeVisible();
+    }
   });
 }
