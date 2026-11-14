@@ -1,0 +1,20 @@
+[
+  {
+    "id": "permutazione",
+    "component": "algoritmi-shuffle",
+    "title": "Permuta scegliendo nel suffisso",
+    "description": "Modifica il seme e segui gli elementi fissati."
+  },
+  {
+    "id": "partition",
+    "component": "algoritmi-partition",
+    "title": "Il pivot e le regioni di Partition",
+    "description": "Scambi interpolati, indici i e j e posizione definitiva del pivot."
+  },
+  {
+    "id": "counting",
+    "component": "algoritmi-counting",
+    "title": "Dal conteggio alla posizione in B",
+    "description": "Frequenze, prefissi e collocazione degli elementi nell’output."
+  }
+]
