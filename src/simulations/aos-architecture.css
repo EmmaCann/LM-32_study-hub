@@ -1,0 +1,42 @@
+:root .simulation.aos-theatre.architectural-player{--visual-ink:#e8f1ff;--visual-muted:#9db3ce;--visual-line:#304b68;--visual-bg:#0c182a;--visual-paper:#14283e;--visual-blue:#7ab9f5;--visual-violet:#b899ff;--visual-teal:#63e5b4;--visual-amber:#ffcc76;--visual-red:#ff7f93;--visual-pink:#efa9d3;--visual-cyan:#57d9f8}
+.architectural-player .theatre-layout{grid-template-columns:minmax(0,1fr)}
+.architectural-player .theatre-stage,.architectural-player .theatre-viewport{background:#08111f}
+.architectural-player .theatre-inspector{border-left:0;display:grid;grid-template-columns:1fr 1fr;gap:0 24px;border-top:1px solid var(--line)}
+.architectural-player .theatre-inspector>.eyebrow{grid-column:1/-1}
+.architectural-player .theatre-step-title{grid-column:1;margin-bottom:8px}
+.architectural-player .theatre-description{grid-column:1;font-size:13px;line-height:1.65}
+.architectural-player .theatre-checks{grid-column:2;grid-row:2/4;margin:0;border:0;border-left:1px solid var(--line);padding:12px 20px}
+.architectural-player .theatre-caption{background:#0e1c30;border-color:#243b55;color:#9db3ce}
+.architectural-player .theatre-caption button{background:#16283f;border-color:#2a425e;color:#b5cee8}
+.architectural-player .scene-node>rect:first-child{fill:transparent;stroke:none}
+.architectural-player .architecture-surface{stroke:currentColor;stroke-width:1.2;stroke-opacity:.6;filter:drop-shadow(0 7px 6px #030b1766)}
+.architectural-player .architecture-edge{fill:none;stroke:currentColor;stroke-width:1;opacity:.18}
+.architectural-player .architecture-facet{fill:currentColor;fill-opacity:.09;stroke:currentColor;stroke-opacity:.45}
+.architectural-player .architecture-pins{fill:none;stroke:currentColor;stroke-width:2;stroke-opacity:.6}
+.architectural-player .shape-chip .node-accent{opacity:0}
+.architectural-player .node-lit .architecture-surface{stroke-opacity:1;stroke-width:2;filter:drop-shadow(0 0 6px #57d9f828)}
+.architectural-player .scene-node .scene-title{font-size:16px;letter-spacing:-.15px}
+.architectural-player .scene-node .scene-small{font-size:13px}
+.architectural-player .domain-host,.architectural-player .domain-guest,.architectural-player .domain-user{fill-opacity:.7;stroke-dasharray:7 4}
+.architectural-player .scene-wire path{stroke-width:2.2}
+.architectural-player .scene-wire.wire-lit path{stroke-width:3;filter:drop-shadow(0 0 3px #57d9f83b)}
+.architectural-player .moving-token rect{fill:color-mix(in srgb,currentColor 22%,#0b182b);stroke:currentColor;stroke-width:1.5;filter:drop-shadow(0 4px 5px #030b1770)}
+.architectural-player .moving-token text{fill:#e8f1ff;font-family:ui-monospace,monospace}
+.architectural-player .translation-block rect,.architectural-player .bit-field rect{filter:drop-shadow(0 4px 5px #020a1566)}
+.architectural-player .ram-chip>rect{filter:drop-shadow(5px 7px 0 #102438);stroke:#57d9f8}
+.architectural-player .ring-cell,.architectural-player .ram-cell,.architectural-player .buffer-cell,.architectural-player .register-cell{fill:#112339;stroke:#3b5b7d}
+.architectural-player .timer-dial .dial-face{fill:#102138;stroke:#5da6ce}
+.architectural-player .sampling-gap{fill:#593c25;opacity:.42}
+.architectural-player .aos-scene .exp-title,.architectural-player .aos-scene .exp-label{fill:#e8f1ff}
+.architectural-player .aos-scene .exp-small{fill:#a9bfd8}
+.architectural-player .aos-scene .exp-mono{fill:#e8f1ff}
+.architectural-player .aos-scene .exp-console{fill:#f2f6ff}
+.architectural-player .container-surface{filter:drop-shadow(0 5px 5px #030b1750)}
+@media(max-width:600px){.architectural-player .theatre-viewport svg.aos-scene{min-width:680px}.architectural-player .theatre-inspector{display:block}.architectural-player .theatre-checks{border:0;padding:12px 0}}
+
+.architectural-player .theatre-viewport svg.aos-scene{width:calc(max(100%,680px) * var(--scene-zoom,1));min-width:680px}
+.architectural-player .architecture-token-pins{fill:none;stroke:currentColor;stroke-width:1.5}
+
+.architectural-player .scene-node.node-lit>rect:first-child{fill:transparent;stroke:none}
+.architectural-player [stroke="#268c85"],.architectural-player [stroke="#328d83"]{stroke:var(--visual-teal)}
+.architectural-player [fill="#268c85"],.architectural-player [fill="#328d83"]{fill:var(--visual-teal)}

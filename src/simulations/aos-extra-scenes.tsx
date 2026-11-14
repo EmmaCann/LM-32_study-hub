@@ -41,15 +41,15 @@ export function TimerScene({mips,period,playing,step}:{mips:number;period:number
 
 export function InterruptScene({frame,step,masked,playing}:{frame:Frame;step:number;masked:boolean;playing:boolean}){
  const enabled=Number(frame.values['Guest pronto ad accettarlo'])===1,delivered=step>=(masked?5:3),eoi=frame.title.startsWith('EOI');
- const point=delivered?[752,373]:step===0?[116,176]:step===1?[350,176]:step===2?[595,176]:[683,230];
+ const point=delivered?[752,409]:step===0?[116,176]:step===1?[350,176]:step===2?[595,176]:[683,230];
  return <Scene title="Il pacchetto attraversa controller fisico, host e controller virtuale prima dell’handler guest" playing={playing}>
   <rect x="24" y="44" width="850" height="186" rx="19" className="domain-host"/><text x="42" y="71" className="scene-kicker">HARDWARE E HOST</text>
-  <NodeBox x={40} y={91} w={180} title="NIC fisica" sub="Genera l’evento" tone="amber" active={step===0}/>
+  <NodeBox shape="chip" x={40} y={91} w={180} title="NIC fisica" sub="Genera l’evento" tone="amber" active={step===0}/>
   <NodeBox x={270} y={91} w={182} title="Driver host" sub="Gestisce la periferica" tone="teal" active={step===1}/>
   <NodeBox x={518} y={91} w={328} title="Controller virtuale nel VMM" sub="Pendenze, priorità e maschere" tone="violet" active={frame.active===2}/>
   <Wire d="M220 132 H267" active={step>=1} tone="amber"/><Wire d="M452 132 H515" active={step>=2} tone="teal"/>
   <rect x="480" y="301" width="394" height="149" rx="19" className="domain-guest"/><text x="500" y="326" className="scene-kicker">DENTRO LA VM</text>
-  <NodeBox x={626} y={347} w={228} h={84} title="Handler del guest" sub={delivered?'Interrupt consegnato':'In attesa della consegna'} tone="violet" active={delivered}/>
+  <NodeBox x={626} y={347} w={228} h={84} title="Handler del guest" sub={delivered?undefined:'In attesa della consegna'} tone="violet" active={delivered}/>
   <Wire d="M683 178 V343" active={enabled&&step>=2} tone="violet" label="VM entry / iniezione quando accettabile" x={150} y={269}/>
   <g className={`interrupt-gate ${enabled?'gate-open':'gate-closed'}`} style={{transformOrigin:'683px 270px',transform:`rotate(${enabled?90:0}deg)`}}><rect x="618" y="263" width="130" height="14" rx="5"/></g>
   <MovingToken x={point[0]} y={point[1]} label="evento IRQ" tone={delivered?'violet':enabled?'teal':'amber'}/>
@@ -71,10 +71,10 @@ export function AddressScene({mode,valid,step,playing}:{mode:AddressMode;valid:b
   <NodeBox x={288} y={126} w={262} h={76} title="Page table guest + EPT" sub="GVA → GPA 0x2000 → HPA" active={cpu&&step===1} tone="violet"/>
   <Wire d="M214 163 H286" active={cpu} tone="violet"/><Wire d="M549 163 H638 L691 231" active={cpu&&step===2} tone="violet"/>
   <rect x="24" y="260" width="572" height="159" rx="18" className="domain-host"/><text x="43" y="288" className="scene-kicker">RICHIESTE DEL DISPOSITIVO</text>
-  <NodeBox x={41} y={309} w={173} h={76} title="Periferica DMA" sub="IOVA 0x5000" active={!cpu&&step===0} tone="teal"/>
-  <NodeBox x={288} y={309} w={262} h={76} title="IOMMU / dominio" sub={blocked?'Mapping o permessi non validi':'Traduzione e permessi DMA'} active={!cpu&&step===1} tone={blocked?'red':'teal'}/>
+  <NodeBox shape="chip" x={41} y={309} w={173} h={76} title="Periferica DMA" sub="IOVA 0x5000" active={!cpu&&step===0} tone="teal"/>
+  <NodeBox shape="chip" x={288} y={309} w={262} h={76} title="IOMMU / dominio" sub={blocked?'Mapping o permessi non validi':'Traduzione e permessi DMA'} active={!cpu&&step===1} tone={blocked?'red':'teal'}/>
   <Wire d="M214 347 H286" active={!cpu} tone="teal"/><Wire d="M549 347 H638 L691 279" active={!cpu&&step===2&&!blocked} tone={blocked?'red':'teal'}/>
-  <g className="ram-chip"><rect x="665" y="126" width="202" height="269" rx="18"/><text x="766" y="161" textAnchor="middle" className="scene-title">RAM fisica host</text>{Array.from({length:6},(_,i)=><g key={i}><rect x="687" y={180+i*31} width="159" height="24" rx="4" className={i===2&&step===2&&!blocked?'ram-selected':'ram-cell'}/>{i===2&&<text x="766" y={197+i*31} textAnchor="middle" className="scene-small">HPA 0x9000</text>}</g>)}</g>
+  <g className="ram-chip"><rect x="665" y="126" width="202" height="269" rx="18"/><text x="766" y="161" textAnchor="middle" className="scene-title">RAM fisica host</text>{Array.from({length:6},(_,i)=><g key={i}><rect x="687" y={180+i*31} width="159" height="24" rx="4" className={i===2&&step===2&&!blocked?'ram-selected':'ram-cell'}/>{i===2&&!(step===2&&!blocked)&&<text x="766" y={197+i*31} textAnchor="middle" className="scene-small">HPA 0x9000</text>}</g>)}</g>
   <MovingToken x={x} y={step===2&&!blocked?254:y+55} label={step===2?blocked?'FAULT':'0x9000':step===1?cpu?'GPA 0x2000':'IOVA 0x5000':cpu?'GVA 0x1000':'IOVA 0x5000'} tone={blocked&&step===2?'red':cpu?'violet':'teal'}/>
   {blocked&&step===2&&<g className="fault-barrier"><path d="M583 295 V393"/><text x="585" y="287" textAnchor="middle" className="scene-title">BLOCCO</text></g>}
   {playing&&step===2&&!blocked&&<Signal path={cpu?'M549 163 H638 L691 231':'M549 347 H638 L691 279'} tone={cpu?'violet':'teal'}/>}

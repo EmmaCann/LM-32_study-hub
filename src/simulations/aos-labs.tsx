@@ -35,5 +35,5 @@ export function AosLab({id,title,component}:{id:string;title:string;component:Ao
  {component==='aos-virtqueue'&&<label>Richieste per gruppo<select aria-label="Richieste per gruppo" value={batch} onChange={e=>choose(()=>setBatch(Number(e.target.value)))}>{[1,2,4,8].map(i=><option key={i}>{i}</option>)}</select></label>}
  {component==='aos-kvm-run'&&<label>Seconda exit<select aria-label="Seconda exit" value={userExit?'user':'kernel'} onChange={e=>choose(()=>setUserExit(e.target.value==='user'))}><option value="user">I/O nel VMM userspace</option><option value="kernel">Gestita internamente da KVM</option></select></label>}
  </>;
- return <VisualPlayer id={id} title={title} frame={frame} step={step} count={frames.length} onStep={setStep} transport={transport} options={options} scene={scene} checks={checks} legend={legend}/>;
+ return <VisualPlayer design="architecture" id={id} title={title} frame={frame} step={step} count={frames.length} onStep={setStep} transport={transport} options={options} scene={scene} checks={checks} legend={legend}/>;
 }

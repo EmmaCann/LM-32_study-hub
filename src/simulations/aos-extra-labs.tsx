@@ -26,5 +26,5 @@ export function AosExtraLab({id,title,component}:{id:string;title:string;compone
  {component==='aos-addresses'&&<label>Percorso<select aria-label="Percorso indirizzi" value={mode} onChange={e=>change(()=>setMode(e.target.value as AddressMode))}><option value="cpu">CPU: GVA → GPA → HPA</option><option value="dma">DMA: IOVA → IOMMU → HPA</option></select></label>}
  {(component==='aos-memory-slot'||component==='aos-addresses'&&mode==='dma')&&<label>Richiesta<select aria-label="Richiesta" value={valid?'valid':'invalid'} onChange={e=>change(()=>setValid(e.target.value==='valid'))}><option value="valid">Consentita</option><option value="invalid">Fuori intervallo / non autorizzata</option></select></label>}
  </>;
- return <VisualPlayer id={id} title={title} frame={frame} step={step} count={frames.length} onStep={onStep} transport={transport} options={options} scene={scene} checks={checks} legend={legend}/>;
+ return <VisualPlayer design="architecture" id={id} title={title} frame={frame} step={step} count={frames.length} onStep={onStep} transport={transport} options={options} scene={scene} checks={checks} legend={legend}/>;
 }

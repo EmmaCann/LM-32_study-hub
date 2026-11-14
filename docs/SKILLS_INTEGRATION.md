@@ -177,6 +177,15 @@ le altre materie alla pubblicazione pubblica senza Authentication, come AOS.
 Le fonti e i PDF restano locali; pubblicazione via push su main e verifica del deploy Git.
 
 
+## Profilo grafico AOS approvato — 14 novembre 2026
+
+Solo per AOS: `VisualPlayer design="architecture"` attiva la scena tecnica ampia,
+la palette blu notte e i materiali vettoriali di `aos-architecture.css`.
+`NodeBox shape="module|chip|memory"` distingue componenti software, chip e memoria.
+Il default del player resta `classic`; Algoritmi e C++ conservano il loro stile.
+Il riferimento per nuove scene AOS è `aos-memory-scenes.tsx`, approvato nella
+lezione 7. Riutilizzare i modelli e preservare geometria didattica, URL e PDF.
+
 ## Laboratorio AOS 8
 
 `aos-container` riusa il player comune con quattro scene: identita PID/UTS, cambio del root mount, veth con scenari UP/DOWN/rotta assente, capability P/E/B. Modelli in `aos-container-model.ts`; `execCaps` descrive il caso ordinario non-root, non tutte le regole Linux. Il solo DROP Bounding non revoca E/P. Nessun comando delle fonti viene eseguito dal laboratorio.

@@ -37,7 +37,7 @@ export function CpuScene({frame,step,n,mode,playing}:{frame:Frame;step:number;n:
   <NodeBox x={322} y={80} w={225} h={84} title={interpreted?'Fetch + Decode':'Frontend → IR → host'} sub={interpreted?'Decodifica a ogni passaggio':miss?'MISS: costruisci un blocco':'Traduzioni riutilizzabili'} active={interpreted||miss} tone="blue"/>
   <g className="alu-shape"><path d="M372 206 H499 L476 272 H395Z"/><text x="437" y="236" textAnchor="middle" className="scene-title">ALU</text><text x="437" y="257" textAnchor="middle" className="scene-small">{line===1?'x1 + x2':line===2?'x2 − 1':line===3?'x2 ≠ 0 ?':'esecuzione'}</text></g>
   <Wire d="M276 125 H319" active={interpreted||miss}/><Wire d="M437 164 V201" active={interpreted||miss}/>
-  <NodeBox x={635} y={65} w={235} h={240} title="Registri guest" sub="Stato della CPU emulata" tone="violet"/>
+  <NodeBox shape="memory" x={635} y={65} w={235} h={240} title="Registri guest" sub="Stato della CPU emulata" tone="violet"/>
   {[0,1,2].map((r,i)=><g key={r}><rect x="658" y={142+i*46} width="189" height="36" rx="7" className={`register-cell ${r===1&&line===1||r===2&&line===2?'register-active':''}`}/><text x="672" y={166+i*46} className="scene-code">x{r}</text><text key={`${r}-${frame.values['x'+r]}`} x="824" y={166+i*46} textAnchor="end" className="scene-code register-value">{frame.values['x'+r]}</text></g>)}
   <Wire d="M633 205 H525 L498 225" active={line===1||line===2} tone="violet" label="operandi" x={542} y={191}/><Wire d="M490 256 H580 V279 H632" active={line!==3} tone="teal"/>
   {playing&&<>{(interpreted||miss)&&<Signal path="M276 125 H437 V205" tone="blue"/>}<Signal path="M635 205 H525 L450 230 L490 256 H580 V279 H635" tone="violet" delay=".45s"/></>}
@@ -83,7 +83,7 @@ export function KvmScene({frame,step,playing}:{frame:Frame;step:number;playing:b
  const kernel=frame.active===1,guest=frame.active===2,user=frame.active===0;
  return <Scene title="Architettura KVM: il controllo percorre il ciclo interno o raggiunge userspace" playing={playing}>
   <rect x="230" y="40" width="610" height="112" rx="18" className="domain-guest"/><text x="250" y="65" className="scene-kicker">GUEST · NON-ROOT</text>
-  <NodeBox x={280} y={76} w={330} h={61} title="CPU virtuale in esecuzione" tone="violet" active={guest}/>
+  <NodeBox shape="chip" x={280} y={76} w={330} h={61} title="CPU virtuale in esecuzione" tone="violet" active={guest}/>
   <rect x="230" y="183" width="610" height="119" rx="18" className="domain-host"/><text x="250" y="207" className="scene-kicker">HOST · KERNEL SPACE</text>
   <NodeBox x={280} y={219} w={330} h={64} title="KVM: decidi come gestire la exit" tone="teal" active={kernel}/>
   <rect x="230" y="342" width="610" height="118" rx="18" className="domain-user"/><text x="250" y="367" className="scene-kicker">HOST · USER SPACE</text>
