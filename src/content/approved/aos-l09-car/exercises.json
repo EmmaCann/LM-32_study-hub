@@ -1,0 +1,35 @@
+[
+  {
+    "id": "ordine-car",
+    "type": "multiple-choice",
+    "title": "Quale dipendenza correggi?",
+    "prompt": "Il figlio cambia radice prima di aprire /run/netns/brake. Quale modifica risolve questa dipendenza?",
+    "options": [
+      "Aprire il riferimento e completare setns prima del cambio di radice",
+      "Cambiare cpu.max",
+      "Cambiare il nome del bridge"
+    ],
+    "answer": "Aprire il riferimento e completare setns prima del cambio di radice",
+    "hints": [
+      "Il percorso appartiene all?ambiente host."
+    ],
+    "solution": "Completa open e setns prima di pivot_root, controllando gli errori.",
+    "explanation": "Il cambio di radice nasconde il percorso host. Un namespace di rete gia configurato non basta se il processo non vi entra."
+  },
+  {
+    "id": "quota-car",
+    "type": "multiple-choice",
+    "title": "Quota e deadline",
+    "prompt": "cpu.max dell?infotainment vale 2000 10000. Questo garantisce la deadline del freno?",
+    "options": [
+      "No: limita un gruppo ma non riserva automaticamente tempo a brake",
+      "Si: il freno riceve sempre gli altri 8 ms"
+    ],
+    "answer": "No: limita un gruppo ma non riserva automaticamente tempo a brake",
+    "hints": [
+      "Considera altri task, core e ritardi."
+    ],
+    "solution": "La quota limita l?infotainment; la deadline di brake richiede un?analisi separata.",
+    "explanation": "Nel laboratorio temporale varia quota e attesa separatamente: i valori della risposta sono ipotesi, non misure."
+  }
+]

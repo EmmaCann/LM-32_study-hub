@@ -1,4 +1,5 @@
 'use client';
+import { AosCarLab } from './aos-car-lab';
 import { AosContainerLab } from './aos-container-lab';
 import { AosMemoryLab } from './aos-memory-lab';
 import { useEffect, useState } from 'react';
@@ -125,6 +126,7 @@ function AvlDiagram({ step }: { step: number }) {
 // Components must be reviewed and registered in application code, never loaded from content.
 export const registry = { 'vm-exit': VmDiagram, 'avl-rotation': AvlDiagram };
 export function SimulationPlayer({ simulation: s }: { simulation: Simulation }) {
+  if(s.component === 'aos-car') return <AosCarLab id={s.id} title={s.title}/>;
   if(s.component === 'aos-container') return <AosContainerLab id={s.id} title={s.title}/>;
   if(s.component === 'aos-memory') return <AosMemoryLab id={s.id} title={s.title}/>;
   if (s.component === 'algoritmi-insertion' || s.component === 'algoritmi-merge') {

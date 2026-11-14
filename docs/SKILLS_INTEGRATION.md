@@ -1,5 +1,17 @@
 # Contratto di integrazione per le future skill — schema 1
 
+## Playground AOS e laboratorio car
+
+`/aos/playground` raccoglie i laboratori AOS registrati, senza usare la toolchain C++
+per syscall Linux non supportate. Il componente `aos-car` della lezione 9 offre
+quattro esperimenti originali in `aos-car-model.ts` e `aos-car-lab.tsx`: rete e
+filtro della sorgente, sostituzione del percorso radar, budget/tempo di risposta,
+dipendenze nella costruzione del container. Sono modelli deterministici, non
+esecuzioni native di clone/mount/cgroup, e non certificano la sicurezza della
+soluzione car fornita (priva di riduzione delle capabilities).
+Route della lezione: `/aos/lezione-09/car-container#car`. Gli esercizi associati
+usano lo schema comune; non pubblicare gli originali car o dati di accesso.
+
 Estensione compatibile C++: il formato base resta schema 1. I pacchetti AOS e Algoritmi continuano a usare manifest, simulazioni ed esercizi precedenti. Per il nuovo tipo `cpp` si aggiunge una specifica strutturata e, dopo verifica tecnica, `cpp-verification.json`.
 
 **Per le skill C++ è obbligatorio seguire [CPP_SKILLS_CONTRACT.md](CPP_SKILLS_CONTRACT.md)**: descrive esercizi, file iniziali/supporto, test pubblici e aggiuntivi, suggerimenti, soluzioni, download e ricevuta tecnica. [CPP_PLAYGROUND.md](CPP_PLAYGROUND.md) documenta toolchain e limiti. La pubblicazione resta pubblica senza autenticazione; i PDF completi restano locali.
