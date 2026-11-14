@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "cpp-l01-tipi-memoria",
+  "subject": "cpp",
+  "chapter": {
+    "id": "fondamenti",
+    "title": "Fondamenti e ownership",
+    "order": 1
+  },
+  "slug": "tipi-memoria",
+  "title": "Lezione 1: alias e matrici",
+  "description": "Due esercizi originali con compilazione C++ reale nel browser.",
+  "order": 2,
+  "demo": false,
+  "updated": "2026-11-14",
+  "revision": 2,
+  "review": {
+    "status": "approved",
+    "reviewer": "Codex - revisione didattica, originalita e riservatezza; pubblicazione autorizzata dalla proprietaria",
+    "sources": []
+  },
+  "assets": []
+}

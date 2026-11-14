@@ -1,0 +1,118 @@
+[
+  {
+    "id": "modifica-alias",
+    "type": "cpp",
+    "title": "Modifica tramite alias",
+    "prompt": "Completa aumenta: modifica x aggiungendo delta. Input: x e delta interi fra -1000 e 1000; stampa il nuovo x. Il main è già fornito.",
+    "hints": [
+      "Il parametro deve essere un alias del chiamante.",
+      "Usa int& per il primo parametro; modifica il valore con +=."
+    ],
+    "solution": "#include <iostream>\n\nvoid aumenta(int& valore, int delta) {\n    // Il riferimento e un alias dell'intero del chiamante.\n    valore += delta;\n}\n\nint main() {\n    int valore{}, delta{};\n    if (!(std::cin >> valore >> delta)) return 0;\n    aumenta(valore, delta);\n    std::cout << valore << '\\n';\n}\n",
+    "explanation": "Il riferimento lega il parametro allo stesso int del chiamante. I casi verificano valori positivi, negativi e zero.",
+    "cpp": {
+      "difficulty": "base",
+      "tags": [
+        "reference",
+        "parametri"
+      ],
+      "standard": "c++20",
+      "starterCode": "#include <iostream>\n\nvoid aumenta(int valore, int delta) {\n    // TODO: modifica il parametro e il corpo per agire sul chiamante.\n    (void)valore;\n    (void)delta;\n}\n\nint main() {\n    int valore{}, delta{};\n    if (!(std::cin >> valore >> delta)) return 0;\n    aumenta(valore, delta);\n    std::cout << valore << '\\n';\n}\n",
+      "files": [],
+      "tests": [
+        {
+          "id": "caso-1",
+          "title": "Caso 1",
+          "visibility": "public",
+          "stdin": "10 3\n",
+          "stdout": "13\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-2",
+          "title": "Caso 2",
+          "visibility": "additional",
+          "stdin": "-8 5\n",
+          "stdout": "-3\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-3",
+          "title": "Caso 3",
+          "visibility": "additional",
+          "stdin": "0 0\n",
+          "stdout": "0\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        }
+      ],
+      "referenceLesson": {
+        "title": "C++ - Lezione 1: tipi, memoria e funzioni"
+      },
+      "execution": "browser"
+    }
+  },
+  {
+    "id": "lettura-row-major",
+    "type": "cpp",
+    "title": "Leggere una matrice rettangolare",
+    "prompt": "Completa leggi: restituisci per valore la cella (r,c) di un buffer row-major. Input: R C, R*C valori e r c. Vincoli: 1<=R,C<=3, R*C<=12, indici validi. Il main è fornito. Non introdurre classi.",
+    "hints": [
+      "Ogni riga occupa cols elementi.",
+      "Salta r righe, poi avanza di c elementi."
+    ],
+    "solution": "#include <iostream>\n#include <cstddef>\n\nint leggi(const int* dati, std::size_t colonne,\n          std::size_t r, std::size_t c) {\n    // Salta r righe complete, poi avanza di c elementi.\n    return dati[r * colonne + c];\n}\n\nint main() {\n    std::size_t righe{}, colonne{}, r{}, c{};\n    int dati[12]{};\n    if (!(std::cin >> righe >> colonne)) return 0;\n    // L'input rispetta i vincoli dichiarati nella consegna.\n    for (std::size_t i = 0; i < righe * colonne; ++i) {\n        std::cin >> dati[i];\n    }\n    std::cin >> r >> c;\n    std::cout << leggi(dati, colonne, r, c) << '\\n';\n}\n",
+    "explanation": "L’indice è r*cols+c. Le dimensioni rettangolari distinguono il passo di riga dal numero di righe.",
+    "cpp": {
+      "difficulty": "base",
+      "tags": [
+        "array",
+        "matrici"
+      ],
+      "standard": "c++20",
+      "starterCode": "#include <iostream>\n#include <cstddef>\n\nint leggi(const int* dati, std::size_t colonne,\n          std::size_t r, std::size_t c) {\n    // TODO: restituisci la cella richiesta senza modificare i dati.\n    (void)dati;\n    (void)colonne;\n    (void)r;\n    (void)c;\n    return 0;\n}\n\nint main() {\n    std::size_t righe{}, colonne{}, r{}, c{};\n    int dati[12]{};\n    if (!(std::cin >> righe >> colonne)) return 0;\n    // L'input rispetta i vincoli dichiarati nella consegna.\n    for (std::size_t i = 0; i < righe * colonne; ++i) {\n        std::cin >> dati[i];\n    }\n    std::cin >> r >> c;\n    std::cout << leggi(dati, colonne, r, c) << '\\n';\n}\n",
+      "files": [],
+      "tests": [
+        {
+          "id": "caso-1",
+          "title": "Caso 1",
+          "visibility": "public",
+          "stdin": "2 3\n1 2 3 4 5 6\n1 0\n",
+          "stdout": "4\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-2",
+          "title": "Caso 2",
+          "visibility": "additional",
+          "stdin": "3 2\n8 9 10 11 12 13\n2 1\n",
+          "stdout": "13\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-3",
+          "title": "Caso 3",
+          "visibility": "additional",
+          "stdin": "1 3\n-4 0 7\n0 2\n",
+          "stdout": "7\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        }
+      ],
+      "referenceLesson": {
+        "title": "C++ - Lezione 1: tipi, memoria e funzioni"
+      },
+      "execution": "browser"
+    }
+  }
+]
