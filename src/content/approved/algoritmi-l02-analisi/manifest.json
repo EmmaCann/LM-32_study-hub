@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "algoritmi-l02-analisi",
+  "subject": "algoritmi",
+  "chapter": { "id": "analisi", "title": "Analisi degli algoritmi", "order": 2 },
+  "slug": "complessita-ricorrenze",
+  "title": "Complessità e ricorrenze: esplora i limiti",
+  "description": "Costanti asintotiche modificabili e alberi ricorsivi che si espandono dal genitore.",
+  "order": 2,
+  "demo": false,
+  "updated": "2026-11-14",
+  "revision": 1,
+  "review": {
+    "status": "approved",
+    "reviewer": "Codex — workflow universitario autorizzato",
+    "sources": [
+      "Lezione del 12 ottobre 2026, parti 1 e 2: complessità e ricorrenze; rielaborazioni didattiche originali."
+    ]
+  },
+  "assets": []
+}

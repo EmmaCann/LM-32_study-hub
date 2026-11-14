@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "algoritmi-l02-heap",
+  "subject": "algoritmi",
+  "chapter": {
+    "id": "ordinamento",
+    "title": "Ordinamento",
+    "order": 1
+  },
+  "slug": "heap-heapsort",
+  "title": "Heap: costruzione, riparazione e ordinamento",
+  "description": "Albero e array sincronizzati: Max-Heapify, Build-Max-Heap e Heapsort.",
+  "order": 2,
+  "demo": false,
+  "updated": "2026-11-14",
+  "revision": 1,
+  "review": {
+    "status": "approved",
+    "reviewer": "Codex - workflow universitario autorizzato",
+    "sources": ["Lezione del 12 ottobre 2026: heap e Heapsort; rielaborazione originale."]
+  },
+  "assets": []
+}

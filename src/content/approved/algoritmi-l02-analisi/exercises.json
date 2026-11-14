@@ -1,0 +1,24 @@
+[
+  {
+    "id": "o-casi",
+    "type": "true-false",
+    "title": "Notazione e casi",
+    "prompt": "Dire f(n) = O(g(n)) significa, per definizione, analizzare il caso peggiore di un algoritmo?",
+    "options": ["Vero", "Falso"],
+    "answer": "Falso",
+    "hints": ["Prima si sceglie la funzione di costo, poi se ne studia la crescita."],
+    "solution": "O esprime una maggiorazione asintotica della funzione scelta.",
+    "explanation": "Si può maggiorare il costo del caso migliore, medio o peggiore. La notazione non decide quale funzione si sta analizzando."
+  },
+  {
+    "id": "livelli",
+    "type": "multiple-choice",
+    "title": "Un livello dell'albero",
+    "prompt": "In T(n)=3T(n/4)+n², qual è il costo non ricorsivo complessivo al livello i, prima dei casi base?",
+    "options": ["n²(3/16)^i", "n²(3/4)^i", "3n²/4^i"],
+    "answer": "n²(3/16)^i",
+    "hints": ["Moltiplica il numero di nodi per il costo di ogni nodo."],
+    "solution": "3^i sottoproblemi, ognuno con costo (n/4^i)².",
+    "explanation": "Il quadrato agisce sul divisore: 3^i n²/16^i = n²(3/16)^i."
+  }
+]

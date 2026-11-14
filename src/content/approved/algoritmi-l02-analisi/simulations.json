@@ -1,0 +1,14 @@
+[
+  {
+    "id": "limiti",
+    "component": "algoritmi-bounds",
+    "title": "Una fascia per il rapporto f/g",
+    "description": "Muovi costanti e soglia e osserva dove la fascia fallisce."
+  },
+  {
+    "id": "ricorrenza",
+    "component": "algoritmi-recurrence",
+    "title": "Come si distribuisce il costo ricorsivo",
+    "description": "Espandi i sottoproblemi e confronta i costi per livello."
+  }
+]

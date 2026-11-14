@@ -35,9 +35,9 @@ export function useSceneClock(playing: boolean) {
 }
 export type VisualCheck = { label: string; ok: boolean; note?: string };
 type Transport = ReturnType<typeof useLabTransport>;
-export function VisualPlayer({id,title,frame,step,count,onStep,transport,options,scene,checks,legend,design='classic'}: {
+export function VisualPlayer({id,title,frame,step,count,onStep,transport,options,scene,checks,legend,design='classic',subjectLabel='AOS / ESPLORAZIONE ANIMATA',detailPanel}: {
   id:string;title:string;frame:Frame;step:number;count:number;onStep:(n:number)=>void;
-  transport:Transport;options:ReactNode;scene:ReactNode;checks:VisualCheck[];legend:string;design?:'classic'|'architecture';
+  transport:Transport;options:ReactNode;scene:ReactNode;checks:VisualCheck[];legend:string;design?:'classic'|'architecture';subjectLabel?:string;detailPanel?:ReactNode;
 }) {
   const [expanded,setExpanded]=useState(false),[zoom,setZoom]=useState(1);
   const root=useRef<HTMLElement>(null);
@@ -54,11 +54,11 @@ export function VisualPlayer({id,title,frame,step,count,onStep,transport,options
     if(e.key==='ArrowRight'){e.preventDefault();move(step+1);}
     if(e.key==='ArrowLeft'){e.preventDefault();move(step-1);}
   }}>
-    <header className="theatre-heading"><div><span className="eyebrow">AOS / ESPLORAZIONE ANIMATA</span><h3>{title}</h3></div><button type="button" className="theatre-expand" onClick={()=>setExpanded(!expanded)} aria-label={expanded?'Riduci scena':'Espandi scena'}>{expanded?<Minimize2 size={17}/>:<Maximize2 size={17}/>}<span>{expanded?'Riduci':'Espandi'}</span></button></header>
+    <header className="theatre-heading"><div><span className="eyebrow">{subjectLabel}</span><h3>{title}</h3></div><button type="button" className="theatre-expand" onClick={()=>setExpanded(!expanded)} aria-label={expanded?'Riduci scena':'Espandi scena'}>{expanded?<Minimize2 size={17}/>:<Maximize2 size={17}/>}<span>{expanded?'Riduci':'Espandi'}</span></button></header>
     <div className="aos-options theatre-options">{options}</div>
     <div className="theatre-layout">
       <div className="theatre-stage"><div className="theatre-viewport" style={{'--scene-zoom':zoom} as CSSProperties}>{scene}</div><div className="theatre-caption"><span>{legend}</span><div className="theatre-zoom"><button type="button" aria-label="Riduci zoom" disabled={zoom<=1} onClick={()=>setZoom(Math.max(1,zoom-.5))}><ZoomOut size={16}/></button><output>{Math.round(zoom*100)}%</output><button type="button" aria-label="Ingrandisci scena" disabled={zoom>=3} onClick={()=>setZoom(Math.min(3,zoom+.5))}><ZoomIn size={16}/></button></div></div></div>
-      <aside className="theatre-inspector"><span className="eyebrow">COSA STA SUCCEDENDO</span><div className="theatre-step-title"><span>{String(step+1).padStart(2,'0')}</span><h4>{frame.title}</h4></div><p className="theatre-description" aria-live="polite">{frame.detail}</p><div className="theatre-checks"><h5>Relazioni da osservare</h5>{checks.map(c=><div key={c.label} className={c.ok?'check-pass':'check-fail'}><b aria-label={c.ok?'Rispettata':'Non rispettata'}>{c.ok?'✓':'×'}</b><div>{c.label}{c.note&&<small>{c.note}</small>}</div></div>)}</div></aside>
+      <aside className="theatre-inspector"><span className="eyebrow">COSA STA SUCCEDENDO</span><div className="theatre-step-title"><span>{String(step+1).padStart(2,'0')}</span><h4>{frame.title}</h4></div><p className="theatre-description" aria-live="polite">{frame.detail}</p><div className="theatre-checks"><h5>Relazioni da osservare</h5>{checks.map(c=><div key={c.label} className={c.ok?'check-pass':'check-fail'}><b aria-label={c.ok?'Rispettata':'Non rispettata'}>{c.ok?'✓':'×'}</b><div>{c.label}{c.note&&<small>{c.note}</small>}</div></div>)}</div>{detailPanel}</aside>
     </div>
     <div className="theatre-controls"><div className="theatre-buttons"><button type="button" aria-label="Indietro" disabled={step===0} onClick={()=>move(step-1)}><ChevronLeft size={18}/><span>Indietro</span></button><button type="button" className="theatre-play" aria-label={transport.playing?'Pausa':'Riproduci animazione'} onClick={transport.toggle}>{transport.playing?<Pause size={17}/>:<Play size={17}/>}<span>{transport.playing?'Pausa':'Riproduci'}</span></button><button type="button" aria-label="Avanti" disabled={step===count-1} onClick={()=>move(step+1)}><span>Avanti</span><ChevronRight size={18}/></button><button type="button" aria-label="Reset" onClick={()=>move(0)}><RotateCcw size={17}/><span>Reset</span></button></div><label className="theatre-speed">Ritmo<select aria-label="Velocità animazione" value={transport.delay} onChange={e=>transport.setDelay(Number(e.target.value))}><option value={3600}>Lento</option><option value={2400}>Normale</option><option value={1300}>Veloce</option></select></label><output className="theatre-progress">{step+1} / {count}</output></div>
     <label className="theatre-timeline"><span>Esplora i passaggi</span><input type="range" aria-label="Passaggio" min={0} max={count-1} value={step} onChange={e=>move(Number(e.target.value))}/></label>

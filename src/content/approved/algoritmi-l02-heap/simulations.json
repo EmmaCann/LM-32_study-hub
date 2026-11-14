@@ -1,0 +1,8 @@
+[
+  {
+    "id": "heap",
+    "component": "algoritmi-heap",
+    "title": "Heap: costruzione, riparazione e ordinamento",
+    "description": "Albero e array sincronizzati: Max-Heapify, Build-Max-Heap e Heapsort."
+  }
+]
