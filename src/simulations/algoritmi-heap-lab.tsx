@@ -120,13 +120,13 @@ export function AlgoritmiHeapLab({ id, title }: { id: string; title: string }) {
           <g key={item.id}>
             <g data-heap-item={item.id} transform={`translate(${x},${y})`}>
               <circle r="23" fill={fill} stroke={stroke} strokeWidth={selected ? 3 : 1.5} />
-              <text y="6" textAnchor="middle" fontSize="20" fill="#203848">
+          <text y="6" textAnchor="middle" fontSize="20" fill="#203848" style={{ fill: '#203848' }}>
                 {item.value}
               </text>
             </g>
             <g data-array-item={item.id} transform={`translate(${65 + 80 * index},500)`}>
               <rect x="-29" y="-20" width="58" height="40" rx="6" fill={fill} stroke={stroke} />
-              <text y="6" textAnchor="middle" fontSize="19" fill="#203848">
+          <text y="6" textAnchor="middle" fontSize="19" fill="#203848" style={{ fill: '#203848' }}>
                 {item.value}
               </text>
             </g>
