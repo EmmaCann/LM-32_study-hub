@@ -16,7 +16,7 @@
   "revision": 1,
   "review": {
     "status": "approved",
-    "reviewer": "Codex: revisione statica di fonti, modello e contenuti originali; rilascio subordinato ai controlli browser e build.",
+    "reviewer": "Codex: fonti e modelli revisionati, test Chromium/WebKit e movimento verificati; autorizzazione persistente della proprietaria.",
     "sources": [
       "Rielaborazione originale della lezione AOS 9 e del laboratorio car; nessuna fonte originale distribuita."
     ]
