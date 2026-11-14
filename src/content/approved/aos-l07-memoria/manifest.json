@@ -9,11 +9,11 @@
   },
   "slug": "laboratori-memoria",
   "title": "Memoria: traduzioni, allocazione e latenza",
-  "description": "Esperimenti confrontabili su ACK e riuso, frammentazione, traduzioni, balloon, KSM e deadline.",
+  "description": "Sei esperimenti visuali: chip e segnali, memoria in prospettiva, percorsi di traduzione, balloon e copie private.",
   "order": 1,
   "demo": false,
   "updated": "2026-11-13",
-  "revision": 2,
+  "revision": 3,
   "review": {
     "status": "approved",
     "reviewer": "Codex: fonti verificate, modello e movimento controllati in Chromium/WebKit; pubblicazione autorizzata dalla proprietaria.",
