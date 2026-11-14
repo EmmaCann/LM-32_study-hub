@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "algoritmi-l03-ordinamenti",
+  "subject": "algoritmi",
+  "chapter": { "id": "ordinamento", "title": "Ordinamento", "order": 1 },
+  "slug": "casualita-partition-counting",
+  "title": "Casualità, Partition e Counting Sort",
+  "description": "Scambi con identità persistenti, regioni del pivot e collocazione nell’output.",
+  "order": 3,
+  "demo": false,
+  "updated": "2026-11-14",
+  "revision": 1,
+  "review": {
+    "status": "approved",
+    "reviewer": "Codex - workflow universitario autorizzato",
+    "sources": [
+      "Lezione 3 di Algoritmi: rielaborazioni originali per esplorare permutazioni, partizionamento e conteggio."
+    ]
+  },
+  "assets": []
+}

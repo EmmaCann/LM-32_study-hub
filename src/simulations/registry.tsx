@@ -9,6 +9,7 @@ import { AosBaremetalLab } from './aos-baremetal-labs';
 import { AosPartitionLab } from './aos-partition-labs';
 import { AlgoritmiSortingLab } from './algoritmi-sorting-lab';
 import { AlgoritmiHeapLab } from './algoritmi-heap-lab';
+import { AlgoritmiLesson3Lab } from './algoritmi-l03-lab';
 import { AlgoritmiBoundsLab, AlgoritmiRecurrenceLab } from './algoritmi-analysis-lab';
 import { ChevronLeft, ChevronRight, Play, Pause, RotateCcw } from 'lucide-react';
 import type { Simulation } from '@/lib/schema';
@@ -133,6 +134,7 @@ export function SimulationPlayer({ simulation: s }: { simulation: Simulation }) 
     return <AlgoritmiSortingLab id={s.id} title={s.title} mode={s.component === 'algoritmi-insertion' ? 'insertion' : 'merge'} />;
   }
   if (s.component === 'algoritmi-heap') return <AlgoritmiHeapLab id={s.id} title={s.title} />;
+  if (s.component === 'algoritmi-partition' || s.component === 'algoritmi-counting' || s.component === 'algoritmi-shuffle') return <AlgoritmiLesson3Lab id={s.id} title={s.title} mode={s.component === 'algoritmi-partition' ? 'partition' : s.component === 'algoritmi-counting' ? 'counting' : 'shuffle'} />;
   if (s.component === 'algoritmi-bounds') return <AlgoritmiBoundsLab id={s.id} title={s.title} />;
   if (s.component === 'algoritmi-recurrence') return <AlgoritmiRecurrenceLab id={s.id} title={s.title} />;
   if (s.component === 'aos-partition' || s.component === 'aos-ivshmem' || s.component === 'aos-ring' || s.component === 'aos-cache-colors') {

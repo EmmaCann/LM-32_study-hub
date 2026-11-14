@@ -1,0 +1,28 @@
+[
+  {
+    "id": "attesa",
+    "type": "true-false",
+    "title": "Costo atteso e caso peggiore",
+    "prompt": "Un costo atteso Θ(n log n) esclude esecuzioni di costo quadratico?",
+    "options": ["Vero", "Falso"],
+    "answer": "Falso",
+    "hints": ["Un’aspettativa è una media pesata."],
+    "solution": "Restano possibili scelte sfavorevoli.",
+    "explanation": "La randomizzazione cambia la distribuzione dei costi, non garantisce lo stesso costo per ogni esecuzione."
+  },
+  {
+    "id": "prefissi",
+    "type": "multiple-choice",
+    "title": "Che cosa conta C?",
+    "prompt": "Dopo le somme prefisse e prima della collocazione, C[v] conta:",
+    "options": [
+      "Gli elementi minori o uguali a v",
+      "Solo gli elementi uguali a v",
+      "Solo gli elementi strettamente minori di v"
+    ],
+    "answer": "Gli elementi minori o uguali a v",
+    "hints": ["Le somme includono anche la frequenza della cella corrente."],
+    "solution": "C[v] include tutti i conteggi da 0 a v.",
+    "explanation": "Questa quantità indica l’ultima posizione riservata al valore v nell’output indicizzato da 1."
+  }
+]
