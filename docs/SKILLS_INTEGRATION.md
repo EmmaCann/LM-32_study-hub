@@ -185,6 +185,9 @@ la palette blu notte e i materiali vettoriali di `aos-architecture.css`.
 Il default del player resta `classic`; Algoritmi e C++ conservano il loro stile.
 Il riferimento per nuove scene AOS è `aos-memory-scenes.tsx`, approvato nella
 lezione 7. Riutilizzare i modelli e preservare geometria didattica, URL e PDF.
+Le primitive comuni sono in `aos-architecture-primitives.tsx`. La lezione 8 usa
+`aos-container-scenes.tsx`: task persistenti e viste PID, volumi e percorsi,
+topologia veth e trasferimenti di privilegi. Il modello dei 19 casi resta separato.
 
 ## Laboratorio AOS 8
 

@@ -1,0 +1,15 @@
+﻿.container-experiments .container-cinematic text{font-family:system-ui,-apple-system,sans-serif;fill:#e8f1ff;pointer-events:none}
+.container-experiments .container-cinematic .mv-title{font-size:23px;font-weight:650;letter-spacing:-.6px}
+.container-experiments .container-cinematic .mv-eyebrow{font:11px ui-monospace,monospace;letter-spacing:2px;fill:#7298bc}
+.container-experiments .container-cinematic .mv-small{font-size:14px;fill:#a3b8d0}
+.container-experiments .container-cinematic .mv-label{font-size:17px;font-weight:650}
+.container-experiments .container-cinematic .mv-tiny{font-size:12px;fill:#9db3ce}
+.container-experiments .container-cinematic .mv-chip-title{font:700 19px ui-monospace,monospace;letter-spacing:1px}
+.container-experiments .container-cinematic .mv-code{font:14px ui-monospace,monospace}
+.container-experiments .container-cinematic .mv-big{font-size:38px;font-weight:650}
+.container-experiments .container-cinematic .mv-result{font-size:16px;font-weight:550}
+.container-experiments .container-cinematic .mv-tag{font:600 11px ui-monospace,monospace;letter-spacing:.3px}
+.container-experiments .container-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;width:100%;margin-bottom:10px}
+.container-experiments .container-tabs button{display:flex;gap:10px;min-width:0;justify-content:flex-start;text-align:left;padding:12px 14px;font-size:11px}
+.container-experiments .container-tabs button[aria-pressed=true]{background:#102b42;color:#86ddf2;border-color:#3f7da1;box-shadow:inset 0 -2px #57d9f8}
+@media(max-width:700px){.container-experiments .container-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.container-experiments .container-tabs button{padding:10px 8px;font-size:10px}}
