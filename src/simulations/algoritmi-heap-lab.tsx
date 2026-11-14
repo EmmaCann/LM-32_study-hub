@@ -81,7 +81,7 @@ export function AlgoritmiHeapLab({ id, title }: { id: string; title: string }) {
         </marker>
       </defs>
       <rect width="900" height="540" fill="#f3f8fa" />
-      <text x="25" y="24" fontSize="15" fill="#365c6b">
+      <text x="25" y="24" fontSize="15" style={{ fill: '#203848' }}>
         Albero: heap attivo · indici da 1 · fase {current.phase}
       </text>
       {Array.from({ length: current.size }, (_, i) => i)
@@ -93,14 +93,14 @@ export function AlgoritmiHeapLab({ id, title }: { id: string; title: string }) {
             <line key={i} x1={p.x} y1={p.y} x2={c.x} y2={c.y} stroke="#a2bbc7" strokeWidth="2" />
           );
         })}
-      <text x="25" y="357" fontSize="14" fill="#365c6b">
+      <text x="25" y="357" fontSize="14" style={{ fill: '#203848' }}>
         Massimi esclusi dall’heap: suffisso ordinato
       </text>
-      <text x="25" y="458" fontSize="14" fill="#365c6b">
+      <text x="25" y="458" fontSize="14" style={{ fill: '#203848' }}>
         Array completo: stessa struttura, seconda vista · heap-size = {current.size}
       </text>
       {Array.from({ length: input.length }, (_, i) => (
-        <text key={i} x={65 + 80 * i} y="475" textAnchor="middle" fontSize="11" fill="#587484">
+        <text key={i} x={65 + 80 * i} y="475" textAnchor="middle" fontSize="11" style={{ fill: '#365c6b' }}>
           {i + 1}
         </text>
       ))}
