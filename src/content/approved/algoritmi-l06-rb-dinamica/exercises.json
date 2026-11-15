@@ -1,0 +1,35 @@
+[
+  {
+    "id": "primo-pezzo",
+    "type": "true-false",
+    "title": "La decisione memorizzata",
+    "prompt": "Memorizzare il primo pezzo in s[j] limita la soluzione a un solo taglio.",
+    "options": [
+      "Vero",
+      "Falso"
+    ],
+    "answer": "Falso",
+    "hints": [
+      "Che cosa succede al residuo j-s[j]?"
+    ],
+    "solution": "Si segue nuovamente s sul residuo, fino a zero. Possono comparire molti pezzi.",
+    "explanation": "Una decisione per stato consente di ricostruire una sequenza di decisioni."
+  },
+  {
+    "id": "rotazioni",
+    "type": "multiple-choice",
+    "title": "Quante rotazioni?",
+    "prompt": "Quante rotazioni può eseguire il fixup di un singolo inserimento RB?",
+    "options": [
+      "Al più due",
+      "Una per ogni livello",
+      "Sempre tre"
+    ],
+    "answer": "Al più due",
+    "hints": [
+      "Quale caso può ripetere il ciclo?"
+    ],
+    "solution": "Il caso 1 può ripetere ricolorazioni; i casi 2 e 3 terminano con al più due rotazioni.",
+    "explanation": "Il limite logaritmico riguarda soprattutto la risalita tramite ricolorazioni."
+  }
+]

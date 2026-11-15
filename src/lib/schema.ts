@@ -139,6 +139,9 @@ export const simulationSchema = z
     component: z.enum([
       'vm-exit',
       'avl-rotation',
+      'algoritmi-rb-insert',
+      'algoritmi-rod',
+      'algoritmi-matrix-intro',
       'aos-memory',
       'aos-container',
       'aos-car',
