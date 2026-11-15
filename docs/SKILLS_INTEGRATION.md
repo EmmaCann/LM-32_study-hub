@@ -1,5 +1,15 @@
 # Contratto di integrazione per le future skill — schema 1
 
+## AOS 10: moduli kernel
+
+`aos-modules` offre tre scene architetturali con dieci scenari deterministici:
+caricamento/init/parametri/rimozione, export e riferimenti provider-consumer,
+RMW ordinaria contro atomica. Il codice è in `aos-modules-model.ts` e
+`aos-modules-lab.tsx`; usa il player e le primitive AOS approvate.
+Route stabile: `/aos/lezione-10/moduli-kernel#moduli`, inclusa nel playground AOS.
+Non compila né carica moduli Linux. I tempi sono illustrativi, la firma è una
+condizione di policy del modello e il lucchetto della RMW non è un mutex nel sorgente.
+
 ## Playground AOS e laboratorio car
 
 `/aos/playground` raccoglie i laboratori AOS registrati, senza usare la toolchain C++

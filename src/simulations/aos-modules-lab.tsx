@@ -9,7 +9,7 @@ function Cartridge({x,y,label,color,sub}:{x:number;y:number;label:string;color:s
 function ModulesScene({mode,scenario,time,a}:{mode:ModuleMode;scenario:string;time:number;a:ModuleFrame}){
  const uid=useId().replaceAll(':',''),step=Math.min(6,Math.floor(time)),t=time-step;
  const probe=(points:readonly(readonly[number,number])[],start:number,end:number,tag:string,color=P.cyan)=><Signal uid={uid} probe='experiment' points={points} t={clamp((time-start)/(end-start))} tag={tag} color={color}/>;
- const lifePos=[[145,220],[400,220],[680,397],[680,397],[680,397],[400,488],[145,488]]as const;
+ const lifePos=[[145,220],[400,220],[680,397],[680,397],[680,397],[400,488],[400,488]]as const;
  const early=scenario==='version'||scenario==='signature';const p=lifePos[step],q=lifePos[Math.min(6,step+1)];
  const x=early&&time>=1?400:scenario==='invalid'&&time>=3?mix(680,145,clamp((time-3)/2)):mix(p[0],q[0],t),y=early&&time>=1?220:scenario==='invalid'&&time>=3?mix(397,488,clamp((time-3)/2)):mix(p[1],q[1],t);
  return <Scene title={moduleModes[mode]} height={620}><defs><linearGradient id={`${uid}-chip`} x2='.3' y2='1'><stop stopColor='#25425f'/><stop offset='1' stopColor='#112138'/></linearGradient><filter id={`${uid}-glow`}><feGaussianBlur stdDeviation='2'/></filter></defs><g className='module-canvas' data-module-scene={mode} data-time={time.toFixed(4)}>
@@ -20,9 +20,9 @@ function ModulesScene({mode,scenario,time,a}:{mode:ModuleMode;scenario:string;ti
   <Wire d='M235 220H480V397H585' color={P.cyan}/><text x={405} y={144} textAnchor='middle' className='mod-label'>LOADER</text><text x={405} y={169} textAnchor='middle' className='mod-tiny'>versione · policy · simboli</text>
   <path d='M480 202V265' stroke={early&&step>=1?P.red:P.green} strokeWidth={6} transform={`rotate(${!early&&time>1?-65:0} 480 265)`}/>
   <path d='M580 357H790V451H580Z' fill='#08121f' stroke={P.violet} strokeDasharray='5 4'/><text x={683} y={477} textAnchor='middle' className='mod-tiny'>{a.live?'LIVE · callback disponibili':a.init?'init completata o rollback':'socket codice kernel'}</text>
-  <g data-experiment-probe transform={`translate(${x} ${y})`}><Cartridge x={0} y={0} label='hello.ko' color={a.error?P.red:P.cyan} sub={a.live?'LIVE':a.error?'rifiutato':step>=5?'rilascio':'in transito'}/></g>
-  <text x={65} y={375} className='mod-label'>Variabili del modulo</text><text x={65} y={408} className='mod-code'>times = {scenario==='invalid'?20:3}</text><text x={65} y={435} className='mod-code'>name = {a.name}</text><text x={65} y={462} className='mod-tiny'>{a.init?'init invocata una volta':'init non ancora invocata'}</text>
-  {scenario==='valid'&&step===4&&probe([[145,435],[400,435],[580,397]],4,5,'sysfs: Bob',P.violet)}
+  <g data-experiment-probe opacity={scenario==='valid'&&time>=5?1-clamp(time-5):1} transform={`translate(${x} ${y})`}><Cartridge x={0} y={0} label='hello.ko' color={a.error?P.red:P.cyan} sub={a.live?'LIVE':a.error?'rifiutato':step>=5?'rilascio':'in transito'}/></g>
+  <text x={65} y={375} className='mod-label'>{step===6?'Ultima configurazione (storico)':'Configurazione / variabili'}</text><text x={65} y={408} className='mod-code'>times = {scenario==='invalid'?20:3}</text><text x={65} y={435} className='mod-code'>name = {a.name}</text><text x={65} y={462} className='mod-tiny'>{a.init?'init invocata una volta':'init non ancora invocata'}</text>
+  {scenario==='valid'&&step===4&&probe([[310,435],[440,435],[580,397]],4,5,'sysfs: Bob',P.violet)}
  </>}
  {mode==='dependency'&&<>
   <path d='M38 145H860V540H38Z' fill='#0c192b' stroke={P.line}/><text x={60} y={170} className='mod-tiny'>KERNEL · SPAZIO DI INDIRIZZAMENTO CONDIVISO</text>
