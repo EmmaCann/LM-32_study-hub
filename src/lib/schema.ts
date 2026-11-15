@@ -107,9 +107,21 @@ export const exerciseSchema = z
     explanation: z.string().default(''),
     download: assetName.optional(),
     cpp: cppSpecSchema.optional(),
+    completion: z.object({
+      language: z.enum(['c', 'sh']),
+      code: z.string().min(1),
+      execution: z.literal('reference-only'),
+      slots: z.array(z.object({id: slug, label: z.string().min(1), answers: z.array(z.string().min(1)).min(1), explanation: z.string().min(1)}).strict()).min(1),
+    }).strict().optional(),
   })
   .strict()
   .superRefine((e, c) => {
+    if (e.completion) {
+      const ids = e.completion.slots.map(s => s.id);
+      const markers = [...e.completion.code.matchAll(/\{\{([a-z][a-z0-9-]*)\}\}/g)].map(m => m[1]);
+      if (e.type !== 'programming' || new Set(ids).size !== ids.length || new Set(markers).size !== ids.length || markers.length !== ids.length || markers.some(id => !ids.includes(id)))
+        c.addIssue({code:'custom',message:'Completamento: tipo programming, identificatori unici e un segnaposto per campo richiesti'});
+    }
     if ((e.type === 'cpp') !== Boolean(e.cpp))
       c.addIssue({
         code: 'custom',

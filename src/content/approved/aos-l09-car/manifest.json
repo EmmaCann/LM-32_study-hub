@@ -13,10 +13,10 @@
   "order": 1,
   "demo": false,
   "updated": "2026-11-15",
-  "revision": 3,
+  "revision": 4,
   "review": {
     "status": "approved",
-    "reviewer": "Codex: fonti e modelli revisionati, test Chromium/WebKit e movimento verificati; autorizzazione persistente della proprietaria.",
+    "reviewer": "Revisione statica dei frammenti car e del completamento guidato. Syscall Linux reference-only: nessuna esecuzione browser certificata.",
     "sources": [
       "Rielaborazione originale della lezione AOS 9 e del laboratorio car; nessuna fonte originale distribuita."
     ]

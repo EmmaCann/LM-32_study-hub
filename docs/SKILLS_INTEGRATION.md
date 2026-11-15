@@ -1,5 +1,17 @@
 # Contratto di integrazione per le future skill — schema 1
 
+## Completamento di codice Linux AOS
+
+Gli esercizi `programming` possono includere `completion`: `language` (`c` o `sh`),
+`execution: reference-only`, `code` con segnaposto `{{id}}`, `slots` con `id`,
+`label`, `answers` (forme ammesse) ed `explanation`. Ogni campo compare una volta.
+Il componente CodeCompletion corregge soltanto i campi per confronto con le forme
+ammesse, ignorando spazi iniziali/finali; non compila, non esegue syscall e non
+valida codice arbitrario. Mostra conteggio, feedback per campo, suggerimenti,
+soluzione nascosta e reset. Non usare il tipo cpp o ricevute C++ per questi esercizi.
+Car contiene sette esercizi rielaborati dai blocchi del supervisor: clone, rete,
+setns, controller cgroup, migrazione/vista, OverlayFS e pivot_root.
+
 ## AOS 11: moduli kernel
 
 `aos-modules` offre tre scene architetturali con dieci scenari deterministici:

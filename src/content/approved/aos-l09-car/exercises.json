@@ -31,5 +31,317 @@
     ],
     "solution": "La quota limita l'infotainment; la deadline di brake richiede un'analisi separata.",
     "explanation": "Nel laboratorio temporale varia quota e attesa separatamente: i valori della risposta sono ipotesi, non misure."
+  },
+  {
+    "id": "car-clone",
+    "type": "programming",
+    "title": "1. start_service: creare il figlio isolato",
+    "prompt": "Completa i flag mantenendo PID, mount, UTS e IPC separati. Rete e cgroup saranno configurati dopo. Il buffer stack e la struttura s sono gia predisposti dal supervisor. Scrivi un solo identificatore per campo.",
+    "hints": [
+      "Il flag dei mount ha il nome storico NEWNS.",
+      "Non aggiungere CLONE_NEWNET: car entra in una rete gia creata."
+    ],
+    "solution": "Questa fase crea il processo container_main, non avvia ancora radar. CLONE_NEWUSER non e presente: non si ottiene una rimappatura dei privilegi.",
+    "explanation": "Questa fase crea il processo container_main, non avvia ancora radar. CLONE_NEWUSER non e presente: non si ottiene una rimappatura dei privilegi.",
+    "completion": {
+      "language": "c",
+      "execution": "reference-only",
+      "code": "prepare_layers(s->name);\nint flags = {{pid}} | {{mount}} | CLONE_NEWUTS | CLONE_NEWIPC | {{signal}};\ns->pid = clone(container_main, stack + sizeof stack, flags, s);\nif (s->pid < 0) { perror(\"clone\"); exit(EXIT_FAILURE); }",
+      "slots": [
+        {
+          "id": "pid",
+          "label": "Namespace PID",
+          "answers": [
+            "CLONE_NEWPID"
+          ],
+          "explanation": "Il figlio e PID 1 nella propria vista; il padre conserva un PID host."
+        },
+        {
+          "id": "mount",
+          "label": "Namespace mount",
+          "answers": [
+            "CLONE_NEWNS"
+          ],
+          "explanation": "Separa la tabella dei mount; la propagazione va gestita dopo."
+        },
+        {
+          "id": "signal",
+          "label": "Segnale al padre",
+          "answers": [
+            "SIGCHLD"
+          ],
+          "explanation": "Permette al supervisor di osservare la terminazione. Non e un namespace."
+        }
+      ]
+    }
+  },
+  {
+    "id": "car-veth",
+    "type": "programming",
+    "title": "2. setup_network: collegare radar al bridge",
+    "prompt": "Ricostruisci i comandi generati da setup_network per radar. Il bridge br-car esiste gia ed e UP. Scrivi soltanto i nomi richiesti; nessuno di questi comandi viene eseguito qui.",
+    "hints": [
+      "Una coppia Ethernet virtuale si crea con type veth."
+    ],
+    "solution": "Nel C questi comandi sono costruiti con snprintf e passati a run_command. ip -n seleziona la rete sulla quale opera il comando; non sposta il supervisor in quella rete.",
+    "explanation": "Nel C questi comandi sono costruiti con snprintf e passati a run_command. ip -n seleziona la rete sulla quale opera il comando; non sposta il supervisor in quella rete.",
+    "completion": {
+      "language": "sh",
+      "execution": "reference-only",
+      "code": "ip netns add radar\nip link add v-radar type {{pair}} peer name eth0 netns radar\nip link set v-radar master {{bridge}} up\nip -n radar addr add 10.0.1.2/24 dev eth0\nip -n radar link set eth0 up\nip -n radar link set {{loop}} up",
+      "slots": [
+        {
+          "id": "pair",
+          "label": "Tipo di coppia",
+          "answers": [
+            "veth"
+          ],
+          "explanation": "Un estremo resta sull host, il peer eth0 entra nel namespace radar."
+        },
+        {
+          "id": "bridge",
+          "label": "Switch virtuale",
+          "answers": [
+            "br-car"
+          ],
+          "explanation": "Il bridge collega gli estremi host delle coppie; non e un firewall."
+        },
+        {
+          "id": "loop",
+          "label": "Interfaccia loopback",
+          "answers": [
+            "lo"
+          ],
+          "explanation": "Va attivata esplicitamente nel nuovo namespace."
+        }
+      ]
+    }
+  },
+  {
+    "id": "car-setns",
+    "type": "programming",
+    "title": "3. container_main: entrare nella rete esistente",
+    "prompt": "Completa nome della syscall, tipo di namespace e rilascio del descrittore. Questo blocco deve precedere pivot_root: /run/netns appartiene alla vista host.",
+    "hints": [
+      "unshare creerebbe una vista nuova: qui serve la rete predisposta da setup_network."
+    ],
+    "solution": "L ordine open, setns, close preserva la rete del servizio e permette di trovare il percorso host. Dopo un cambio di radice quel percorso potrebbe non essere raggiungibile.",
+    "explanation": "L ordine open, setns, close preserva la rete del servizio e permette di trovare il percorso host. Dopo un cambio di radice quel percorso potrebbe non essere raggiungibile.",
+    "completion": {
+      "language": "c",
+      "execution": "reference-only",
+      "code": "snprintf(path, sizeof path, \"/run/netns/%s\", s->name);\nint fd = open(path, O_RDONLY);\nif (fd < 0 || {{join}}(fd, {{net}}) < 0) {\n    perror(\"setns net\"); exit(EXIT_FAILURE);\n}\n{{release}}(fd);",
+      "slots": [
+        {
+          "id": "join",
+          "label": "Ingresso nel namespace",
+          "answers": [
+            "setns"
+          ],
+          "explanation": "Usa il riferimento aperto; non crea un nuovo namespace."
+        },
+        {
+          "id": "net",
+          "label": "Tipo rete",
+          "answers": [
+            "CLONE_NEWNET"
+          ],
+          "explanation": "Controlla che il descrittore identifichi un network namespace."
+        },
+        {
+          "id": "release",
+          "label": "Rilascio descrittore",
+          "answers": [
+            "close"
+          ],
+          "explanation": "L appartenenza resta anche dopo la chiusura del riferimento."
+        }
+      ]
+    }
+  },
+  {
+    "id": "car-controllers",
+    "type": "programming",
+    "title": "4. setup_cgroups: distribuire i controller",
+    "prompt": "Il ramo superiore deve gia rendere disponibili i controller; il nodo interno car non deve ospitare task nei normali rami di dominio. Completa i nomi dei file kernel, senza virgolette.",
+    "hints": [
+      "Non confondere cgroup.controllers con il file da scrivere per abilitare i controller."
+    ],
+    "solution": "write_file e l helper del supervisor. La soluzione originale ha controlli di errore parziali: il completamento corretto non dimostra che una scrittura sia riuscita sulla VM. La quota non garantisce la deadline di brake.",
+    "explanation": "write_file e l helper del supervisor. La soluzione originale ha controlli di errore parziali: il completamento corretto non dimostra che una scrittura sia riuscita sulla VM. La quota non garantisce la deadline di brake.",
+    "completion": {
+      "language": "c",
+      "execution": "reference-only",
+      "code": "mkdir(CG_CAR, 0755);\nwrite_file(CG_CAR \"/{{enable}}\", \"+cpu +memory +pids\");\nsnprintf(path, sizeof path, CG_CAR \"/%s\", s->name);\nmkdir(path, 0755);\nif (s->cpu_max) {\n    snprintf(path, sizeof path, CG_CAR \"/%s/{{cpu}}\", s->name);\n    write_file(path, s->cpu_max);\n}\nif (s->mem_max) {\n    snprintf(path, sizeof path, CG_CAR \"/%s/{{memory}}\", s->name);\n    write_file(path, s->mem_max);\n}",
+      "slots": [
+        {
+          "id": "enable",
+          "label": "File dei controller figli",
+          "answers": [
+            "cgroup.subtree_control"
+          ],
+          "explanation": "Abilita i controller per i discendenti, se disponibili dall antenato."
+        },
+        {
+          "id": "cpu",
+          "label": "File quota CPU",
+          "answers": [
+            "cpu.max"
+          ],
+          "explanation": "2000 10000 significa 2 ms CPU aggregati per periodo di 10 ms."
+        },
+        {
+          "id": "memory",
+          "label": "File limite memoria",
+          "answers": [
+            "memory.max"
+          ],
+          "explanation": "Il nome kernel e memory.max, anche se il campo C si chiama mem_max."
+        }
+      ]
+    }
+  },
+  {
+    "id": "car-membership",
+    "type": "programming",
+    "title": "5. container_main: appartenenza prima della vista",
+    "prompt": "Completa il file di migrazione, il valore che indica il chiamante e la nuova vista cgroup. Il valore viene inserito dentro una stringa: scrivi 0 senza virgolette.",
+    "hints": [
+      "Prima cambia l appartenenza, poi la radice della vista."
+    ],
+    "solution": "unshare non applica cpu.max e non rimuove capabilities. I figli futuri ereditano l appartenenza al cgroup; il namespace cambia come ne vedono i percorsi.",
+    "explanation": "unshare non applica cpu.max e non rimuove capabilities. I figli futuri ereditano l appartenenza al cgroup; il namespace cambia come ne vedono i percorsi.",
+    "completion": {
+      "language": "c",
+      "execution": "reference-only",
+      "code": "snprintf(path, sizeof path, CG_CAR \"/%s/{{members}}\", s->name);\nwrite_file(path, \"{{self}}\");\nif (unshare({{view}}) < 0) {\n    perror(\"unshare new cgroup\"); exit(EXIT_FAILURE);\n}",
+      "slots": [
+        {
+          "id": "members",
+          "label": "File di appartenenza",
+          "answers": [
+            "cgroup.procs"
+          ],
+          "explanation": "Sposta il processo nel gruppo di risorse."
+        },
+        {
+          "id": "self",
+          "label": "Processo chiamante",
+          "answers": [
+            "0"
+          ],
+          "explanation": "Il kernel interpreta 0 come il processo che effettua la scrittura."
+        },
+        {
+          "id": "view",
+          "label": "Namespace cgroup",
+          "answers": [
+            "CLONE_NEWCGROUP"
+          ],
+          "explanation": "La nuova vista prende come radice il cgroup corrente dopo la migrazione."
+        }
+      ]
+    }
+  },
+  {
+    "id": "car-overlay",
+    "type": "programming",
+    "title": "6. container_main: propagazione e OverlayFS",
+    "prompt": "Completa il flag ricorsivo e le opzioni del mount. IMAGE e il lower condiviso; ogni servizio ha upper, work e merged propri. Scrivi identificatori o nomi di opzione, senza virgolette.",
+    "hints": [
+      "CLONE_NEWNS non elimina da solo le relazioni di propagazione condivisa."
+    ],
+    "solution": "L immagine lower e comune; gli upper separati confinano le normali modifiche ai file. Questo non certifica la sicurezza di un container che conserva capabilities eccessive.",
+    "explanation": "L immagine lower e comune; gli upper separati confinano le normali modifiche ai file. Questo non certifica la sicurezza di un container che conserva capabilities eccessive.",
+    "completion": {
+      "language": "c",
+      "execution": "reference-only",
+      "code": "if (mount(NULL, \"/\", NULL, {{recursive}} | MS_PRIVATE, NULL) < 0) {\n    perror(\"make / private\"); exit(EXIT_FAILURE);\n}\nsnprintf(opts, sizeof opts,\n    \"lowerdir=\" IMAGE \",{{upper}}=\" CAR \"/run/%s/upper,{{work}}=\" CAR \"/run/%s/work\",\n    s->name, s->name);\nsnprintf(path, sizeof path, CAR \"/run/%s/merged\", s->name);\nif (mount(\"overlay\", path, \"{{fs}}\", 0, opts) < 0) {\n    perror(\"mount overlay\"); exit(EXIT_FAILURE);\n}",
+      "slots": [
+        {
+          "id": "recursive",
+          "label": "Flag ricorsivo",
+          "answers": [
+            "MS_REC"
+          ],
+          "explanation": "MS_PRIVATE va applicato anche ai mount discendenti ereditati."
+        },
+        {
+          "id": "upper",
+          "label": "Opzione strato scrivibile",
+          "answers": [
+            "upperdir"
+          ],
+          "explanation": "Le modifiche del servizio vanno nel suo upper, non in quello di radar."
+        },
+        {
+          "id": "work",
+          "label": "Opzione area tecnica",
+          "answers": [
+            "workdir"
+          ],
+          "explanation": "Work deve stare sullo stesso file system di upper ed essere inizialmente vuota."
+        },
+        {
+          "id": "fs",
+          "label": "Tipo file system",
+          "answers": [
+            "overlay"
+          ],
+          "explanation": "merged e il target; montare qui non rende ancora merged la radice."
+        }
+      ]
+    }
+  },
+  {
+    "id": "car-pivot",
+    "type": "programming",
+    "title": "7. container_main: cambiare radice e staccare quella vecchia",
+    "prompt": "Completa le chiamate reali e il flag di distacco. path indica merged e il codice della soluzione fornita viene eseguito nel figlio. pivot_root e il wrapper di syscall(SYS_pivot_root, ...) definito dal supervisor.",
+    "hints": [
+      "chdir non cambia da solo il significato dei percorsi assoluti.",
+      "Il nome .oldroot non e una protezione: e la destinazione temporanea del vecchio mount."
+    ],
+    "solution": "Dopo questi passaggi la soluzione monta proc, prepara dev e hostname e infine invoca execv sul servizio. Controlli aggiuntivi su mkdir/rmdir, descrittori e privilegi sono necessari per un runtime robusto; qui si studia il blocco effettivo fornito.",
+    "explanation": "Dopo questi passaggi la soluzione monta proc, prepara dev e hostname e infine invoca execv sul servizio. Controlli aggiuntivi su mkdir/rmdir, descrittori e privilegi sono necessari per un runtime robusto; qui si studia il blocco effettivo fornito.",
+    "completion": {
+      "language": "c",
+      "execution": "reference-only",
+      "code": "if ({{cwd}}(path) < 0) { perror(\"chdir\"); exit(EXIT_FAILURE); }\nmkdir(\".oldroot\", 0700);\nif ({{pivot}}(\".\", \".oldroot\") < 0) {\n    perror(\"pivot_root\"); exit(EXIT_FAILURE);\n}\nif (chdir(\"/\") < 0) { perror(\"chdir\"); exit(EXIT_FAILURE); }\nif ({{detach}}(\"/.oldroot\", {{lazy}}) < 0) {\n    perror(\"umount old root\"); exit(EXIT_FAILURE);\n}\nrmdir(\"/.oldroot\");",
+      "slots": [
+        {
+          "id": "cwd",
+          "label": "Directory di lavoro",
+          "answers": [
+            "chdir"
+          ],
+          "explanation": "Rende merged la directory corrente prima di usare il percorso relativo punto."
+        },
+        {
+          "id": "pivot",
+          "label": "Cambio radice",
+          "answers": [
+            "pivot_root"
+          ],
+          "explanation": "Colloca la vecchia radice sotto .oldroot e rende il mount corrente la nuova radice."
+        },
+        {
+          "id": "detach",
+          "label": "Distacco mount",
+          "answers": [
+            "umount2"
+          ],
+          "explanation": "La vecchia radice deve essere staccata prima di eliminare il punto vuoto."
+        },
+        {
+          "id": "lazy",
+          "label": "Flag lazy unmount",
+          "answers": [
+            "MNT_DETACH"
+          ],
+          "explanation": "Stacca dalla vista; i riferimenti ancora aperti non vengono revocati automaticamente."
+        }
+      ]
+    }
   }
 ]
