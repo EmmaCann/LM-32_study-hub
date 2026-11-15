@@ -1,4 +1,5 @@
 'use client';
+import { AlgoritmiLesson5Lab } from './algoritmi-l05-lab';
 import { AosModulesLab } from './aos-modules-lab';
 import { AosCarLab } from './aos-car-lab';
 import { AosContainerLab } from './aos-container-lab';
@@ -129,6 +130,7 @@ function AvlDiagram({ step }: { step: number }) {
 // Components must be reviewed and registered in application code, never loaded from content.
 export const registry = { 'vm-exit': VmDiagram, 'avl-rotation': AvlDiagram };
 export function SimulationPlayer({ simulation: s }: { simulation: Simulation }) {
+  if(s.component === 'algoritmi-containers' || s.component === 'algoritmi-list' || s.component === 'algoritmi-hash') return <AlgoritmiLesson5Lab id={s.id} title={s.title} mode={s.component === 'algoritmi-containers' ? 'containers' : s.component === 'algoritmi-list' ? 'list' : 'hash'}/>;
   if(s.component === 'aos-modules') return <AosModulesLab id={s.id} title={s.title}/>;
   if(s.component === 'aos-car') return <AosCarLab id={s.id} title={s.title}/>;
   if(s.component === 'aos-container') return <AosContainerLab id={s.id} title={s.title}/>;
