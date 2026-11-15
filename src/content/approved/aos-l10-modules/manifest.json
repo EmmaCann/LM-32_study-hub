@@ -3,9 +3,9 @@
   "id": "aos-l10-modules",
   "subject": "aos",
   "chapter": {
-    "id": "lezione-10",
-    "title": "Lezione 10",
-    "order": 10
+    "id": "lezione-11",
+    "title": "Lezione 11",
+    "order": 11
   },
   "slug": "moduli-kernel",
   "title": "Moduli kernel: caricamento, dipendenze e atomicità",
@@ -13,7 +13,7 @@
   "order": 1,
   "demo": false,
   "updated": "2026-11-15",
-  "revision": 1,
+  "revision": 2,
   "review": {
     "status": "approved",
     "reviewer": "Codex: fonti, modello e contenuti originali revisionati; rilascio subordinato a browser e build.",

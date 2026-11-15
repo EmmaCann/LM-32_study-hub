@@ -1,6 +1,6 @@
 import {test,expect} from '@playwright/test';
 test('Tre architetture, dieci scenari, movimento e controlli',async({page},info)=>{
- const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('/aos/lezione-10/moduli-kernel#moduli');await page.emulateMedia({reducedMotion:'no-preference'});const lab=page.locator('#moduli');
+ const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('/aos/lezione-11/moduli-kernel#moduli');await page.emulateMedia({reducedMotion:'no-preference'});const lab=page.locator('#moduli');
  for(const [label,mode,start]of [['Caricamento e parametri','lifecycle',0],['Dipendenze e riferimenti','dependency',1],['Due CPU, un contatore','atomic',0]]as const){
   await lab.getByRole('button',{name:label,exact:true}).click();await expect(lab.locator('[data-module-scene]')).toHaveAttribute('data-module-scene',mode);await lab.getByLabel('Passaggio',{exact:true}).fill(String(start));await lab.getByRole('button',{name:'Riproduci animazione',exact:true}).click();
   const sample=(duration:number)=>lab.evaluate(async(root,d)=>{const samples=new Set<string>();await new Promise<void>(resolve=>{const begin=performance.now();function tick(t:number){samples.add(root.querySelector('[data-experiment-probe]')?.getAttribute('transform')??'');if(t-begin<d)requestAnimationFrame(tick);else resolve();}requestAnimationFrame(tick);});return samples.size;},duration);
