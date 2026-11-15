@@ -6,7 +6,7 @@
 caricamento/init/parametri/rimozione, export e riferimenti provider-consumer,
 RMW ordinaria contro atomica. Il codice è in `aos-modules-model.ts` e
 `aos-modules-lab.tsx`; usa il player e le primitive AOS approvate.
-Route stabile: `/aos/lezione-11/moduli-kernel#moduli`, inclusa nel playground AOS.
+Route stabile: `/aos/lezione-11/moduli-kernel#moduli`, inclusa in Simulazioni.
 La vecchia route `lezione-10` reindirizza alla lezione 11. Identità del pacchetto
 `aos-l10-modules` conservata per non azzerare i progressi; la numerazione segue l'audio.
 Non compila né carica moduli Linux. I tempi sono illustrativi, la firma è una
@@ -14,8 +14,14 @@ condizione di policy del modello e il lucchetto della RMW non è un mutex nel so
 
 ## Playground AOS e laboratorio car
 
-`/aos/playground` raccoglie i laboratori AOS registrati, senza usare la toolchain C++
-per syscall Linux non supportate. Il componente `aos-car` della lezione 9 offre
+`/aos/playground` è riservato alle esercitazioni di codice (`type: programming`
+nel contratto attuale): mostra i singoli esercizi, mai il catalogo delle lezioni,
+animazioni, modelli guidati o quiz. Se mancano esercizi di codice approvati,
+mostrare uno stato vuoto esplicito. Non promettere esecuzione Linux nel browser
+e non usare la toolchain C++ per syscall Linux non supportate.
+Animazioni e modelli restano nelle lezioni e nel catalogo `/simulazioni`.
+Una scena con parametri modificabili non diventa per questo un esercizio di codice.
+Il componente `aos-car` delle lezioni 9–10 offre
 quattro esperimenti originali in `aos-car-model.ts` e `aos-car-lab.tsx`: rete e
 filtro della sorgente, sostituzione del percorso radar, budget/tempo di risposta,
 dipendenze nella costruzione del container. Sono modelli deterministici, non

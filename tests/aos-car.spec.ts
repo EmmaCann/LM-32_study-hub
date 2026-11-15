@@ -1,6 +1,6 @@
 import {test,expect} from '@playwright/test';
-test('Car: scene, contrasti, movimento e playground AOS',async({page},info)=>{
- await page.goto('/aos/playground');await page.getByRole('link',{name:/Car: costruisci/}).click();
+test('Car: scene, contrasti, movimento e catalogo simulazioni',async({page},info)=>{
+ await page.goto('/simulazioni');await page.locator('a[href="/aos/lezione-09/car-container#car"]').click();
  const lab=page.locator('#car');await expect(lab).toBeVisible();await page.emulateMedia({reducedMotion:'no-preference'});
  for(const [label,mode,start]of [['Rete e misure','network',2],['Integrità del radar','replacement',1],['Budget e deadline','budget',0],['Costruisci il container','bootstrap',0]]as const){
   await lab.getByRole('button',{name:label,exact:true}).click();await expect(lab.locator('[data-car-scene]')).toHaveAttribute('data-car-scene',mode);

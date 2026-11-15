@@ -1,9 +1,43 @@
-import Link from 'next/link';
-import {getTopics} from '@/lib/content';
-import {topicPath} from '@/lib/schema';
-import {PageHeading} from '@/components/catalog';
-export const metadata={title:'Playground AOS'};
-export default function AosPlayground(){
- const topics=getTopics().filter(t=>t.manifest.subject==='aos'&&t.simulations.length);
- return <><PageHeading eyebrow='ADVANCED OPERATING SYSTEMS' title='Playground AOS' description='Esperimenti guidati su architetture, processi e isolamento. Modifica le condizioni e segui gli effetti: sono modelli didattici, senza esecuzione di comandi Linux nel browser.'/><div className='resource-grid'>{topics.slice().reverse().map(t=><Link className='panel resource-card' key={t.manifest.id} href={`${topicPath(t.manifest)}#${t.simulations[0].id}`}><span className='eyebrow'>{t.manifest.chapter.title}</span><h2>{t.manifest.title}</h2><p>{t.manifest.description}</p><span className='text-link'>Apri il laboratorio →</span></Link>)}</div></>;
+import { Code2 } from 'lucide-react';
+import { getTopics } from '@/lib/content';
+import { assetPath } from '@/lib/schema';
+import { EmptyState, PageHeading } from '@/components/catalog';
+import { ExerciseCard } from '@/components/exercise';
+export const metadata = { title: 'Playground AOS' };
+export default function AosPlayground() {
+  const exercises = getTopics()
+    .filter((t) => t.manifest.subject === 'aos')
+    .flatMap((topic) =>
+      topic.exercises
+        .filter((exercise) => exercise.type === 'programming')
+        .map((exercise) => ({ topic, exercise })),
+    );
+  return (
+    <>
+      <PageHeading
+        eyebrow="ESERCITAZIONI DI CODICE"
+        title="Playground AOS"
+        description="Uno spazio per scrivere, completare e correggere il codice delle esercitazioni di Advanced Operating Systems."
+      />
+      {exercises.length ? (
+        <div className="list">
+          {exercises.map(({ topic, exercise }) => (
+            <ExerciseCard
+              key={`${topic.manifest.id}-${exercise.id}`}
+              exercise={exercise}
+              download={
+                exercise.download ? assetPath(topic.manifest, exercise.download) : undefined
+              }
+            />
+          ))}
+        </div>
+      ) : (
+        <EmptyState
+          icon={<Code2 size={24} />}
+          title="Nessuna esercitazione di codice ancora disponibile"
+          description="Le esercitazioni AOS con codice da completare compariranno qui quando saranno pronte."
+        />
+      )}
+    </>
+  );
 }
