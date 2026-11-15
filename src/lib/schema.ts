@@ -130,6 +130,7 @@ export const simulationSchema = z
       'aos-memory',
       'aos-container',
       'aos-car',
+      'aos-modules',
       'aos-flags',
       'aos-cpu-cache',
       'aos-virtqueue',
