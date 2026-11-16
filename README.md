@@ -134,3 +134,10 @@ Controlli: riproduzione/pausa, ritmo, avanti/indietro, reset, timeline, zoom e
 vista espansa. I contatori secondari sono disponibili nei dettagli.
 Le animazioni sono rappresentazioni didattiche, non misure temporali dell'hardware.
 I modelli tecnici restano testati separatamente dalla resa grafica.
+## Percorsi di studio — sviluppo locale
+
+Il branch `feature/study-paths` aggiunge roadmap per materia, verifiche di fine
+lezione, progressi locali con backup, PDF selezionati dal dispositivo e frammenti
+C per AOS. Avvio, limiti e contratto: [docs/STUDY_PATHS.md](docs/STUDY_PATHS.md).
+`npm run test:study` verifica i nuovi flussi su Chromium e WebKit/iPad.
+Nessun PDF viene caricato sul server; il lavoro resta locale fino alla revisione.

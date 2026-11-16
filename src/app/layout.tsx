@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import { Shell } from '@/components/shell';
+import { StudyStorageNotice } from '@/components/study-roadmap';
 import 'katex/dist/katex.min.css';
 import './globals.css';
+import './study.css';
 import './cpp/playground/playground.css';
 import '../simulations/aos-visual.css';
 import '../simulations/algoritmi-sorting.css';
@@ -26,7 +28,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         />
       </head>
       <body>
-        <Shell>{children}</Shell>
+        <Shell>
+          <StudyStorageNotice />
+          {children}
+        </Shell>
       </body>
     </html>
   );

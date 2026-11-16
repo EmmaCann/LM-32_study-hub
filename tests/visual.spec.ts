@@ -4,7 +4,9 @@ test('ispezione visuale e assenza di errori client', async ({ page }, testInfo) 
   page.on('pageerror', (e) => errors.push(e.message));
   await page.setViewportSize({ width: 1440, height: 1100 });
   await page.goto('/', { waitUntil: 'networkidle' });
-  await expect(page.getByRole('heading', { name: /Il tuo studio,/ })).toBeVisible();
+  await expect(
+    page.getByRole('heading', { name: 'Dai un filo al tuo studio.', exact: true }),
+  ).toBeVisible();
   await page.screenshot({ path: testInfo.outputPath('dashboard-desktop.png'), fullPage: true });
   await page.getByRole('button', { name: 'Tema scuro', exact: true }).click();
   await page.screenshot({ path: testInfo.outputPath('dashboard-dark.png'), fullPage: true });

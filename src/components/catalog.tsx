@@ -1,3 +1,5 @@
+import { SubjectProgress } from './study-roadmap';
+import type { StudyLesson } from '@/lib/study-schema';
 import Link from 'next/link';
 import {
   ArrowUpRight,
@@ -29,7 +31,7 @@ export function PageHeading({
     </div>
   );
 }
-export function SubjectCards({ topics }: { topics: Topic[] }) {
+export function SubjectCards({ topics, lessons }: { topics: Topic[]; lessons?: StudyLesson[] }) {
   return (
     <div className="subject-grid">
       {subjects.map((s, index) => {
@@ -46,10 +48,24 @@ export function SubjectCards({ topics }: { topics: Topic[] }) {
             </div>
             <h3>{s.short}</h3>
             <p>{s.description}</p>
+            {lessons && <SubjectProgress lessons={lessons.filter((l) => l.subject === s.id)} />}
             <div className="subject-card-meta">
-              <span>{subjectTopics.length} {subjectTopics.length === 1 ? 'appunto' : 'appunti'}</span>
-              <span aria-hidden="true">·</span>
-              <span>{chapters} {chapters === 1 ? 'capitolo' : 'capitoli'}</span>
+              {lessons ? (
+                <span>
+                  {subjectTopics.reduce((total, topic) => total + topic.simulations.length, 0)}{' '}
+                  laboratori animati
+                </span>
+              ) : (
+                <>
+                  <span>
+                    {subjectTopics.length} {subjectTopics.length === 1 ? 'appunto' : 'appunti'}
+                  </span>
+                  <span aria-hidden="true">·</span>
+                  <span>
+                    {chapters} {chapters === 1 ? 'capitolo' : 'capitoli'}
+                  </span>
+                </>
+              )}
             </div>
             <div className="subject-card-action">
               <span>Apri materia</span>
@@ -78,7 +94,9 @@ export function EmptyState({
 }) {
   return (
     <div className={`empty-state${compact ? ' compact' : ''}`}>
-      <span className="empty-state-icon" aria-hidden="true">{icon}</span>
+      <span className="empty-state-icon" aria-hidden="true">
+        {icon}
+      </span>
       <h2>{title}</h2>
       <p>{description}</p>
       {actionHref && actionLabel && (

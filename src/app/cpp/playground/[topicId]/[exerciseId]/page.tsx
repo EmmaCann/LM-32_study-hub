@@ -1,6 +1,8 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getTopics } from '@/lib/content';
+import { getCurriculum } from '@/lib/study-content';
+import { activityKey } from '@/lib/study-schema';
 import { topicPath, cppExercisePath } from '@/lib/schema';
 import { CppPlayground } from '@/components/cpp-playground';
 import { CppNavigation } from '@/components/cpp-navigation';
@@ -69,6 +71,12 @@ export default async function ExercisePage({
       <CppPlayground
         key={`${topicId}/${exerciseId}`}
         exercise={exercise}
+        draftId={`${topicId}-${exerciseId}`}
+        progressBindings={getCurriculum().flatMap((l) =>
+          l.activities
+            .filter((a) => a.type === 'cpp' && a.topicId === topicId && a.exerciseId === exerciseId)
+            .map((a) => ({ key: activityKey(l.id, a.id), signature: a.signature, lessonId: l.id })),
+        )}
         referenceHref={topicPath(topic.manifest)}
         exerciseNavigation={{
           position: index + 1,

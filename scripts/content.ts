@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import { getCurriculum } from '../src/lib/study-content';
 import path from 'node:path';
 import { approvedRoot, getTopics, readPackage, validateCollection } from '../src/lib/content';
 import { stableUrl, topicPath } from '../src/lib/schema';
@@ -8,7 +9,12 @@ async function main() {
   try {
     if (command === 'validate') {
       const topics = getTopics();
-      console.log(`Validati ${topics.length} argomenti approvati.`);
+      const lessons = fs.existsSync(path.join(process.cwd(), 'src/content/curriculum.json'))
+        ? getCurriculum()
+        : [];
+      console.log(
+        `Validati ${topics.length} argomenti approvati e ${lessons.length} lezioni del percorso.`,
+      );
     } else if (command === 'preview' || command === 'import') {
       if (!arg) throw new Error('Specificare una directory in staging');
       const staging = path.resolve('staging'),

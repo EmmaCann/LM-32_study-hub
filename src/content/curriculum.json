@@ -1,0 +1,2288 @@
+{
+  "schemaVersion": 1,
+  "lessons": [
+    {
+      "id": "aos-lezione-01",
+      "subject": "aos",
+      "chapter": "Percorso principale",
+      "order": 1,
+      "title": "Lezione 1 - Fondamenti della virtualizzazione",
+      "description": "Distingui stato fisico e virtuale, istruzioni sensibili e intervento del monitor.",
+      "objectives": [
+        "Distingui stato fisico e virtuale, istruzioni sensibili e intervento del monitor."
+      ],
+      "availability": "ready",
+      "topicIds": [
+        "aos-l01-flags"
+      ],
+      "theory": [
+        {
+          "topicId": "aos-l01-flags",
+          "simulationId": "if-fisico-virtuale",
+          "page": 11,
+          "section": "Il limite di x86: POPF"
+        }
+      ],
+      "activities": [
+        {
+          "id": "trap",
+          "title": "Ogni istruzione sensibile su x86 classico provoca sempre una trap a privilegio ridotto.",
+          "type": "choice",
+          "required": true,
+          "prompt": "Ogni istruzione sensibile su x86 classico provoca sempre una trap a privilegio ridotto.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Falso",
+          "explanation": "Il caso POPF mostra un aggiornamento sensibile che può essere ignorato senza trap.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        },
+        {
+          "id": "ruoli",
+          "title": "Quale componente fornisce l'interfaccia kernel per l'accelerazione della VM?",
+          "type": "choice",
+          "required": true,
+          "prompt": "Quale componente fornisce l'interfaccia kernel per l'accelerazione della VM?",
+          "options": [
+            "KVM",
+            "Il filesystem guest",
+            "Il solo firmware"
+          ],
+          "answer": "KVM",
+          "explanation": "KVM espone il supporto kernel; QEMU fornisce parti del modello di macchina e dei dispositivi.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        },
+        {
+          "id": "stato-virtuale",
+          "title": "Aggiorna lo stato virtuale",
+          "type": "c-fragment",
+          "required": true,
+          "prompt": "Assegna a virtual_if il bit 9 di flags, normalizzato a 0 o 1.",
+          "context": "unsigned flags;\nunsigned virtual_if;\n/* FRAMMENTO */",
+          "starter": "/* completa qui */",
+          "alternatives": [
+            "virtual_if = (flags >> 9) & 1u;",
+            "virtual_if = (flags >> 9) & 1;"
+          ],
+          "solution": "virtual_if = (flags >> 9) & 1u;",
+          "explanation": "La selezione del bit IF è un controllo su interi, non l'esecuzione di POPF né un hypervisor.",
+          "hints": [
+            "Scrivi soltanto il frammento richiesto, senza cambiare il contesto."
+          ]
+        }
+      ],
+      "document": {
+        "id": "aos-lezione-01-appunti",
+        "title": "Appunti - Lezione 1 - Fondamenti della virtualizzazione",
+        "filename": "Appunti_AOS_Lezione-01.pdf",
+        "fingerprint": "505c0e5afb1169dfe7be1e24d29fc89f6f5b8e459bf7976acd49ff6a8c6a6323",
+        "pages": 15
+      },
+      "sections": [
+        {
+          "id": "sezione-1",
+          "page": 1,
+          "title": "Che cosa viene virtualizzato"
+        },
+        {
+          "id": "sezione-2",
+          "page": 3,
+          "title": "Livelli, architetture e tecniche"
+        },
+        {
+          "id": "sezione-3",
+          "page": 5,
+          "title": "Isolamento e microVM"
+        },
+        {
+          "id": "sezione-4",
+          "page": 6,
+          "title": "QEMU e KVM"
+        },
+        {
+          "id": "sezione-5",
+          "page": 8,
+          "title": "Protezione e privilegi"
+        },
+        {
+          "id": "sezione-6",
+          "page": 10,
+          "title": "Trap-and-emulate"
+        },
+        {
+          "id": "sezione-7",
+          "page": 11,
+          "title": "POPF e soluzioni"
+        },
+        {
+          "id": "sezione-8",
+          "page": 13,
+          "title": "Ambiente di laboratorio"
+        }
+      ]
+    },
+    {
+      "id": "aos-lezione-02",
+      "subject": "aos",
+      "chapter": "Percorso principale",
+      "order": 2,
+      "title": "Lezione 2 - Emulazione e traduzione dinamica",
+      "description": "Segui decodifica, cache dei blocchi e avanzamento del tempo virtuale.",
+      "objectives": [
+        "Segui decodifica, cache dei blocchi e avanzamento del tempo virtuale."
+      ],
+      "availability": "ready",
+      "topicIds": [
+        "aos-l02-cpu-cache"
+      ],
+      "theory": [
+        {
+          "topicId": "aos-l02-cpu-cache",
+          "simulationId": "esecuzione-riscv",
+          "page": 4,
+          "section": "Traduzione dinamica"
+        },
+        {
+          "topicId": "aos-l02-cpu-cache",
+          "simulationId": "campi-riscv",
+          "page": 2,
+          "section": "Il piccolo interprete RISC-V"
+        },
+        {
+          "topicId": "aos-l02-cpu-cache",
+          "simulationId": "tempo-virtuale-timer",
+          "page": 10,
+          "section": "Timer, interrupt e tempo virtuale"
+        }
+      ],
+      "activities": [
+        {
+          "id": "cache",
+          "title": "Riutilizzare un blocco tradotto può evitare di decodificare nuovamente le stesse istruzioni.",
+          "type": "choice",
+          "required": true,
+          "prompt": "Riutilizzare un blocco tradotto può evitare di decodificare nuovamente le stesse istruzioni.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Vero",
+          "explanation": "La traduzione dinamica ammortizza il costo di decodifica e traduzione.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        },
+        {
+          "id": "tempo",
+          "title": "Il tempo virtuale deve necessariamente coincidere con il tempo misurato dall'host.",
+          "type": "choice",
+          "required": true,
+          "prompt": "Il tempo virtuale deve necessariamente coincidere con il tempo misurato dall'host.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Falso",
+          "explanation": "È una scelta del modello; sospensioni e velocità dell'emulazione possono differire.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        },
+        {
+          "id": "registro",
+          "title": "Estrai il registro destinazione",
+          "type": "c-fragment",
+          "required": true,
+          "prompt": "Assegna a rd i cinque bit da 7 a 11 di instruction.",
+          "context": "unsigned instruction;\nunsigned rd;\n/* FRAMMENTO */",
+          "starter": "/* completa qui */",
+          "alternatives": [
+            "rd = (instruction >> 7) & 31u;",
+            "rd = (instruction >> 7) & 31;",
+            "rd = (instruction >> 7) & 0x1f;"
+          ],
+          "solution": "rd = (instruction >> 7) & 31u;",
+          "explanation": "Lo shift sposta il campo, la maschera conserva cinque bit.",
+          "hints": [
+            "Scrivi soltanto il frammento richiesto, senza cambiare il contesto."
+          ]
+        }
+      ],
+      "document": {
+        "id": "aos-lezione-02-appunti",
+        "title": "Appunti - Lezione 2 - Emulazione e traduzione dinamica",
+        "filename": "Appunti_AOS_Lezione-02.pdf",
+        "fingerprint": "a3fc18d0e4a38f40fb5b8d16f01ed3c967899285f1ec69509fa6963942f6833e",
+        "pages": 16
+      },
+      "sections": [
+        {
+          "id": "sezione-1",
+          "page": 1,
+          "title": "Emulare una CPU"
+        },
+        {
+          "id": "sezione-2",
+          "page": 2,
+          "title": "Interprete RISC-V"
+        },
+        {
+          "id": "sezione-3",
+          "page": 4,
+          "title": "Traduzione dinamica"
+        },
+        {
+          "id": "sezione-4",
+          "page": 6,
+          "title": "Modelli di macchina QEMU"
+        },
+        {
+          "id": "sezione-5",
+          "page": 8,
+          "title": "Emulazione embedded"
+        },
+        {
+          "id": "sezione-6",
+          "page": 10,
+          "title": "Timer e tempo virtuale"
+        },
+        {
+          "id": "sezione-7",
+          "page": 12,
+          "title": "Binary translation"
+        },
+        {
+          "id": "sezione-8",
+          "page": 13,
+          "title": "Paravirtualizzazione"
+        }
+      ]
+    },
+    {
+      "id": "aos-lezione-03",
+      "subject": "aos",
+      "chapter": "Percorso principale",
+      "order": 3,
+      "title": "Lezione 3 - Virtualizzazione hardware e I/O",
+      "description": "Distingui VM exit, interrupt, code virtio e traduzioni DMA.",
+      "objectives": [
+        "Distingui VM exit, interrupt, code virtio e traduzioni DMA."
+      ],
+      "availability": "ready",
+      "topicIds": [
+        "aos-l03-virtqueue"
+      ],
+      "theory": [
+        {
+          "topicId": "aos-l03-virtqueue",
+          "simulationId": "code-e-notifiche",
+          "page": 12,
+          "section": "Virtio: cooperazione tramite code condivise"
+        },
+        {
+          "topicId": "aos-l03-virtqueue",
+          "simulationId": "interrupt-pendente-consegnato",
+          "page": 8,
+          "section": "Interrupt fisici e interrupt virtuali"
+        },
+        {
+          "topicId": "aos-l03-virtqueue",
+          "simulationId": "indirizzi-cpu-dma",
+          "page": 14,
+          "section": "Gli indirizzi della CPU e quelli del DMA"
+        }
+      ],
+      "activities": [
+        {
+          "id": "notifica",
+          "title": "Una notifica virtio per ogni descrittore è sempre obbligatoria.",
+          "type": "choice",
+          "required": true,
+          "prompt": "Una notifica virtio per ogni descrittore è sempre obbligatoria.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Falso",
+          "explanation": "Il batching permette di raggruppare lavoro e notifiche nel rispetto del protocollo.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        },
+        {
+          "id": "dma",
+          "title": "La IOMMU interviene nel percorso degli accessi DMA dei dispositivi.",
+          "type": "choice",
+          "required": true,
+          "prompt": "La IOMMU interviene nel percorso degli accessi DMA dei dispositivi.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Vero",
+          "explanation": "Il percorso DMA è distinto da quello delle traduzioni della CPU.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        },
+        {
+          "id": "indice",
+          "title": "Pubblica il nuovo indice",
+          "type": "c-fragment",
+          "required": true,
+          "prompt": "Incrementa avail_idx di uno usando il tipo uint16_t già fornito dal contesto.",
+          "context": "uint16_t avail_idx;\n/* FRAMMENTO */",
+          "starter": "/* completa qui */",
+          "alternatives": [
+            "avail_idx++;",
+            "++avail_idx;",
+            "avail_idx += 1;"
+          ],
+          "solution": "avail_idx++;",
+          "explanation": "Verifichiamo soltanto l'aggiornamento dell'indice; ordinamento della memoria e protocollo completo non sono eseguiti.",
+          "hints": [
+            "Scrivi soltanto il frammento richiesto, senza cambiare il contesto."
+          ]
+        }
+      ],
+      "document": {
+        "id": "aos-lezione-03-appunti",
+        "title": "Appunti - Lezione 3 - Virtualizzazione hardware e I/O",
+        "filename": "Appunti_AOS_Lezione-03.pdf",
+        "fingerprint": "9a742660dbe3988d8e98dbfb92235dda1edc7e2b70fbecddd8b19e58b0ee5c32",
+        "pages": 18
+      },
+      "sections": [
+        {
+          "id": "sezione-1",
+          "page": 2,
+          "title": "Root, non-root e ring"
+        },
+        {
+          "id": "sezione-2",
+          "page": 3,
+          "title": "VMCS"
+        },
+        {
+          "id": "sezione-3",
+          "page": 4,
+          "title": "Ciclo di vita del VMM"
+        },
+        {
+          "id": "sezione-4",
+          "page": 5,
+          "title": "VM exit"
+        },
+        {
+          "id": "sezione-5",
+          "page": 8,
+          "title": "Interrupt virtuali"
+        },
+        {
+          "id": "sezione-6",
+          "page": 10,
+          "title": "Interfacce I/O"
+        },
+        {
+          "id": "sezione-7",
+          "page": 12,
+          "title": "Virtio e code condivise"
+        },
+        {
+          "id": "sezione-8",
+          "page": 14,
+          "title": "CPU, DMA e indirizzi"
+        },
+        {
+          "id": "sezione-9",
+          "page": 15,
+          "title": "Passthrough e IOMMU"
+        },
+        {
+          "id": "sezione-10",
+          "page": 16,
+          "title": "SR-IOV"
+        }
+      ]
+    },
+    {
+      "id": "aos-lezione-04",
+      "subject": "aos",
+      "chapter": "Percorso principale",
+      "order": 4,
+      "title": "Lezione 4 - KVM e mini-VMM",
+      "description": "Segui la creazione della VM, i memory slot e i due cicli di esecuzione.",
+      "objectives": [
+        "Segui la creazione della VM, i memory slot e i due cicli di esecuzione."
+      ],
+      "availability": "ready",
+      "topicIds": [
+        "aos-l04-kvm-run"
+      ],
+      "theory": [
+        {
+          "topicId": "aos-l04-kvm-run",
+          "simulationId": "kernel-e-userspace",
+          "page": 14,
+          "section": "Due cicli: KVM interno e VMM esterno"
+        },
+        {
+          "topicId": "aos-l04-kvm-run",
+          "simulationId": "memory-slot",
+          "page": 8,
+          "section": "RAM guest, memory slot e indirizzi"
+        }
+      ],
+      "activities": [
+        {
+          "id": "exit",
+          "title": "Ogni VM exit hardware implica un ritorno al VMM userspace.",
+          "type": "choice",
+          "required": true,
+          "prompt": "Ogni VM exit hardware implica un ritorno al VMM userspace.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Falso",
+          "explanation": "KVM può gestire alcuni eventi nel kernel e riprendere il guest.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        },
+        {
+          "id": "slot",
+          "title": "Un memory slot associa una regione di indirizzi guest a memoria del processo host.",
+          "type": "choice",
+          "required": true,
+          "prompt": "Un memory slot associa una regione di indirizzi guest a memoria del processo host.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Vero",
+          "explanation": "Il VMM registra la regione; GPA e indirizzo virtuale host hanno ruoli diversi.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        },
+        {
+          "id": "run",
+          "title": "Richiedi l'esecuzione della vCPU",
+          "type": "c-fragment",
+          "required": true,
+          "prompt": "Assegna a rc il risultato di ioctl sul descrittore vcpu_fd con KVM_RUN e terzo argomento 0.",
+          "context": "int vcpu_fd;\nint rc;\n/* FRAMMENTO */",
+          "starter": "/* completa qui */",
+          "alternatives": [
+            "rc = ioctl(vcpu_fd, KVM_RUN, 0);"
+          ],
+          "solution": "rc = ioctl(vcpu_fd, KVM_RUN, 0);",
+          "explanation": "Il controllo riconosce la chiamata richiesta, senza eseguire ioctl né accedere a /dev/kvm.",
+          "hints": [
+            "Scrivi soltanto il frammento richiesto, senza cambiare il contesto."
+          ]
+        }
+      ],
+      "document": {
+        "id": "aos-lezione-04-appunti",
+        "title": "Appunti - Lezione 4 - KVM e mini-VMM",
+        "filename": "Appunti_AOS_Lezione-04.pdf",
+        "fingerprint": "6081439129cd1ad59df52d123beb77f52a166efb9f1a71e434b3423665c422c6",
+        "pages": 17
+      },
+      "sections": [
+        {
+          "id": "sezione-1",
+          "page": 1,
+          "title": "KVM nel kernel Linux"
+        },
+        {
+          "id": "sezione-2",
+          "page": 3,
+          "title": "VM come processo"
+        },
+        {
+          "id": "sezione-3",
+          "page": 8,
+          "title": "Creazione VM e memory slot"
+        },
+        {
+          "id": "sezione-4",
+          "page": 10,
+          "title": "Creazione vCPU e kvm_run"
+        },
+        {
+          "id": "sezione-5",
+          "page": 11,
+          "title": "Codice guest"
+        },
+        {
+          "id": "sezione-6",
+          "page": 12,
+          "title": "Ciclo userspace e I/O"
+        },
+        {
+          "id": "sezione-7",
+          "page": 14,
+          "title": "Ciclo kernel e ciclo VMM"
+        },
+        {
+          "id": "sezione-8",
+          "page": 16,
+          "title": "Limiti del mini-VMM"
+        }
+      ]
+    },
+    {
+      "id": "aos-lezione-05",
+      "subject": "aos",
+      "chapter": "Percorso principale",
+      "order": 5,
+      "title": "Lezione 5 - Firmware, PIT e disponibilità della CPU",
+      "description": "Distingui caricamento, conteggio del timer e intervalli in cui la vCPU non esegue.",
+      "objectives": [
+        "Distingui caricamento, conteggio del timer e intervalli in cui la vCPU non esegue."
+      ],
+      "availability": "ready",
+      "topicIds": [
+        "aos-l05-baremetal"
+      ],
+      "theory": [
+        {
+          "topicId": "aos-l05-baremetal",
+          "simulationId": "elf-in-memoria",
+          "page": 2,
+          "section": "Compilare, collegare, caricare e avviare"
+        },
+        {
+          "topicId": "aos-l05-baremetal",
+          "simulationId": "lettura-pit",
+          "page": 7,
+          "section": "Il PIT: leggere un contatore che continua a scendere"
+        },
+        {
+          "topicId": "aos-l05-baremetal",
+          "simulationId": "pause-vcpu",
+          "page": 9,
+          "section": "La CPU è sempre disponibile?"
+        }
+      ],
+      "activities": [
+        {
+          "id": "bss",
+          "title": "La sezione BSS deve avere lo stato iniziale previsto anche se non occupa gli stessi byte nel file ELF.",
+          "type": "choice",
+          "required": true,
+          "prompt": "La sezione BSS deve avere lo stato iniziale previsto anche se non occupa gli stessi byte nel file ELF.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Vero",
+          "explanation": "Il caricamento prepara memoria e azzera la regione prevista.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        },
+        {
+          "id": "clock",
+          "title": "Se la vCPU non esegue, ogni riferimento temporale esterno deve fermarsi.",
+          "type": "choice",
+          "required": true,
+          "prompt": "Se la vCPU non esegue, ogni riferimento temporale esterno deve fermarsi.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Falso",
+          "explanation": "Il tempo esterno può avanzare mentre la vCPU è deschedulata.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        },
+        {
+          "id": "pit",
+          "title": "Ricostruisci il contatore",
+          "type": "c-fragment",
+          "required": true,
+          "prompt": "Combina low e high in counter: low è il byte meno significativo.",
+          "context": "unsigned low, high, counter;\n/* FRAMMENTO */",
+          "starter": "/* completa qui */",
+          "alternatives": [
+            "counter = low | (high << 8);",
+            "counter = (high << 8) | low;"
+          ],
+          "solution": "counter = low | (high << 8);",
+          "explanation": "I due byte sono combinati senza simulare accessi alle porte I/O.",
+          "hints": [
+            "Scrivi soltanto il frammento richiesto, senza cambiare il contesto."
+          ]
+        }
+      ],
+      "document": {
+        "id": "aos-lezione-05-appunti",
+        "title": "Appunti - Lezione 5 - Firmware, PIT e disponibilità della CPU",
+        "filename": "Appunti_AOS_Lezione-05.pdf",
+        "fingerprint": "371492cb7ab83f4fc18c6949abc9fc5e4b45663d139881e4865b321a559f0497",
+        "pages": 13
+      },
+      "sections": [
+        {
+          "id": "sezione-1",
+          "page": 1,
+          "title": "Dal mini-VMM al firmware"
+        },
+        {
+          "id": "sezione-2",
+          "page": 2,
+          "title": "Compilazione, collegamento e caricamento"
+        },
+        {
+          "id": "sezione-3",
+          "page": 4,
+          "title": "Spazio indirizzabile e RAM"
+        },
+        {
+          "id": "sezione-4",
+          "page": 5,
+          "title": "Preparazione di KVM"
+        },
+        {
+          "id": "sezione-5",
+          "page": 6,
+          "title": "Porte I/O"
+        },
+        {
+          "id": "sezione-6",
+          "page": 7,
+          "title": "Lettura del PIT"
+        },
+        {
+          "id": "sezione-7",
+          "page": 8,
+          "title": "Misurare il tempo"
+        },
+        {
+          "id": "sezione-8",
+          "page": 9,
+          "title": "Disponibilità della CPU"
+        },
+        {
+          "id": "sezione-9",
+          "page": 10,
+          "title": "Interpretare i confronti"
+        }
+      ]
+    },
+    {
+      "id": "aos-lezione-06",
+      "subject": "aos",
+      "chapter": "Percorso principale",
+      "order": 6,
+      "title": "Lezione 6 - Partizionamento statico e comunicazione",
+      "description": "Segui proprietà dei core, memoria condivisa, ring buffer e interferenze cache.",
+      "objectives": [
+        "Segui proprietà dei core, memoria condivisa, ring buffer e interferenze cache."
+      ],
+      "availability": "ready",
+      "topicIds": [
+        "aos-l06-partition"
+      ],
+      "theory": [
+        {
+          "topicId": "aos-l06-partition",
+          "simulationId": "celle-e-core",
+          "page": 2,
+          "section": "Il contratto del partizionamento statico"
+        },
+        {
+          "topicId": "aos-l06-partition",
+          "simulationId": "dati-e-doorbell",
+          "page": 6,
+          "section": "IVSHMEM: condividere dati e notificare"
+        },
+        {
+          "topicId": "aos-l06-partition",
+          "simulationId": "ring-e-lettori",
+          "page": 9,
+          "section": "Il ring buffer sopra la memoria condivisa"
+        },
+        {
+          "topicId": "aos-l06-partition",
+          "simulationId": "colori-cache",
+          "page": 11,
+          "section": "Cache coloring e interferenze"
+        }
+      ],
+      "activities": [
+        {
+          "id": "core",
+          "title": "Separare i core elimina automaticamente ogni interferenza sulla cache condivisa.",
+          "type": "choice",
+          "required": true,
+          "prompt": "Separare i core elimina automaticamente ogni interferenza sulla cache condivisa.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Falso",
+          "explanation": "Le risorse condivise possono ancora introdurre interferenze.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        },
+        {
+          "id": "payload",
+          "title": "Una doorbell sostituisce la scrittura del payload nella memoria condivisa.",
+          "type": "choice",
+          "required": true,
+          "prompt": "Una doorbell sostituisce la scrittura del payload nella memoria condivisa.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Falso",
+          "explanation": "La doorbell notifica; i dati restano nella memoria condivisa.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        },
+        {
+          "id": "ring",
+          "title": "Avanza nel ring",
+          "type": "c-fragment",
+          "required": true,
+          "prompt": "Calcola next come successore circolare di wr in un ring di capacity positiva.",
+          "context": "unsigned wr, capacity, next;\n/* FRAMMENTO */",
+          "starter": "/* completa qui */",
+          "alternatives": [
+            "next = (wr + 1) % capacity;",
+            "next = (wr + 1u) % capacity;"
+          ],
+          "solution": "next = (wr + 1) % capacity;",
+          "explanation": "Il modulo realizza il riavvolgimento dell'indice, non la sincronizzazione concorrente.",
+          "hints": [
+            "Scrivi soltanto il frammento richiesto, senza cambiare il contesto."
+          ]
+        }
+      ],
+      "document": {
+        "id": "aos-lezione-06-appunti",
+        "title": "Appunti - Lezione 6 - Partizionamento statico e comunicazione",
+        "filename": "Appunti_AOS_Lezione-06.pdf",
+        "fingerprint": "4bed7ce63e42b51f043cc3da3ecdd1ba8fd3462176eb30a59c2c93ae2a76283d",
+        "pages": 15
+      },
+      "sections": [
+        {
+          "id": "sezione-1",
+          "page": 1,
+          "title": "Carichi a criticità mista"
+        },
+        {
+          "id": "sezione-2",
+          "page": 2,
+          "title": "Partizionamento statico"
+        },
+        {
+          "id": "sezione-3",
+          "page": 3,
+          "title": "Jailhouse"
+        },
+        {
+          "id": "sezione-4",
+          "page": 4,
+          "title": "Ciclo di vita delle celle"
+        },
+        {
+          "id": "sezione-5",
+          "page": 6,
+          "title": "Isolamento e IVSHMEM"
+        },
+        {
+          "id": "sezione-6",
+          "page": 8,
+          "title": "UIO"
+        },
+        {
+          "id": "sezione-7",
+          "page": 9,
+          "title": "Ring buffer"
+        },
+        {
+          "id": "sezione-8",
+          "page": 10,
+          "title": "Bao"
+        },
+        {
+          "id": "sezione-9",
+          "page": 11,
+          "title": "Cache coloring"
+        },
+        {
+          "id": "sezione-10",
+          "page": 12,
+          "title": "Cockpit e prove di guasto"
+        }
+      ]
+    },
+    {
+      "id": "aos-lezione-07",
+      "subject": "aos",
+      "chapter": "Percorso principale",
+      "order": 7,
+      "title": "Lezione 7 - Gestione della memoria",
+      "description": "Collega pagine, TLB, allocazione e latenza del carico.",
+      "objectives": [
+        "Collega pagine, TLB, allocazione e latenza del carico."
+      ],
+      "availability": "ready",
+      "topicIds": [
+        "aos-l07-memoria"
+      ],
+      "theory": [
+        {
+          "topicId": "aos-l07-memoria",
+          "simulationId": "memoria",
+          "page": 4,
+          "section": "Tabelle multilivello e TLB; panoramica memoria"
+        }
+      ],
+      "activities": [
+        {
+          "id": "fault",
+          "title": "Ogni page fault indica necessariamente un errore del programma.",
+          "type": "choice",
+          "required": true,
+          "prompt": "Ogni page fault indica necessariamente un errore del programma.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Falso",
+          "explanation": "Può essere un evento previsto, per esempio nell'allocazione al primo accesso.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        },
+        {
+          "id": "shootdown",
+          "title": "Aggiornare una tabella può richiedere di invalidare anche TLB di altri core.",
+          "type": "choice",
+          "required": true,
+          "prompt": "Aggiornare una tabella può richiedere di invalidare anche TLB di altri core.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Vero",
+          "explanation": "Altri core possono conservare traduzioni non più valide.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        },
+        {
+          "id": "pagina",
+          "title": "Separa l'offset",
+          "type": "c-fragment",
+          "required": true,
+          "prompt": "Calcola offset per pagine di 4096 byte usando una maschera su address.",
+          "context": "unsigned long address, offset;\n/* FRAMMENTO */",
+          "starter": "/* completa qui */",
+          "alternatives": [
+            "offset = address & 4095;",
+            "offset = address & 4095ul;",
+            "offset = address & 0xfff;"
+          ],
+          "solution": "offset = address & 4095;",
+          "explanation": "I dodici bit bassi rappresentano l'offset per questa dimensione di pagina.",
+          "hints": [
+            "Scrivi soltanto il frammento richiesto, senza cambiare il contesto."
+          ]
+        }
+      ],
+      "document": {
+        "id": "aos-lezione-07-appunti",
+        "title": "Appunti - Lezione 7 - Gestione della memoria",
+        "filename": "Appunti_AOS_Lezione-07.pdf",
+        "fingerprint": "17b6831926bfef9b89c6f5a6a78dc081c065ebb17e75e537eb4946e458f52c09",
+        "pages": 19
+      },
+      "sections": [
+        {
+          "id": "sezione-1",
+          "page": 1,
+          "title": "Pagine e protezione"
+        },
+        {
+          "id": "sezione-2",
+          "page": 3,
+          "title": "Page fault"
+        },
+        {
+          "id": "sezione-3",
+          "page": 4,
+          "title": "Tabelle e TLB"
+        },
+        {
+          "id": "sezione-4",
+          "page": 6,
+          "title": "TLB shootdown"
+        },
+        {
+          "id": "sezione-5",
+          "page": 7,
+          "title": "Huge pages"
+        },
+        {
+          "id": "sezione-6",
+          "page": 8,
+          "title": "Organizzazione della RAM"
+        },
+        {
+          "id": "sezione-7",
+          "page": 9,
+          "title": "Buddy e slab"
+        },
+        {
+          "id": "sezione-8",
+          "page": 10,
+          "title": "Processo e page cache"
+        },
+        {
+          "id": "sezione-9",
+          "page": 12,
+          "title": "THP e traduzione guest"
+        },
+        {
+          "id": "sezione-10",
+          "page": 14,
+          "title": "Overcommit e ballooning"
+        },
+        {
+          "id": "sezione-11",
+          "page": 15,
+          "title": "Jitter"
+        },
+        {
+          "id": "sezione-12",
+          "page": 16,
+          "title": "Carichi time-critical"
+        }
+      ]
+    },
+    {
+      "id": "aos-lezione-08",
+      "subject": "aos",
+      "chapter": "Percorso principale",
+      "order": 8,
+      "title": "Lezione 8 - Namespace e capabilities",
+      "description": "Distingui viste dei processi, radice del filesystem e privilegi effettivi.",
+      "objectives": [
+        "Distingui viste dei processi, radice del filesystem e privilegi effettivi."
+      ],
+      "availability": "ready",
+      "topicIds": [
+        "aos-l08-container"
+      ],
+      "theory": [
+        {
+          "topicId": "aos-l08-container",
+          "simulationId": "container",
+          "page": 3,
+          "section": "Namespace: viste, PID, mount e capabilities"
+        }
+      ],
+      "activities": [
+        {
+          "id": "kernel",
+          "title": "Due processi in namespace diversi devono eseguire due kernel differenti.",
+          "type": "choice",
+          "required": true,
+          "prompt": "Due processi in namespace diversi devono eseguire due kernel differenti.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Falso",
+          "explanation": "I namespace forniscono viste isolate sullo stesso kernel.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        },
+        {
+          "id": "bounding",
+          "title": "Rimuovere una capability dal Bounding set revoca automaticamente ogni capability Effective già attiva.",
+          "type": "choice",
+          "required": true,
+          "prompt": "Rimuovere una capability dal Bounding set revoca automaticamente ogni capability Effective già attiva.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Falso",
+          "explanation": "Il Bounding set limita acquisizioni successive; gli insiemi hanno ruoli diversi.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        },
+        {
+          "id": "clone",
+          "title": "Combina i namespace richiesti",
+          "type": "c-fragment",
+          "required": true,
+          "prompt": "Assegna a flags la combinazione di CLONE_NEWUTS e CLONE_NEWPID, senza altri flag.",
+          "context": "int flags;\n/* FRAMMENTO */",
+          "starter": "/* completa qui */",
+          "alternatives": [
+            "flags = CLONE_NEWUTS | CLONE_NEWPID;",
+            "flags = CLONE_NEWPID | CLONE_NEWUTS;"
+          ],
+          "solution": "flags = CLONE_NEWUTS | CLONE_NEWPID;",
+          "explanation": "Il controllo verifica la combinazione di flag, senza creare processi o namespace.",
+          "hints": [
+            "Scrivi soltanto il frammento richiesto, senza cambiare il contesto."
+          ]
+        }
+      ],
+      "document": {
+        "id": "aos-lezione-08-appunti",
+        "title": "Appunti - Lezione 8 - Namespace e capabilities",
+        "filename": "Appunti_AOS_Lezione-08.pdf",
+        "fingerprint": "41072ec139f657e03d67d723acf3acc3e9340e3276f2dedbfad8b436a865bbdf",
+        "pages": 18
+      },
+      "sections": [
+        {
+          "id": "sezione-1",
+          "page": 1,
+          "title": "Modello di container"
+        },
+        {
+          "id": "sezione-2",
+          "page": 3,
+          "title": "Namespace"
+        },
+        {
+          "id": "sezione-3",
+          "page": 4,
+          "title": "Identità PID"
+        },
+        {
+          "id": "sezione-4",
+          "page": 5,
+          "title": "Mount e radice"
+        },
+        {
+          "id": "sezione-5",
+          "page": 7,
+          "title": "Rete e IPC"
+        },
+        {
+          "id": "sezione-6",
+          "page": 9,
+          "title": "User, cgroup e time namespace"
+        },
+        {
+          "id": "sezione-7",
+          "page": 12,
+          "title": "Capabilities"
+        },
+        {
+          "id": "sezione-8",
+          "page": 15,
+          "title": "Attivare e revocare privilegi"
+        },
+        {
+          "id": "sezione-9",
+          "page": 17,
+          "title": "Mini-container"
+        }
+      ]
+    },
+    {
+      "id": "aos-lezioni-09-10",
+      "subject": "aos",
+      "chapter": "Percorso principale",
+      "order": 9,
+      "title": "Lezioni 9-10 - Isolare i servizi di car",
+      "description": "Completa i frammenti C del supervisor distinguendo namespace, limiti e filesystem.",
+      "objectives": [
+        "Completa i frammenti C del supervisor distinguendo namespace, limiti e filesystem."
+      ],
+      "availability": "ready",
+      "topicIds": [],
+      "theory": [],
+      "activities": [
+        {
+          "id": "cgroup",
+          "title": "I namespace da soli impongono un limite quantitativo alla memoria utilizzata.",
+          "type": "choice",
+          "required": true,
+          "prompt": "I namespace da soli impongono un limite quantitativo alla memoria utilizzata.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Falso",
+          "explanation": "Viste isolate e controllo delle risorse sono responsabilità diverse; i limiti sono gestiti dai cgroup.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        },
+        {
+          "id": "overlay",
+          "title": "Con OverlayFS, l'upper layer raccoglie le modifiche rispetto ai layer inferiori.",
+          "type": "choice",
+          "required": true,
+          "prompt": "Con OverlayFS, l'upper layer raccoglie le modifiche rispetto ai layer inferiori.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Vero",
+          "explanation": "I layer permettono una vista combinata con una parte scrivibile privata.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        },
+        {
+          "id": "attesa",
+          "title": "Attendi un figlio",
+          "type": "c-fragment",
+          "required": true,
+          "prompt": "Assegna a result il risultato di waitpid per pid, salvando lo stato in status e usando opzioni 0.",
+          "context": "pid_t pid, result;\nint status;\n/* FRAMMENTO */",
+          "starter": "/* completa qui */",
+          "alternatives": [
+            "result = waitpid(pid, &status, 0);"
+          ],
+          "solution": "result = waitpid(pid, &status, 0);",
+          "explanation": "Il frammento controlla gli argomenti richiesti. Il riavvio e la gestione degli errori appartengono al programma completo.",
+          "hints": [
+            "Scrivi soltanto il frammento richiesto, senza cambiare il contesto."
+          ]
+        }
+      ],
+      "document": {
+        "id": "aos-lezioni-09-10-appunti",
+        "title": "Appunti - Lezioni 9-10 - Isolare i servizi di car",
+        "filename": "Appunti_AOS_Lezione-09-10.pdf",
+        "fingerprint": "8f9dbb53b22ffc2ce63d6646b4fef313c31277983daca6f75063293a6de78a7b",
+        "pages": 19
+      },
+      "sections": [
+        {
+          "id": "sezione-1",
+          "page": 1,
+          "title": "Servizi car e isolamento"
+        },
+        {
+          "id": "sezione-2",
+          "page": 2,
+          "title": "Flusso dei dati"
+        },
+        {
+          "id": "sezione-3",
+          "page": 5,
+          "title": "Immagine e materiali forniti"
+        },
+        {
+          "id": "sezione-4",
+          "page": 6,
+          "title": "Supervisor"
+        },
+        {
+          "id": "sezione-5",
+          "page": 8,
+          "title": "Layer privati e clone"
+        },
+        {
+          "id": "sezione-6",
+          "page": 10,
+          "title": "Rete virtuale"
+        },
+        {
+          "id": "sezione-7",
+          "page": 12,
+          "title": "Cgroup v2"
+        },
+        {
+          "id": "sezione-8",
+          "page": 14,
+          "title": "OverlayFS"
+        },
+        {
+          "id": "sezione-9",
+          "page": 15,
+          "title": "Radice e avvio del servizio"
+        },
+        {
+          "id": "sezione-10",
+          "page": 17,
+          "title": "Garanzie e limiti"
+        }
+      ]
+    },
+    {
+      "id": "aos-lezione-11",
+      "subject": "aos",
+      "chapter": "Percorso principale",
+      "order": 11,
+      "title": "Lezione 11 - Moduli kernel",
+      "description": "Distingui inizializzazione, cleanup e osservabilità dei moduli Linux.",
+      "objectives": [
+        "Distingui inizializzazione, cleanup e osservabilità dei moduli Linux."
+      ],
+      "availability": "ready",
+      "topicIds": [],
+      "theory": [],
+      "activities": [
+        {
+          "id": "init",
+          "title": "Una funzione init di un modulo deve restituire 0 per segnalare l'inizializzazione riuscita.",
+          "type": "choice",
+          "required": true,
+          "prompt": "Una funzione init di un modulo deve restituire 0 per segnalare l'inizializzazione riuscita.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Vero",
+          "explanation": "Un valore di errore impedisce il completamento del caricamento.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        },
+        {
+          "id": "cleanup",
+          "title": "Il cleanup può ignorare callback ancora attive e riferimenti alle risorse del modulo.",
+          "type": "choice",
+          "required": true,
+          "prompt": "Il cleanup può ignorare callback ancora attive e riferimenti alle risorse del modulo.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Falso",
+          "explanation": "La rimozione richiede un protocollo che impedisca usi successivi delle risorse liberate.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        },
+        {
+          "id": "registrazione",
+          "title": "Registra l'inizializzazione",
+          "type": "c-fragment",
+          "required": true,
+          "prompt": "Registra hello_init come funzione di inizializzazione del modulo.",
+          "context": "static int hello_init(void);\n/* FRAMMENTO */",
+          "starter": "/* completa qui */",
+          "alternatives": [
+            "module_init(hello_init);"
+          ],
+          "solution": "module_init(hello_init);",
+          "explanation": "Verifica della macro richiesta; nessun modulo viene caricato nel kernel.",
+          "hints": [
+            "Scrivi soltanto il frammento richiesto, senza cambiare il contesto."
+          ]
+        }
+      ],
+      "document": {
+        "id": "aos-lezione-11-appunti",
+        "title": "Appunti - Lezione 11 - Moduli kernel",
+        "filename": "Appunti_AOS_Lezione-11.pdf",
+        "fingerprint": "f632e2aa3ae510c63f99c512acc081edfc2898c240432bcc90b7fb76b07f59a1",
+        "pages": 17
+      },
+      "sections": [
+        {
+          "id": "sezione-1",
+          "page": 1,
+          "title": "Driver"
+        },
+        {
+          "id": "sezione-2",
+          "page": 3,
+          "title": "Moduli kernel"
+        },
+        {
+          "id": "sezione-3",
+          "page": 4,
+          "title": "Vincoli del codice kernel"
+        },
+        {
+          "id": "sezione-4",
+          "page": 5,
+          "title": "Errori e cleanup"
+        },
+        {
+          "id": "sezione-5",
+          "page": 7,
+          "title": "Interfacce e simboli"
+        },
+        {
+          "id": "sezione-6",
+          "page": 8,
+          "title": "Inizializzazione e rimozione"
+        },
+        {
+          "id": "sezione-7",
+          "page": 9,
+          "title": "Kbuild"
+        },
+        {
+          "id": "sezione-8",
+          "page": 11,
+          "title": "Parametri"
+        },
+        {
+          "id": "sezione-9",
+          "page": 13,
+          "title": "Log"
+        },
+        {
+          "id": "sezione-10",
+          "page": 14,
+          "title": "Simboli condivisi"
+        },
+        {
+          "id": "sezione-11",
+          "page": 16,
+          "title": "Firma dei moduli"
+        }
+      ]
+    },
+    {
+      "id": "algoritmi-lezione-01",
+      "subject": "algoritmi",
+      "chapter": "Percorso principale",
+      "order": 1,
+      "title": "Lezione 1 - Ordinamento e analisi",
+      "description": "Segui Insertion Sort e Merge e distingui costo e correttezza.",
+      "objectives": [
+        "Segui Insertion Sort e Merge e distingui costo e correttezza."
+      ],
+      "availability": "ready",
+      "topicIds": [
+        "algoritmi-l01-ordinamenti"
+      ],
+      "theory": [
+        {
+          "topicId": "algoritmi-l01-ordinamenti",
+          "simulationId": "insertion-sort",
+          "page": 2,
+          "section": "Insertion Sort: estendere un prefisso ordinato"
+        },
+        {
+          "topicId": "algoritmi-l01-ordinamenti",
+          "simulationId": "merge",
+          "page": 8,
+          "section": "Merge: fondere due parti ordinate"
+        }
+      ],
+      "activities": [
+        {
+          "id": "prefisso",
+          "title": "Insertion Sort mantiene ordinato il prefisso già elaborato.",
+          "type": "choice",
+          "required": true,
+          "prompt": "Insertion Sort mantiene ordinato il prefisso già elaborato.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Vero",
+          "explanation": "L'inserimento della chiave estende il prefisso ordinato.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        },
+        {
+          "id": "merge",
+          "title": "Merge richiede che entrambe le parti di ingresso siano già ordinate.",
+          "type": "choice",
+          "required": true,
+          "prompt": "Merge richiede che entrambe le parti di ingresso siano già ordinate.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Vero",
+          "explanation": "Il confronto fra le teste funziona grazie all'ordine delle due parti.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        },
+        {
+          "id": "conservazione",
+          "title": "Per ordinare correttamente è sufficiente produrre valori crescenti, anche perdendo duplicati.",
+          "type": "choice",
+          "required": true,
+          "prompt": "Per ordinare correttamente è sufficiente produrre valori crescenti, anche perdendo duplicati.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Falso",
+          "explanation": "Occorre conservare gli elementi e le loro molteplicità.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        }
+      ],
+      "document": {
+        "id": "algoritmi-lezione-01-appunti",
+        "title": "Appunti - Lezione 1 - Ordinamento e analisi",
+        "filename": "Appunti_Algoritmi_Lezione-01.pdf",
+        "fingerprint": "6d10c916feb27cd3bf1a017a7a237200835397217190b44fb13292fd69636551",
+        "pages": 13
+      },
+      "sections": [
+        {
+          "id": "sezione-1",
+          "page": 1,
+          "title": "Problemi e algoritmi"
+        },
+        {
+          "id": "sezione-2",
+          "page": 2,
+          "title": "Insertion Sort"
+        },
+        {
+          "id": "sezione-3",
+          "page": 4,
+          "title": "Modello di costo"
+        },
+        {
+          "id": "sezione-4",
+          "page": 5,
+          "title": "Analisi di Insertion Sort"
+        },
+        {
+          "id": "sezione-5",
+          "page": 7,
+          "title": "Divide et impera"
+        },
+        {
+          "id": "sezione-6",
+          "page": 8,
+          "title": "Merge"
+        },
+        {
+          "id": "sezione-7",
+          "page": 11,
+          "title": "Ricorrenza di Merge Sort"
+        },
+        {
+          "id": "sezione-8",
+          "page": 12,
+          "title": "Confronto dei costi"
+        }
+      ]
+    },
+    {
+      "id": "algoritmi-lezione-02",
+      "subject": "algoritmi",
+      "chapter": "Percorso principale",
+      "order": 2,
+      "title": "Lezione 2 - Complessità, ricorrenze e heap",
+      "description": "Distingui limiti asintotici e costi di riparazione e costruzione del max-heap.",
+      "objectives": [
+        "Distingui limiti asintotici e costi di riparazione e costruzione del max-heap."
+      ],
+      "availability": "ready",
+      "topicIds": [
+        "algoritmi-l02-analisi",
+        "algoritmi-l02-heap"
+      ],
+      "theory": [
+        {
+          "topicId": "algoritmi-l02-analisi",
+          "simulationId": "limiti",
+          "page": 3,
+          "section": "Limiti asintotici"
+        },
+        {
+          "topicId": "algoritmi-l02-analisi",
+          "simulationId": "ricorrenza",
+          "page": 6,
+          "section": "Ricorrenze"
+        },
+        {
+          "topicId": "algoritmi-l02-heap",
+          "simulationId": "heap",
+          "page": 10,
+          "section": "Dall'array alla struttura heap"
+        }
+      ],
+      "activities": [
+        {
+          "id": "upper",
+          "title": "Un limite O(g(n)) è necessariamente anche un limite Θ(g(n)).",
+          "type": "choice",
+          "required": true,
+          "prompt": "Un limite O(g(n)) è necessariamente anche un limite Θ(g(n)).",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Falso",
+          "explanation": "Un limite superiore può non essere stretto.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        },
+        {
+          "id": "heapify",
+          "title": "Max-Heapify può riparare un nodo assumendo già validi i due sottoalberi heap.",
+          "type": "choice",
+          "required": true,
+          "prompt": "Max-Heapify può riparare un nodo assumendo già validi i due sottoalberi heap.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Vero",
+          "explanation": "La violazione viene spinta lungo un ramo.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        },
+        {
+          "id": "build",
+          "title": "Qual è il costo asintotico della costruzione bottom-up di un heap?",
+          "type": "choice",
+          "required": true,
+          "prompt": "Qual è il costo asintotico della costruzione bottom-up di un heap?",
+          "options": [
+            "Θ(n)",
+            "Θ(né)",
+            "Θ(1)"
+          ],
+          "answer": "Θ(n)",
+          "explanation": "La somma dei costi per altezza è lineare; non tutti i nodi hanno altezza logaritmica.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        }
+      ],
+      "document": {
+        "id": "algoritmi-lezione-02-appunti",
+        "title": "Appunti - Lezione 2 - Complessità, ricorrenze e heap",
+        "filename": "Appunti_Algoritmi_Lezione-02.pdf",
+        "fingerprint": "001d13a8564db27de0b7fcbd2cb0c46d1c352e0e93536ac5bdb3c48dd2e34b68",
+        "pages": 21
+      },
+      "sections": [
+        {
+          "id": "sezione-1",
+          "page": 2,
+          "title": "Misura del costo"
+        },
+        {
+          "id": "sezione-2",
+          "page": 3,
+          "title": "Limiti asintotici"
+        },
+        {
+          "id": "sezione-3",
+          "page": 5,
+          "title": "Difficoltà del problema"
+        },
+        {
+          "id": "sezione-4",
+          "page": 6,
+          "title": "Ricorrenze"
+        },
+        {
+          "id": "sezione-5",
+          "page": 8,
+          "title": "Teorema dell'esperto"
+        },
+        {
+          "id": "sezione-6",
+          "page": 10,
+          "title": "Heap su array"
+        },
+        {
+          "id": "sezione-7",
+          "page": 12,
+          "title": "Max-Heapify"
+        },
+        {
+          "id": "sezione-8",
+          "page": 15,
+          "title": "Build-Max-Heap"
+        },
+        {
+          "id": "sezione-9",
+          "page": 16,
+          "title": "Costo della costruzione"
+        },
+        {
+          "id": "sezione-10",
+          "page": 17,
+          "title": "Heapsort"
+        }
+      ]
+    },
+    {
+      "id": "algoritmi-lezione-03",
+      "subject": "algoritmi",
+      "chapter": "Percorso principale",
+      "order": 3,
+      "title": "Lezione 3 - Probabilità e Quicksort",
+      "description": "Distingui costo atteso, pivot e ordinamento per confronti.",
+      "objectives": [
+        "Distingui costo atteso, pivot e ordinamento per confronti."
+      ],
+      "availability": "ready",
+      "topicIds": [],
+      "theory": [],
+      "activities": [
+        {
+          "id": "pivot",
+          "title": "Un pivot randomizzato garantisce tempo O(n log n) in ogni singola esecuzione di Quicksort.",
+          "type": "choice",
+          "required": true,
+          "prompt": "Un pivot randomizzato garantisce tempo O(n log n) in ogni singola esecuzione di Quicksort.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Falso",
+          "explanation": "La garanzia attesa non esclude esecuzioni quadratiche.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        },
+        {
+          "id": "partizione",
+          "title": "Partition colloca il pivot nella sua posizione relativa rispetto alle due parti.",
+          "type": "choice",
+          "required": true,
+          "prompt": "Partition colloca il pivot nella sua posizione relativa rispetto alle due parti.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Vero",
+          "explanation": "La partizione separa le chiavi rispetto al pivot.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        },
+        {
+          "id": "counting",
+          "title": "Counting Sort può evitare il limite degli ordinamenti basati soltanto su confronti.",
+          "type": "choice",
+          "required": true,
+          "prompt": "Counting Sort può evitare il limite degli ordinamenti basati soltanto su confronti.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Vero",
+          "explanation": "Usa informazioni sulle chiavi come indici e richiede ipotesi sul loro dominio.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        }
+      ],
+      "document": {
+        "id": "algoritmi-lezione-03-appunti",
+        "title": "Appunti - Lezione 3 - Probabilità e Quicksort",
+        "filename": "Appunti_Algoritmi_Lezione-03.pdf",
+        "fingerprint": "0821b90299d2065fff517f42735d82c2e9e61ac930e5c05546cbe52796d78a60",
+        "pages": 13
+      },
+      "sections": [
+        {
+          "id": "sezione-1",
+          "page": 1,
+          "title": "Costo atteso"
+        },
+        {
+          "id": "sezione-2",
+          "page": 2,
+          "title": "Assunzioni probabilistiche"
+        },
+        {
+          "id": "sezione-3",
+          "page": 4,
+          "title": "Permutazione uniforme"
+        },
+        {
+          "id": "sezione-4",
+          "page": 5,
+          "title": "Partition e Quicksort"
+        },
+        {
+          "id": "sezione-5",
+          "page": 7,
+          "title": "Costo delle partizioni"
+        },
+        {
+          "id": "sezione-6",
+          "page": 9,
+          "title": "Quicksort randomizzato"
+        },
+        {
+          "id": "sezione-7",
+          "page": 10,
+          "title": "Limite per confronti"
+        },
+        {
+          "id": "sezione-8",
+          "page": 11,
+          "title": "Counting Sort"
+        }
+      ]
+    },
+    {
+      "id": "algoritmi-lezione-04",
+      "subject": "algoritmi",
+      "chapter": "Percorso principale",
+      "order": 4,
+      "title": "Lezione 4 - Ordinamenti lineari e selezione",
+      "description": "Confronta stabilità, distribuzione e scelta del rango.",
+      "objectives": [
+        "Confronta stabilità, distribuzione e scelta del rango."
+      ],
+      "availability": "ready",
+      "topicIds": [],
+      "theory": [],
+      "activities": [
+        {
+          "id": "radix",
+          "title": "Radix Sort LSD richiede una procedura stabile a ogni passata per mantenere il risultato delle cifre precedenti.",
+          "type": "choice",
+          "required": true,
+          "prompt": "Radix Sort LSD richiede una procedura stabile a ogni passata per mantenere il risultato delle cifre precedenti.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Vero",
+          "explanation": "La stabilità preserva l'ordine già stabilito dalle cifre meno significative.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        },
+        {
+          "id": "select",
+          "title": "Randomized-Select deve ricorrere sempre su entrambe le parti come Quicksort.",
+          "type": "choice",
+          "required": true,
+          "prompt": "Randomized-Select deve ricorrere sempre su entrambe le parti come Quicksort.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Falso",
+          "explanation": "Prosegue nella sola parte che contiene il rango cercato.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        },
+        {
+          "id": "bucket",
+          "title": "Il costo atteso lineare di Bucket Sort vale senza alcuna ipotesi sulla distribuzione.",
+          "type": "choice",
+          "required": true,
+          "prompt": "Il costo atteso lineare di Bucket Sort vale senza alcuna ipotesi sulla distribuzione.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Falso",
+          "explanation": "La distribuzione degli elementi nei bucket è essenziale all'analisi attesa.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        }
+      ],
+      "document": {
+        "id": "algoritmi-lezione-04-appunti",
+        "title": "Appunti - Lezione 4 - Ordinamenti lineari e selezione",
+        "filename": "Appunti_Algoritmi_Lezione-04.pdf",
+        "fingerprint": "cc193bb2cea61ee8ece9a141e438fae332a6423f138915f35912700723b0b35b",
+        "pages": 16
+      },
+      "sections": [
+        {
+          "id": "sezione-1",
+          "page": 1,
+          "title": "Counting Sort stabile"
+        },
+        {
+          "id": "sezione-2",
+          "page": 3,
+          "title": "Radix Sort"
+        },
+        {
+          "id": "sezione-3",
+          "page": 5,
+          "title": "Bucket Sort"
+        },
+        {
+          "id": "sezione-4",
+          "page": 7,
+          "title": "Rango e mediana"
+        },
+        {
+          "id": "sezione-5",
+          "page": 8,
+          "title": "Minimo e massimo"
+        },
+        {
+          "id": "sezione-6",
+          "page": 10,
+          "title": "Randomized-Select"
+        },
+        {
+          "id": "sezione-7",
+          "page": 12,
+          "title": "Select deterministico"
+        },
+        {
+          "id": "sezione-8",
+          "page": 15,
+          "title": "Confronto delle garanzie"
+        }
+      ]
+    },
+    {
+      "id": "algoritmi-lezione-05",
+      "subject": "algoritmi",
+      "chapter": "Percorso principale",
+      "order": 5,
+      "title": "Lezione 5 - Strutture dati e hashing",
+      "description": "Distingui discipline di accesso e costo delle collisioni.",
+      "objectives": [
+        "Distingui discipline di accesso e costo delle collisioni."
+      ],
+      "availability": "ready",
+      "topicIds": [],
+      "theory": [],
+      "activities": [
+        {
+          "id": "stack",
+          "title": "Una pila usa la disciplina LIFO.",
+          "type": "choice",
+          "required": true,
+          "prompt": "Una pila usa la disciplina LIFO.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Vero",
+          "explanation": "L'ultimo elemento inserito è il primo estratto.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        },
+        {
+          "id": "queue",
+          "title": "Una coda FIFO estrae prima l'elemento inserito più recentemente.",
+          "type": "choice",
+          "required": true,
+          "prompt": "Una coda FIFO estrae prima l'elemento inserito più recentemente.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Falso",
+          "explanation": "Estrae l'elemento in attesa da più tempo.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        },
+        {
+          "id": "hash",
+          "title": "Una funzione hash può produrre collisioni tra chiavi differenti.",
+          "type": "choice",
+          "required": true,
+          "prompt": "Una funzione hash può produrre collisioni tra chiavi differenti.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Vero",
+          "explanation": "La gestione delle collisioni fa parte del progetto della tabella.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        }
+      ],
+      "document": {
+        "id": "algoritmi-lezione-05-appunti",
+        "title": "Appunti - Lezione 5 - Strutture dati e hashing",
+        "filename": "Appunti_Algoritmi_Lezione-05.pdf",
+        "fingerprint": "f1772662250414b242a6e145be53c39dbca32f99fed2ca7b0d19bc013afbd032",
+        "pages": 18
+      },
+      "sections": [
+        {
+          "id": "sezione-1",
+          "page": 1,
+          "title": "Insiemi dinamici"
+        },
+        {
+          "id": "sezione-2",
+          "page": 2,
+          "title": "Pile e code"
+        },
+        {
+          "id": "sezione-3",
+          "page": 5,
+          "title": "Liste concatenate"
+        },
+        {
+          "id": "sezione-4",
+          "page": 8,
+          "title": "Sentinelle"
+        },
+        {
+          "id": "sezione-5",
+          "page": 10,
+          "title": "Alberi e indirizzamento"
+        },
+        {
+          "id": "sezione-6",
+          "page": 12,
+          "title": "Costo della ricerca hash"
+        },
+        {
+          "id": "sezione-7",
+          "page": 15,
+          "title": "Funzioni hash"
+        },
+        {
+          "id": "sezione-8",
+          "page": 16,
+          "title": "Hashing universale"
+        }
+      ]
+    },
+    {
+      "id": "algoritmi-lezione-06",
+      "subject": "algoritmi",
+      "chapter": "Percorso principale",
+      "order": 6,
+      "title": "Lezione 6 - Alberi rosso-neri e programmazione dinamica",
+      "description": "Collega invarianti, riuso dei sottoproblemi e ricostruzione.",
+      "objectives": [
+        "Collega invarianti, riuso dei sottoproblemi e ricostruzione."
+      ],
+      "availability": "ready",
+      "topicIds": [],
+      "theory": [],
+      "activities": [
+        {
+          "id": "rosso",
+          "title": "In un albero rosso-nero un nodo rosso può avere un figlio rosso.",
+          "type": "choice",
+          "required": true,
+          "prompt": "In un albero rosso-nero un nodo rosso può avere un figlio rosso.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Falso",
+          "explanation": "L'invariante vieta due nodi rossi consecutivi.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        },
+        {
+          "id": "memo",
+          "title": "La memoizzazione riutilizza il risultato di sottoproblemi già risolti.",
+          "type": "choice",
+          "required": true,
+          "prompt": "La memoizzazione riutilizza il risultato di sottoproblemi già risolti.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Vero",
+          "explanation": "Evita di ripetere gli stessi calcoli nella ricorsione.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        },
+        {
+          "id": "rotazione",
+          "title": "Una rotazione valida preserva l'ordine della visita inorder di un albero di ricerca.",
+          "type": "choice",
+          "required": true,
+          "prompt": "Una rotazione valida preserva l'ordine della visita inorder di un albero di ricerca.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Vero",
+          "explanation": "Cambia i collegamenti, non l'ordinamento relativo delle chiavi.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        }
+      ],
+      "document": {
+        "id": "algoritmi-lezione-06-appunti",
+        "title": "Appunti - Lezione 6 - Alberi rosso-neri e programmazione dinamica",
+        "filename": "Appunti_Algoritmi_Lezione-06.pdf",
+        "fingerprint": "f93ff2ae0b4a1ffee5d41c8b335ac35f3db10fae73b7003352d13d18dcdd957d",
+        "pages": 16
+      },
+      "sections": [
+        {
+          "id": "sezione-1",
+          "page": 1,
+          "title": "Invarianti rosso-neri"
+        },
+        {
+          "id": "sezione-2",
+          "page": 2,
+          "title": "Altezza logaritmica"
+        },
+        {
+          "id": "sezione-3",
+          "page": 3,
+          "title": "Rotazioni"
+        },
+        {
+          "id": "sezione-4",
+          "page": 5,
+          "title": "Inserimento rosso-nero"
+        },
+        {
+          "id": "sezione-5",
+          "page": 8,
+          "title": "Programmazione dinamica"
+        },
+        {
+          "id": "sezione-6",
+          "page": 9,
+          "title": "Memoizzazione"
+        },
+        {
+          "id": "sezione-7",
+          "page": 11,
+          "title": "Bottom-up e ricostruzione"
+        },
+        {
+          "id": "sezione-8",
+          "page": 13,
+          "title": "Catene di matrici"
+        }
+      ]
+    },
+    {
+      "id": "cpp-lezione-01",
+      "subject": "cpp",
+      "chapter": "Percorso principale",
+      "order": 1,
+      "title": "Lezione 1 - Tipi, memoria e funzioni",
+      "description": "Collega tipi, alias, parametri e matrici linearizzate.",
+      "objectives": [
+        "Collega tipi, alias, parametri e matrici linearizzate."
+      ],
+      "availability": "ready",
+      "topicIds": [
+        "cpp-l01-tipi-memoria"
+      ],
+      "theory": [],
+      "activities": [
+        {
+          "id": "alias",
+          "title": "Una modifica attraverso un riferimento può cambiare l'oggetto del chiamante.",
+          "type": "choice",
+          "required": true,
+          "prompt": "Una modifica attraverso un riferimento può cambiare l'oggetto del chiamante.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Vero",
+          "explanation": "Il riferimento è un alias dello stesso oggetto.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        },
+        {
+          "id": "array",
+          "title": "Array e puntatori sono sempre lo stesso tipo in C++.",
+          "type": "choice",
+          "required": true,
+          "prompt": "Array e puntatori sono sempre lo stesso tipo in C++.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Falso",
+          "explanation": "Un array può decadere a puntatore in molti contesti, ma i tipi restano distinti.",
+          "hints": [
+            "Confronta le alternative con il meccanismo descritto nella teoria."
+          ]
+        },
+        {
+          "id": "modifica-alias",
+          "title": "Modifica tramite alias",
+          "type": "cpp",
+          "required": true,
+          "topicId": "cpp-l01-tipi-memoria",
+          "exerciseId": "modifica-alias",
+          "explanation": "Supera i casi disponibili nel Playground C++ reale.",
+          "hints": []
+        },
+        {
+          "id": "lettura-row-major",
+          "title": "Leggere una matrice rettangolare",
+          "type": "cpp",
+          "required": true,
+          "topicId": "cpp-l01-tipi-memoria",
+          "exerciseId": "lettura-row-major",
+          "explanation": "Supera i casi disponibili nel Playground C++ reale.",
+          "hints": []
+        }
+      ],
+      "document": {
+        "id": "cpp-lezione-01-appunti",
+        "title": "Appunti - Lezione 1 - Tipi, memoria e funzioni",
+        "filename": "Appunti_CPP_Lezione-01.pdf",
+        "fingerprint": "ceab1a6215eae95f501772b30824e88251975db3702b7d9072d4a2b419860999",
+        "pages": 18
+      },
+      "sections": [
+        {
+          "id": "sezione-1",
+          "page": 1,
+          "title": "Tipi e significato dei dati"
+        },
+        {
+          "id": "sezione-2",
+          "page": 2,
+          "title": "Dimensioni e limiti degli interi"
+        },
+        {
+          "id": "sezione-3",
+          "page": 5,
+          "title": "Conversioni e inizializzazione"
+        },
+        {
+          "id": "sezione-4",
+          "page": 6,
+          "title": "Virgola mobile"
+        },
+        {
+          "id": "sezione-5",
+          "page": 8,
+          "title": "Array"
+        },
+        {
+          "id": "sezione-6",
+          "page": 9,
+          "title": "Struct e union"
+        },
+        {
+          "id": "sezione-7",
+          "page": 10,
+          "title": "Puntatori"
+        },
+        {
+          "id": "sezione-8",
+          "page": 12,
+          "title": "Array e puntatori"
+        },
+        {
+          "id": "sezione-9",
+          "page": 13,
+          "title": "Riferimenti e funzioni"
+        },
+        {
+          "id": "sezione-10",
+          "page": 15,
+          "title": "Matrici linearizzate"
+        },
+        {
+          "id": "sezione-11",
+          "page": 17,
+          "title": "Pratica"
+        }
+      ]
+    },
+    {
+      "id": "cpp-pratica",
+      "subject": "cpp",
+      "chapter": "Pratica aggiuntiva",
+      "order": 100,
+      "title": "Pratica progressiva - C++",
+      "description": "Passa da input e sequenze alla gestione esclusiva delle risorse.",
+      "objectives": [
+        "Passa da input e sequenze alla gestione esclusiva delle risorse."
+      ],
+      "availability": "ready",
+      "topicIds": [
+        "cpp-esercitazioni-guidate"
+      ],
+      "theory": [],
+      "activities": [
+        {
+          "id": "somma-interi",
+          "title": "Somma di due interi",
+          "type": "cpp",
+          "required": true,
+          "topicId": "cpp-esercitazioni-guidate",
+          "exerciseId": "somma-interi",
+          "explanation": "I test attestano soltanto i casi verificati.",
+          "hints": []
+        },
+        {
+          "id": "statistiche-vettore",
+          "title": "Statistiche di una sequenza",
+          "type": "cpp",
+          "required": true,
+          "topicId": "cpp-esercitazioni-guidate",
+          "exerciseId": "statistiche-vettore",
+          "explanation": "I test attestano soltanto i casi verificati.",
+          "hints": []
+        },
+        {
+          "id": "lista-ownership",
+          "title": "Una lista con ownership esclusiva",
+          "type": "cpp",
+          "required": true,
+          "topicId": "cpp-esercitazioni-guidate",
+          "exerciseId": "lista-ownership",
+          "explanation": "I test attestano soltanto i casi verificati.",
+          "hints": []
+        }
+      ],
+      "sections": []
+    },
+    {
+      "id": "ottimizzazione-percorso",
+      "subject": "ottimizzazione",
+      "chapter": "Percorso principale",
+      "order": 1,
+      "title": "Percorso di ottimizzazione",
+      "description": "Lezioni e verifiche da preparare a partire dagli appunti revisionati.",
+      "objectives": [
+        "Organizzare il percorso dopo la revisione degli appunti."
+      ],
+      "availability": "planned",
+      "topicIds": [],
+      "theory": [],
+      "activities": [],
+      "sections": []
+    }
+  ]
+}

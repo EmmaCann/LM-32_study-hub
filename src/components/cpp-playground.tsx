@@ -6,6 +6,7 @@ import { CppEditor } from './cpp-editor';
 import { CppRuntime, type CppStandard, type CompileResult } from '@/lib/cpp-runtime';
 import { passesTest, type RunResult } from '@/lib/cpp-check';
 import type { Exercise } from '@/lib/schema';
+import { passActivity, saveDraft, useStudyProgress } from '@/lib/study-store';
 
 const initialCode =
   '#include <iostream>\n\nint main() {\n    int numero;\n    std::cin >> numero;\n    std::cout << "Hai scritto: " << numero << "\\n";\n    return 0;\n}\n';
@@ -16,17 +17,39 @@ export type ExerciseNavigation = {
   previous?: { href: string; title: string };
   next?: { href: string; title: string };
 };
-export function CppPlayground({
-  exercise,
-  referenceHref,
-  exerciseNavigation,
-}: {
+type ProgressBinding = { key: string; signature: string; lessonId: string };
+type PlaygroundProps = {
   exercise?: Exercise;
   referenceHref?: string;
   exerciseNavigation?: ExerciseNavigation;
-}) {
+  progressBindings?: ProgressBinding[];
+  draftId?: string;
+};
+export function CppPlayground(props: PlaygroundProps) {
+  const { progress, ready, warning } = useStudyProgress();
+  const draftKey = `cpp-${props.draftId ?? props.exercise?.id ?? 'libero'}--sorgente`;
+  if (!ready) return <p role="status">Ripristino della bozza locale…</p>;
+  return (
+    <>
+      {warning && <p className="callout">{warning}</p>}
+      <CppPlaygroundSession
+        {...props}
+        draftKey={draftKey}
+        initialSource={progress.drafts[draftKey]?.value}
+      />
+    </>
+  );
+}
+function CppPlaygroundSession({
+  exercise,
+  referenceHref,
+  exerciseNavigation,
+  progressBindings,
+  draftKey,
+  initialSource,
+}: PlaygroundProps & { draftKey: string; initialSource?: string }) {
   const spec = exercise?.cpp;
-  const [code, setCode] = useState(spec?.starterCode ?? initialCode);
+  const [code, setCode] = useState(initialSource ?? spec?.starterCode ?? initialCode);
   const [standard, setStandard] = useState<CppStandard>(spec?.standard ?? 'c++17');
   const [stdin, setStdin] = useState(
     spec?.tests.find((t) => t.visibility === 'public')?.stdin ?? '42\n',
@@ -146,6 +169,9 @@ export function CppPlayground({
         }
         if (active.current) {
           setCheckedCode(snapshot);
+          if (results.every((r) => r.passed))
+            for (const binding of progressBindings ?? [])
+              passActivity(binding.key, binding.signature);
           setStatus(
             `${results.every((r) => r.passed) ? 'Esercizio superato.' : 'Esercizio da rivedere.'} ${results.filter((r) => r.passed).length}/${results.length} casi verificati superati. Questo non dimostra la correttezza per tutti gli input.`,
           );
@@ -173,6 +199,11 @@ export function CppPlayground({
 
   return (
     <div className="cpp-playground">
+      {progressBindings?.[0] && (
+        <Link className="study-return" href={`/percorso/${progressBindings[0].lessonId}#verifica`}>
+          Torna alla verifica della lezione
+        </Link>
+      )}
       {exerciseNavigation && (
         <nav className="cpp-exercise-navigation" aria-label="Passa a un altro esercizio">
           <div>
@@ -265,6 +296,7 @@ export function CppPlayground({
             ) {
               stop();
               setCode(spec?.starterCode ?? initialCode);
+              saveDraft(draftKey, spec?.starterCode ?? initialCode);
               setDiagnostics('');
               setChecks([]);
               setOutput(undefined);
@@ -370,7 +402,13 @@ export function CppPlayground({
               </select>
             </label>
           </div>
-          <CppEditor value={code} onChange={setCode} />
+          <CppEditor
+            value={code}
+            onChange={(value) => {
+              setCode(value);
+              saveDraft(draftKey, value);
+            }}
+          />
           <p className="cpp-small">
             Tab sposta il focus. Il codice resta nell’editor durante compilazione e verifica; la
             soluzione non lo sostituisce.

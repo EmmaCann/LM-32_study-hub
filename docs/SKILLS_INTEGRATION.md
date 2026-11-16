@@ -1,5 +1,63 @@
 # Contratto di integrazione per le future skill — schema 1
 
+## Percorsi, teoria locale e verifiche — estensione compatibile
+
+Vedere [STUDY_PATHS.md](STUDY_PATHS.md) per comportamento, storage e controlli.
+Il formato dei pacchetti esistenti non cambia. Il catalogo indipendente
+`src/content/curriculum.json` usa `{ "schemaVersion": 1, "lessons": [...] }`;
+l'autorità è `src/lib/study-schema.ts` e la validazione incrociata è in
+`src/lib/study-content.ts`. Aggiungere o aggiornare lezioni senza modificare
+componenti o route. Conservare ID delle lezioni, delle attività e tutti gli URL.
+
+Una lezione contiene: `id`, `subject`, `chapter` (gruppo leggibile), `order`,
+`title`, `description`, `objectives`, `availability` (`ready` oppure `planned`),
+`topicIds`, `theory`, `activities`, `sections` (opzionale, default array vuoto).
+Le lezioni pronte richiedono almeno un'attività obbligatoria; quelle pianificate
+non devono dichiarare verifiche inesistenti. `topicIds` referenzia i pacchetti
+approvati della stessa materia, non copia la loro teoria.
+
+`document`, opzionale, contiene `id`, `title`, `filename` (solo basename PDF),
+`fingerprint` SHA-256 del documento revisionato e `pages`. Non esportare il PDF,
+percorsi personali, estratti teorici integrali, ZIP o indice full text. Le
+`sections` sono soli metadati `{id,title,page}`. Ogni riferimento `theory` contiene
+`{topicId,simulationId,page,section}`: tutti i laboratori associati alla lezione
+devono avere un riferimento verificato, entro il numero di pagine del PDF.
+Non dedurre pagine da titoli simili né inserire riferimenti inventati.
+
+Ogni attività ha `id`, `type`, `title`, `required`, `explanation`, `hints`:
+
+- `choice`: aggiunge `prompt`, `options`, `answer`; vero/falso si rappresenta
+  con le due opzioni corrispondenti. La risposta deve appartenere alle opzioni.
+- `c-fragment`: soltanto AOS; aggiunge `prompt`, `context`, `starter`,
+  `alternatives`, `solution`. Scrivere frammenti C originali e minimali.
+  Il contesto è fornito e l'utente completa solo la parte richiesta.
+  Documentare le alternative accettate: confronto per token, non esecuzione,
+  equivalenza semantica generale o certificazione del programma Linux.
+- `cpp`: aggiunge `topicId`, `exerciseId`, riferiti a un esercizio C++ già
+  approvato e verificato con il contratto C++ esistente. La ricevuta del percorso
+  viene registrata soltanto dopo il superamento reale dei test disponibili.
+
+Le risposte e le alternative sono pubbliche nel bundle: non sono segreti.
+Una modifica all'attività o all'esercizio C++ cambia automaticamente la firma
+dei risultati; non riutilizzare ID per attività concettualmente diverse.
+
+Per una skill che esporta nuove lezioni: scrivere il sottoinsieme da aggiungere
+o aggiornare in `staging/<id>/curriculum.json`, con i soli metadati e contenuti
+interattivi originali. Prima importare e validare gli eventuali pacchetti
+referenziati, poi eseguire:
+
+```powershell
+npm run study:content -- preview staging/<id>/curriculum.json
+# Dopo revisione didattica, tecnica e delle fonti:
+npm run study:content -- import staging/<id>/curriculum.json --approve
+```
+
+L'importazione aggiorna il catalogo locale con backup; senza `--approve`
+fallisce. Non esegue commit, push o deployment. Nuove simulazioni restano
+soggette alla revisione separata del codice prevista dal contratto base.
+Nel lavoro `feature/study-paths` tutti i test e le anteprime rimangono locali:
+non applicare le vecchie istruzioni di pubblicazione automatica a questo lavoro.
+
 Estensione compatibile C++: il formato base resta schema 1. I pacchetti AOS e Algoritmi continuano a usare manifest, simulazioni ed esercizi precedenti. Per il nuovo tipo `cpp` si aggiunge una specifica strutturata e, dopo verifica tecnica, `cpp-verification.json`.
 
 **Per le skill C++ è obbligatorio seguire [CPP_SKILLS_CONTRACT.md](CPP_SKILLS_CONTRACT.md)**: descrive esercizi, file iniziali/supporto, test pubblici e aggiuntivi, suggerimenti, soluzioni, download e ricevuta tecnica. [CPP_PLAYGROUND.md](CPP_PLAYGROUND.md) documenta toolchain e limiti. La pubblicazione resta pubblica senza autenticazione; i PDF completi restano locali.

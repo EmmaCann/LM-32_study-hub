@@ -9,3 +9,5 @@ backups/
 test-results/
 playwright-report/
 .preview/
+
+public/pdf/

@@ -1,5 +1,10 @@
 import { test, expect } from '@playwright/test';
 import { getTopics } from '../src/lib/content';
+const allCppExercises = getTopics()
+  .filter((t) => t.manifest.subject === 'cpp')
+  .flatMap((t) =>
+    t.exercises.filter((e) => e.type === 'cpp').map((e) => ({ topic: t, exercise: e })),
+  );
 const topic = getTopics().find((t) => t.manifest.id === 'cpp-esercitazioni-guidate')!;
 test.setTimeout(180000);
 test('C++ navigazione, download e layout responsive', async ({ page, request }, testInfo) => {
@@ -113,13 +118,14 @@ for (const [exerciseIndex, exercise] of topic.exercises.entries()) {
     ).toBeVisible();
     await expect(
       page.getByRole('navigation', { name: 'Passa a un altro esercizio' }),
-    ).toContainText(`Esercizio ${exerciseIndex + 1} di 3`);
-    const nextExercise = topic.exercises[exerciseIndex + 1];
+    ).toContainText(`Esercizio ${exerciseIndex + 1} di ${allCppExercises.length}`);
+    const nextItem = allCppExercises[exerciseIndex + 1];
+    const nextExercise = nextItem?.exercise;
     const nextAction = page.getByRole('link', { name: 'Passa al prossimo esercizio', exact: true });
     if (nextExercise) {
       await expect(nextAction).toHaveAttribute(
         'href',
-        `/cpp/playground/${topic.manifest.id}/${nextExercise.id}`,
+        `/cpp/playground/${nextItem.topic.manifest.id}/${nextExercise.id}`,
       );
     } else {
       await expect(nextAction).toHaveCount(0);
@@ -153,7 +159,7 @@ for (const [exerciseIndex, exercise] of topic.exercises.entries()) {
     if (nextExercise) {
       await nextAction.click();
       await expect(page).toHaveURL(
-        new RegExp(`/cpp/playground/${topic.manifest.id}/${nextExercise.id}$`),
+        new RegExp(`/cpp/playground/${nextItem.topic.manifest.id}/${nextExercise.id}$`),
       );
       await expect(
         page.getByRole('heading', { name: nextExercise.title, exact: true }),

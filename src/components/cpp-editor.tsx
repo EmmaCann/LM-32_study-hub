@@ -20,9 +20,11 @@ import { cpp } from '@codemirror/lang-cpp';
 export function CppEditor({
   value,
   onChange,
+  label = 'Codice C++',
 }: {
   value: string;
   onChange: (value: string) => void;
+  label?: string;
 }) {
   const host = useRef<HTMLDivElement>(null);
   const view = useRef<EditorView | null>(null);
@@ -49,7 +51,7 @@ export function CppEditor({
           highlightActiveLine(),
           keymap.of([...defaultKeymap, ...historyKeymap]),
           EditorView.contentAttributes.of({
-            'aria-label': 'Codice C++',
+            'aria-label': label,
             spellcheck: 'false',
             autocapitalize: 'off',
             autocorrect: 'off',
@@ -82,7 +84,7 @@ export function CppEditor({
       editor.destroy();
       view.current = null;
     };
-  }, []);
+  }, [label]);
   useEffect(() => {
     const editor = view.current;
     if (editor && value !== editor.state.doc.toString())

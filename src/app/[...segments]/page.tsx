@@ -1,3 +1,6 @@
+import { getCurriculum } from '@/lib/study-content';
+import { StudyRoadmap } from '@/components/study-roadmap';
+import { TheorySimulation } from '@/components/theory-simulation';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, ArrowRight, Download, FileText, Library, Play, PenLine } from 'lucide-react';
@@ -46,7 +49,7 @@ export default async function Page({ params }: { params: Promise<{ segments: str
             title="Materie"
             description="Ogni corso ha il suo spazio: appunti, capitoli e attività raccolti insieme."
           />
-          <SubjectCards topics={topics} />
+          <SubjectCards topics={topics} lessons={getCurriculum()} />
         </>
       );
     if (first === 'argomenti')
@@ -78,7 +81,16 @@ export default async function Page({ params }: { params: Promise<{ segments: str
             title="Cosa vuoi approfondire?"
             description="Una ricerca in tutto il tuo spazio di studio."
           />
-          <SearchBox entries={searchEntries()} />
+          <SearchBox
+            entries={searchEntries()}
+            lessons={getCurriculum().map((l) => ({
+              id: l.id,
+              title: l.title,
+              subject: l.subject,
+              description: l.description,
+              documentId: l.document?.id,
+            }))}
+          />
         </>
       );
     if (first === 'simulazioni' || first === 'esercizi') {
@@ -164,6 +176,20 @@ export default async function Page({ params }: { params: Promise<{ segments: str
           description={subject.description}
         />
         {subject.id === 'cpp' && <CppNavigation />}
+        {!chapter && (
+          <>
+            <StudyRoadmap
+              lessons={getCurriculum().filter((l) => l.subject === subject.id)}
+              subjectTitle={subject.short}
+            />
+            {subject.id === 'aos' && (
+              <Link className="button primary" href="/aos/playground">
+                Esercitazioni di codice C
+              </Link>
+            )}
+            <h2 className="study-existing-heading">Raccolta dei laboratori per argomento</h2>
+          </>
+        )}
         {!filtered.length ? (
           <EmptyState
             icon={<Library size={22} />}
@@ -230,9 +256,28 @@ export default async function Page({ params }: { params: Promise<{ segments: str
             </div>
           </div>
           <Notes content={topic.content} manifest={m} />
-          {topic.simulations.map((s) => (
-            <SimulationPlayer key={s.id} simulation={s} />
-          ))}
+          {topic.simulations.map((s) => {
+            const lesson = getCurriculum().find((l) =>
+              l.theory.some((r) => r.topicId === m.id && r.simulationId === s.id),
+            );
+            const ref = lesson?.theory.find((r) => r.topicId === m.id && r.simulationId === s.id);
+            return lesson?.document && ref ? (
+              <TheorySimulation
+                key={s.id}
+                reference={{
+                  document: lesson.document,
+                  page: ref.page,
+                  section: ref.section,
+                  lessonId: lesson.id,
+                  key: `${m.id}/${s.id}`,
+                }}
+              >
+                <SimulationPlayer simulation={s} />
+              </TheorySimulation>
+            ) : (
+              <SimulationPlayer key={s.id} simulation={s} />
+            );
+          })}
           {topic.exercises.map((e) => (
             <ExerciseCard
               key={e.id}

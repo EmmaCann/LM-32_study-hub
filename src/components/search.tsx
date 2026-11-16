@@ -1,18 +1,54 @@
 'use client';
-import { useState } from 'react';
+import { useDeferredValue, useState } from 'react';
 import Link from 'next/link';
 import { Search, ArrowUpRight } from 'lucide-react';
-type Entry = { title: string; kind: string; url: string; text: string };
-const normalize = (s: string) =>
-  s
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase();
-export function SearchBox({ entries }: { entries: Entry[] }) {
+import { normalizeSearch, pdfSearch, usePdfLibrary } from '@/lib/pdf-library';
+type Entry = { title: string; kind: string; url: string; text: string; subject?: string };
+type LessonEntry = {
+  id: string;
+  title: string;
+  description: string;
+  subject: string;
+  documentId?: string;
+};
+export function SearchBox({
+  entries,
+  lessons = [],
+}: {
+  entries: Entry[];
+  lessons?: LessonEntry[];
+}) {
   const [query, setQuery] = useState('');
-  const terms = normalize(query).trim().split(/\s+/).filter(Boolean);
+  const deferred = useDeferredValue(query);
+  const [kind, setKind] = useState('');
+  const [subject, setSubject] = useState('');
+  const { documents } = usePdfLibrary();
+  const terms = normalizeSearch(deferred).trim().split(/\s+/).filter(Boolean);
+  const all: Entry[] = [
+    ...entries.map((e) => ({ ...e, subject: e.url.split('/')[1] })),
+    ...lessons.map((l) => ({
+      title: l.title,
+      kind: 'Lezione',
+      url: `/percorso/${l.id}`,
+      text: l.description,
+      subject: l.subject,
+    })),
+    ...pdfSearch(documents, deferred).map((m) => ({
+      title: `${m.title} ? pagina ${m.page}`,
+      kind: 'PDF locale',
+      url: `/biblioteca?document=${m.id}&page=${m.page}`,
+      text: m.excerpt,
+      subject: lessons.find((l) => l.documentId === m.id)?.subject,
+    })),
+  ];
   const found = terms.length
-    ? entries.filter((e) => terms.every((t) => normalize(e.title + ' ' + e.text).includes(t)))
+    ? all.filter(
+        (e) =>
+          (!kind || e.kind === kind) &&
+          (!subject || e.subject === subject) &&
+          (e.kind === 'PDF locale' ||
+            terms.every((t) => normalizeSearch(e.title + ' ' + e.text).includes(t))),
+      )
     : [];
   return (
     <>
@@ -23,28 +59,69 @@ export function SearchBox({ entries }: { entries: Entry[] }) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           aria-label="Cerca in tutti i contenuti"
-          placeholder="Cerca un argomento, una sezione o un esercizio…"
+          placeholder="Un argomento, una lezione, una pagina dei tuoi PDF?"
         />
       </label>
+      <div className="study-actions study-search-filters">
+        <label>
+          Materia
+          <select
+            aria-label="Filtra ricerca per materia"
+            value={subject}
+            onChange={(e) => setSubject(e.target.value)}
+          >
+            <option value="">Tutte</option>
+            <option value="aos">AOS</option>
+            <option value="algoritmi">Algoritmi</option>
+            <option value="cpp">C++</option>
+            <option value="ottimizzazione">Ottimizzazione</option>
+          </select>
+        </label>
+        <label>
+          Tipo
+          <select
+            aria-label="Filtra ricerca per tipo"
+            value={kind}
+            onChange={(e) => setKind(e.target.value)}
+          >
+            <option value="">Tutti</option>
+            {[
+              'Lezione',
+              'Argomento',
+              'Sezione',
+              'Simulazione',
+              'Esercizio',
+              'PDF locale',
+              'Capitolo',
+              'Materia',
+            ].map((k) => (
+              <option key={k}>{k}</option>
+            ))}
+          </select>
+        </label>
+        <Link href="/biblioteca">Gestisci i PDF locali →</Link>
+      </div>
       <p role="status" className="muted">
         {terms.length
           ? `${found.length} risultati`
-          : 'Cerca materie, capitoli, sezioni, simulazioni ed esercizi.'}
+          : 'Cerca nei contenuti del sito e nei PDF che hai selezionato su questo dispositivo.'}
       </p>
       <div className="list">
-        {found.map((e, i) => (
+        {found.slice(0, 100).map((e, i) => (
           <Link className="list-row" key={`${e.url}-${i}`} href={e.url}>
             <div>
               <span className="eyebrow">{e.kind}</span>
               <h3>{e.title}</h3>
+              {e.kind === 'PDF locale' && <p className="study-search-excerpt">{e.text}</p>}
             </div>
             <ArrowUpRight />
           </Link>
         ))}
       </div>
-      {terms.length && !found.length && (
+      {found.length > 100 && <p>Mostrati i primi 100 risultati. Affina la ricerca.</p>}
+      {terms.length > 0 && !found.length && (
         <div className="empty">
-          Nessun risultato. Prova una parola più breve o un altro concetto.
+          Nessun risultato. Prova un?altra parola o collega i tuoi PDF nella biblioteca.
         </div>
       )}
     </>
