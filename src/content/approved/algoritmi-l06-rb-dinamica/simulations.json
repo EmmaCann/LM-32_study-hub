@@ -1,0 +1,20 @@
+[
+  {
+    "id": "rb",
+    "component": "algoritmi-rb-insert",
+    "title": "Inserimento rosso-nero: ricolora e ruota",
+    "description": "Segui chiavi persistenti e proprietà, con una sequenza modificabile."
+  },
+  {
+    "id": "aste",
+    "component": "algoritmi-rod",
+    "title": "Taglio delle aste: primo pezzo e resto ottimo",
+    "description": "Modifica il listino e osserva i candidati della tabella bottom-up."
+  },
+  {
+    "id": "matrici",
+    "component": "algoritmi-matrix-intro",
+    "title": "Matrici: due ordini di calcolo",
+    "description": "Confronta intermedi e costi cambiando dimensioni e parentesi."
+  }
+]

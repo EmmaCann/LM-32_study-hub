@@ -1,0 +1,9 @@
+{
+  "toolchain": "@yowasp/clang@22.0.0-git20542-10",
+  "digest": "1ee86ba16f086e7906cd9614631112da7fd8f3cab82023fe3bca23b4d5d2bd6f",
+  "verifiedAt": "2026-11-16T09:09:49.440Z",
+  "exercises": 2,
+  "tests": 8,
+  "passed": true,
+  "starterChecked": true
+}

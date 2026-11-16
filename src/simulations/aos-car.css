@@ -1,0 +1,12 @@
+.car-lab .car-canvas text{fill:#e8f1ff;font-family:system-ui,sans-serif;pointer-events:none}
+.car-lab .car-canvas .mv-title{font-size:23px;font-weight:650}
+.car-lab .car-canvas .mv-eyebrow{font:11px ui-monospace,monospace;letter-spacing:2px;fill:#9bb4d0}
+.car-lab .car-canvas .mv-small,.car-lab .car-canvas .car-code,.car-lab .car-canvas .mv-code{font:14px ui-monospace,monospace;fill:#b9cce1}
+.car-lab .car-canvas .mv-label,.car-lab .car-canvas .car-label{font-size:17px;font-weight:650}
+.car-lab .car-canvas .mv-chip-title{font:700 19px ui-monospace,monospace}
+.car-lab .car-canvas .mv-tiny,.car-lab .car-canvas .car-tiny,.car-lab .car-canvas .mv-tag{font-size:12px;fill:#b0c4db}
+.car-lab .car-canvas .car-result{font-size:16px;font-weight:600}
+.car-lab .car-tabs{width:100%;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.car-lab .car-tabs button[aria-pressed=true]{background:#123149;color:#a6eaff;border-color:#57d9f8}
+.car-lab .car-tabs button{white-space:normal}
+@media(max-width:700px){.car-lab .car-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}}

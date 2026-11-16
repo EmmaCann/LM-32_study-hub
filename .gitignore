@@ -9,3 +9,4 @@ backups/
 test-results/
 playwright-report/
 .preview/
+.vercel

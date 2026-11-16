@@ -1,5 +1,13 @@
 # Contratto di integrazione per le future skill — schema 1
 
+## Playground AOS: solo esercitazioni di codice
+
+`/aos/playground` ospita esclusivamente esercitazioni di codice approvate, di tipo
+`programming` nel contratto attuale. Non elencarvi lezioni, quiz o simulazioni:
+queste restano nelle lezioni e in `/simulazioni`. Se mancano esercizi di codice,
+mostrare uno stato vuoto esplicito. Non promettere esecuzione di syscall Linux
+nel browser e non usare la toolchain C++ per funzioni Linux non supportate.
+
 Estensione compatibile C++: il formato base resta schema 1. I pacchetti AOS e Algoritmi continuano a usare manifest, simulazioni ed esercizi precedenti. Per il nuovo tipo `cpp` si aggiunge una specifica strutturata e, dopo verifica tecnica, `cpp-verification.json`.
 
 **Per le skill C++ è obbligatorio seguire [CPP_SKILLS_CONTRACT.md](CPP_SKILLS_CONTRACT.md)**: descrive esercizi, file iniziali/supporto, test pubblici e aggiuntivi, suggerimenti, soluzioni, download e ricevuta tecnica. [CPP_PLAYGROUND.md](CPP_PLAYGROUND.md) documenta toolchain e limiti. La pubblicazione resta pubblica senza autenticazione; i PDF completi restano locali.

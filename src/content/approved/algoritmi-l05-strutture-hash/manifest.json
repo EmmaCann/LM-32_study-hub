@@ -1,0 +1,27 @@
+{
+    "schemaVersion":  1,
+    "id":  "algoritmi-l05-strutture-hash",
+    "subject":  "algoritmi",
+    "chapter":  {
+                    "id":  "strutture-dati",
+                    "title":  "Strutture dati",
+                    "order":  2
+                },
+    "slug":  "pile-liste-hash",
+    "title":  "Pile, code, liste e hashing",
+    "description":  "Confronta politiche di estrazione, collegamenti fra nodi e collisioni nelle tabelle hash.",
+    "order":  5,
+    "demo":  false,
+    "updated":  "2026-11-15",
+    "revision":  1,
+    "review":  {
+                   "status":  "approved",
+                   "reviewer":  "Codex - revisione didattica e pubblicazione autorizzate",
+                   "sources":  [
+                                   "Rielaborazioni originali sui contenuti verificati della lezione 5 di Algoritmi."
+                               ]
+               },
+    "assets":  [
+
+               ]
+}

@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "algoritmi-l04-lineari-selezione",
+  "subject": "algoritmi",
+  "chapter": { "id": "ordinamento", "title": "Ordinamento", "order": 1 },
+  "slug": "radix-bucket-selezione",
+  "title": "Ordinamenti lineari e selezione",
+  "description": "Passate stabili, distribuzione nei bucket e selezione di un rango con due strategie di pivot.",
+  "order": 4,
+  "demo": false,
+  "updated": "2026-11-15",
+  "revision": 1,
+  "review": {
+    "status": "approved",
+    "reviewer": "Codex - workflow universitario autorizzato",
+    "sources": [
+      "Lezione 4 di Algoritmi: rielaborazioni originali su ordinamenti lineari e statistiche d’ordine."
+    ]
+  },
+  "assets": []
+}

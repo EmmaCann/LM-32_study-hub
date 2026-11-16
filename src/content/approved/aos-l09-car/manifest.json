@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "aos-l09-car",
+  "subject": "aos",
+  "chapter": {
+    "id": "lezione-09",
+    "title": "Lezione 9",
+    "order": 9
+  },
+  "slug": "car-container",
+  "title": "Car: costruisci e metti alla prova i container",
+  "description": "Quattro esperimenti: percorsi di rete, integrita del radar, budget CPU e ordine di costruzione del container.",
+  "order": 1,
+  "demo": false,
+  "updated": "2026-11-14",
+  "revision": 1,
+  "review": {
+    "status": "approved",
+    "reviewer": "Codex: fonti e modelli revisionati, test Chromium/WebKit e movimento verificati; autorizzazione persistente della proprietaria.",
+    "sources": [
+      "Rielaborazione originale della lezione AOS 9 e del laboratorio car; nessuna fonte originale distribuita."
+    ]
+  },
+  "assets": []
+}
