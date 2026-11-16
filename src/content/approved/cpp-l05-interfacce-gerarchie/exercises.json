@@ -1,0 +1,142 @@
+[
+  {
+    "id": "pipeline-numerica",
+    "type": "cpp",
+    "title": "Una sequenza di correzioni numeriche",
+    "prompt": "Gli input value, delta e factor sono interi fra -100 e 100. Completa apply_all mantenendo la firma: ogni owner non nullo indica uno stadio che trasforma il risultato precedente. Non copiare unique_ptr e non sostituire la chiamata virtuale con formule specifiche per Add e Scale. Il main verifica sia Add seguito da Scale sia la pipeline vuota.",
+    "hints": [
+      "Il valore iniziale è anche il risultato della sequenza vuota.",
+      "Scorri gli owner per riferimento const e assegna a value il risultato di step->apply(value)."
+    ],
+    "solution": "#include <iostream>\n#include <memory>\n#include <vector>\nstruct Adjustment {\n    virtual ~Adjustment() = default;\n    virtual int apply(int value) const = 0;\n};\nstruct Add final : Adjustment {\n    int delta;\n    explicit Add(int n) : delta(n) {}\n    int apply(int n) const override { return n + delta; }\n};\nstruct Scale final : Adjustment {\n    int factor;\n    explicit Scale(int n) : factor(n) {}\n    int apply(int n) const override { return n * factor; }\n};\nusing Pipeline = std::vector<std::unique_ptr<Adjustment>>;\nint apply_all(const Pipeline& steps, int value) {\n    // TODO: applica ogni stadio, in ordine, senza copiare gli owner.\n    for (const auto& step : steps) {\n        value = step->apply(value);\n    }\n    return value;\n}\nint main() {\n    int value=0, delta=0, factor=0;\n    std::cin >> value >> delta >> factor;\n    Pipeline steps;\n    steps.push_back(std::make_unique<Add>(delta));\n    steps.push_back(std::make_unique<Scale>(factor));\n    std::cout << apply_all(steps, value) << ' '\n              << apply_all(Pipeline{}, value) << '\\n';\n}\n",
+    "explanation": "Il codice viene compilato ed eseguito nel browser. I test verificano i risultati; la lettura del codice deve anche confermare firme, ownership e inizializzazione previste dal contratto.",
+    "cpp": {
+      "difficulty": "base",
+      "tags": [
+        "interfacce",
+        "unique_ptr",
+        "pipeline"
+      ],
+      "standard": "c++20",
+      "starterCode": "#include <iostream>\n#include <memory>\n#include <vector>\nstruct Adjustment {\n    virtual ~Adjustment() = default;\n    virtual int apply(int value) const = 0;\n};\nstruct Add final : Adjustment {\n    int delta;\n    explicit Add(int n) : delta(n) {}\n    int apply(int n) const override { return n + delta; }\n};\nstruct Scale final : Adjustment {\n    int factor;\n    explicit Scale(int n) : factor(n) {}\n    int apply(int n) const override { return n * factor; }\n};\nusing Pipeline = std::vector<std::unique_ptr<Adjustment>>;\nint apply_all(const Pipeline& steps, int value) {\n    // TODO: applica ogni stadio, in ordine, senza copiare gli owner.\n    (void)steps;\n    return value;\n}\nint main() {\n    int value=0, delta=0, factor=0;\n    std::cin >> value >> delta >> factor;\n    Pipeline steps;\n    steps.push_back(std::make_unique<Add>(delta));\n    steps.push_back(std::make_unique<Scale>(factor));\n    std::cout << apply_all(steps, value) << ' '\n              << apply_all(Pipeline{}, value) << '\\n';\n}\n",
+      "files": [],
+      "tests": [
+        {
+          "id": "caso-1",
+          "title": "Caso 1",
+          "visibility": "public",
+          "stdin": "3 2 4\n",
+          "stdout": "20 3\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-2",
+          "title": "Caso 2",
+          "visibility": "additional",
+          "stdin": "0 7 0\n",
+          "stdout": "0 0\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-3",
+          "title": "Caso 3",
+          "visibility": "additional",
+          "stdin": "-3 1 -2\n",
+          "stdout": "4 -3\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-4",
+          "title": "Caso 4",
+          "visibility": "additional",
+          "stdin": "8 -5 3\n",
+          "stdout": "9 8\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        }
+      ],
+      "referenceLesson": {
+        "title": "Lezione 5 di C++",
+        "url": "/cpp/fondamenti/interfacce-gerarchie"
+      },
+      "execution": "browser"
+    }
+  },
+  {
+    "id": "base-condivisa",
+    "type": "cpp",
+    "title": "Un'unica configurazione condivisa",
+    "prompt": "Gli input requested e delta sono interi fra -100 e 100. Mantieni la gerarchia e le firme. Correggi soltanto la lista di inizializzazione di Device: la base virtuale deve contenere requested. Il main osserva lo stato dai due rami, confronta le due viste Config e modifica il valore tramite un ramo. Non duplicare lo stato nei rami o assegnare il valore nel corpo del costruttore.",
+    "hints": [
+      "La base virtuale viene inizializzata dal tipo più derivato dell’oggetto completo.",
+      "Gli inizializzatori Config(1) e Config(2) dei rami non scelgono il valore quando l’oggetto completo è Device."
+    ],
+    "solution": "#include <iostream>\nstruct Config {\n    int value;\n    explicit Config(int n = 0) : value(n) {}\n};\nstruct Reader : virtual Config { Reader() : Config(1) {} };\nstruct Writer : virtual Config { Writer() : Config(2) {} };\nstruct Device : Reader, Writer {\n    explicit Device(int requested) : Config(requested) {\n        // TODO: inizializza Config con requested nella lista sopra.\n        (void)requested;\n    }\n};\nint main() {\n    int requested=0, delta=0;\n    std::cin >> requested >> delta;\n    Device device(requested);\n    Config* left = static_cast<Reader*>(&device);\n    Config* right = static_cast<Writer*>(&device);\n    std::cout << left->value << ' ' << right->value << ' '\n              << (left == right) << ' ';\n    left->value += delta;\n    std::cout << right->value << '\\n';\n}\n",
+    "explanation": "Il codice viene compilato ed eseguito nel browser. I test verificano i risultati; la lettura del codice deve anche confermare firme, ownership e inizializzazione previste dal contratto.",
+    "cpp": {
+      "difficulty": "base",
+      "tags": [
+        "ereditarietà multipla",
+        "basi virtuali",
+        "inizializzazione"
+      ],
+      "standard": "c++20",
+      "starterCode": "#include <iostream>\nstruct Config {\n    int value;\n    explicit Config(int n = 0) : value(n) {}\n};\nstruct Reader : virtual Config { Reader() : Config(1) {} };\nstruct Writer : virtual Config { Writer() : Config(2) {} };\nstruct Device : Reader, Writer {\n    explicit Device(int requested) : Config(0) {\n        // TODO: inizializza Config con requested nella lista sopra.\n        (void)requested;\n    }\n};\nint main() {\n    int requested=0, delta=0;\n    std::cin >> requested >> delta;\n    Device device(requested);\n    Config* left = static_cast<Reader*>(&device);\n    Config* right = static_cast<Writer*>(&device);\n    std::cout << left->value << ' ' << right->value << ' '\n              << (left == right) << ' ';\n    left->value += delta;\n    std::cout << right->value << '\\n';\n}\n",
+      "files": [],
+      "tests": [
+        {
+          "id": "caso-1",
+          "title": "Caso 1",
+          "visibility": "public",
+          "stdin": "42 3\n",
+          "stdout": "42 42 1 45\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-2",
+          "title": "Caso 2",
+          "visibility": "additional",
+          "stdin": "0 0\n",
+          "stdout": "0 0 1 0\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-3",
+          "title": "Caso 3",
+          "visibility": "additional",
+          "stdin": "-7 2\n",
+          "stdout": "-7 -7 1 -5\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-4",
+          "title": "Caso 4",
+          "visibility": "additional",
+          "stdin": "9 -4\n",
+          "stdout": "9 9 1 5\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        }
+      ],
+      "referenceLesson": {
+        "title": "Lezione 5 di C++",
+        "url": "/cpp/fondamenti/interfacce-gerarchie"
+      },
+      "execution": "browser"
+    }
+  }
+]
