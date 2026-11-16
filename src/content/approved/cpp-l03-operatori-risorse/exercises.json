@@ -1,0 +1,142 @@
+[
+  {
+    "id": "stream-intervalli",
+    "type": "cpp",
+    "title": "Scrivere sullo stream ricevuto",
+    "prompt": "Leggi quattro interi fra -1000 e 1000, che descrivono due intervalli. Completa operator<<: scrivi [lo,hi] sullo stream ricevuto, senza spazi interni, e restituisci lo stesso stream per concatenare. Il main usa ostringstream: scrivere direttamente su cout non soddisfa il contratto.",
+    "hints": [
+      "La funzione è libera: il primo parametro è lo stream, il secondo il valore da formattare.",
+      "Ogni << deve usare out; il ritorno è un riferimento allo stesso stream."
+    ],
+    "solution": "#include <iostream>\n#include <sstream>\nstruct Interval { int lo, hi; };\nstd::ostream& operator<<(std::ostream& out, const Interval& x) {\n    // TODO: scrivi [lo,hi] sullo stream ricevuto e restituiscilo.\n    out << '[' << x.lo << ',' << x.hi << ']';\n    return out;\n}\nint main() {\n    int a=0,b=0,c=0,d=0;\n    std::cin >> a >> b >> c >> d;\n    std::ostringstream text;\n    text << Interval{a,b} << \" | \" << Interval{c,d};\n    std::cout << text.str() << '\\n';\n}\n",
+    "explanation": "Rielaborazione originale. I test osservano il risultato; verificare anche firme, identità degli oggetti e uso corretto dello stream.",
+    "cpp": {
+      "difficulty": "base",
+      "tags": [
+        "operatori",
+        "ostream",
+        "riferimenti"
+      ],
+      "standard": "c++20",
+      "starterCode": "#include <iostream>\n#include <sstream>\nstruct Interval { int lo, hi; };\nstd::ostream& operator<<(std::ostream& out, const Interval& x) {\n    // TODO: scrivi [lo,hi] sullo stream ricevuto e restituiscilo.\n    (void)x;\n    return out;\n}\nint main() {\n    int a=0,b=0,c=0,d=0;\n    std::cin >> a >> b >> c >> d;\n    std::ostringstream text;\n    text << Interval{a,b} << \" | \" << Interval{c,d};\n    std::cout << text.str() << '\\n';\n}\n",
+      "files": [],
+      "tests": [
+        {
+          "id": "caso-1",
+          "title": "Caso 1",
+          "visibility": "public",
+          "stdin": "1 3 5 8\n",
+          "stdout": "[1,3] | [5,8]\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-2",
+          "title": "Caso 2",
+          "visibility": "additional",
+          "stdin": "-4 -1 0 0\n",
+          "stdout": "[-4,-1] | [0,0]\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-3",
+          "title": "Caso 3",
+          "visibility": "additional",
+          "stdin": "9 2 -7 4\n",
+          "stdout": "[9,2] | [-7,4]\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-4",
+          "title": "Caso 4",
+          "visibility": "additional",
+          "stdin": "0 1000 -1000 0\n",
+          "stdout": "[0,1000] | [-1000,0]\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        }
+      ],
+      "referenceLesson": {
+        "title": "Lezione 3 di C++",
+        "url": "/cpp/fondamenti/operatori-risorse"
+      },
+      "execution": "browser"
+    }
+  },
+  {
+    "id": "copie-indipendenti",
+    "type": "cpp",
+    "title": "Una copia deve essere indipendente",
+    "prompt": "Leggi a, b e delta fra -1000 e 1000. Costruisci copy come copia di original e assegna original a assigned. Poi aggiungi delta alla prima cella di copy e sottrailo dalla seconda di assigned. Stampa le sei celle come nel main: original deve restare invariato. Non modificare Samples: la copia di vector è già indipendente.",
+    "hints": [
+      "Distingui Samples copy = original dalla successiva assigned = original.",
+      "Il membro vector duplica i propri elementi; modifica le due copie, non original."
+    ],
+    "solution": "#include <iostream>\n#include <vector>\nclass Samples {\n    std::vector<int> values_;\npublic:\n    Samples(int a, int b) : values_{a,b} {}\n    int& at(int i) { return values_.at(i); }\n    int at(int i) const { return values_.at(i); }\n};\nint main() {\n    int a=0,b=0,delta=0;\n    std::cin >> a >> b >> delta;\n    Samples original(a,b);\n    // TODO: costruisci una copia, poi una destinazione assegnata.\n    Samples copy = original;\n    Samples assigned(0,0);\n    assigned = original;\n    copy.at(0) += delta;\n    assigned.at(1) -= delta;\n    // TODO: applica delta alla prima cella di copy;\n    // sottrai delta alla seconda cella di assigned.\n    const Samples& view = original;\n    std::cout << view.at(0) << ' ' << view.at(1) << ' '\n              << copy.at(0) << ' ' << copy.at(1) << ' '\n              << assigned.at(0) << ' ' << assigned.at(1) << '\\n';\n}\n",
+    "explanation": "Rielaborazione originale. I test osservano il risultato; verificare anche firme, identità degli oggetti e uso corretto dello stream.",
+    "cpp": {
+      "difficulty": "base",
+      "tags": [
+        "copia",
+        "vector",
+        "assegnazione"
+      ],
+      "standard": "c++20",
+      "starterCode": "#include <iostream>\n#include <vector>\nclass Samples {\n    std::vector<int> values_;\npublic:\n    Samples(int a, int b) : values_{a,b} {}\n    int& at(int i) { return values_.at(i); }\n    int at(int i) const { return values_.at(i); }\n};\nint main() {\n    int a=0,b=0,delta=0;\n    std::cin >> a >> b >> delta;\n    Samples original(a,b);\n    // TODO: costruisci una copia, poi una destinazione assegnata.\n    Samples copy(0,0);\n    Samples assigned(0,0);\n    // TODO: applica delta alla prima cella di copy;\n    // sottrai delta alla seconda cella di assigned.\n    const Samples& view = original;\n    std::cout << view.at(0) << ' ' << view.at(1) << ' '\n              << copy.at(0) << ' ' << copy.at(1) << ' '\n              << assigned.at(0) << ' ' << assigned.at(1) << '\\n';\n}\n",
+      "files": [],
+      "tests": [
+        {
+          "id": "caso-1",
+          "title": "Caso 1",
+          "visibility": "public",
+          "stdin": "3 7 2\n",
+          "stdout": "3 7 5 7 3 5\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-2",
+          "title": "Caso 2",
+          "visibility": "additional",
+          "stdin": "0 0 0\n",
+          "stdout": "0 0 0 0 0 0\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-3",
+          "title": "Caso 3",
+          "visibility": "additional",
+          "stdin": "-5 9 -3\n",
+          "stdout": "-5 9 -8 9 -5 12\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-4",
+          "title": "Caso 4",
+          "visibility": "additional",
+          "stdin": "100 -100 10\n",
+          "stdout": "100 -100 110 -100 100 -110\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        }
+      ],
+      "referenceLesson": {
+        "title": "Lezione 3 di C++",
+        "url": "/cpp/fondamenti/operatori-risorse"
+      },
+      "execution": "browser"
+    }
+  }
+]
