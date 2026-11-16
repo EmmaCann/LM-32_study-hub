@@ -1,0 +1,123 @@
+[
+  {
+    "id": "mailbox-read",
+    "type": "programming",
+    "title": "Mailbox: limite, copia e posizione",
+    "prompt": "Completa i campi della callback mailbox. Scrivi solo il nome o l espressione richiesta, senza punto e virgola. Il codice e di riferimento e richiede Linux per l esecuzione.",
+    "hints": [
+      "Distingui i byte validi, quelli richiesti e quelli non copiati.",
+      "Le copie uaccess restituiscono zero solo al successo completo."
+    ],
+    "solution": "Si restituisce EOF solo al raggiungimento della lunghezza. In caso di residuo la routine restituisce EFAULT e non avanza la posizione; non certifica una copia transazionale.",
+    "explanation": "Si restituisce EOF solo al raggiungimento della lunghezza. In caso di residuo la routine restituisce EFAULT e non avanza la posizione; non certifica una copia transazionale.",
+    "completion": {
+      "language": "c",
+      "execution": "reference-only",
+      "code": "if (*ppos >= mbox_len) return 0;\nsize_t n = mbox_len - *ppos;\nif (n > count) n = count;\nif ({{copy}}(buf, mbox + *ppos, n)) return -EFAULT;\n*ppos += {{advance}};\nreturn n;",
+      "slots": [
+        {
+          "id": "copy",
+          "label": "Copia verso user",
+          "answers": [
+            "copy_to_user"
+          ],
+          "explanation": "buf e una destinazione user space."
+        },
+        {
+          "id": "advance",
+          "label": "Avanzamento",
+          "answers": [
+            "n"
+          ],
+          "explanation": "Avanza dei byte trasferiti, non della richiesta originaria."
+        }
+      ]
+    }
+  },
+  {
+    "id": "mailbox-write",
+    "type": "programming",
+    "title": "Mailbox: scrittura e capacita",
+    "prompt": "Completa i campi della callback mailbox. Scrivi solo il nome o l espressione richiesta, senza punto e virgola. Il codice e di riferimento e richiede Linux per l esecuzione.",
+    "hints": [
+      "Distingui i byte validi, quelli richiesti e quelli non copiati.",
+      "Le copie uaccess restituiscono zero solo al successo completo."
+    ],
+    "solution": "Nel live coding era discussa anche una scrittura corta limitata alla capacita. Qui si studia la soluzione fornita: count superiore a256 rifiutato prima della copia. Mancano lock, e un fault parziale puo gia avere modificato il contenuto.",
+    "explanation": "Nel live coding era discussa anche una scrittura corta limitata alla capacita. Qui si studia la soluzione fornita: count superiore a256 rifiutato prima della copia. Mancano lock, e un fault parziale puo gia avere modificato il contenuto.",
+    "completion": {
+      "language": "c",
+      "execution": "reference-only",
+      "code": "if (count > MBOX_SIZE) return -{{capacity}};\nif ({{copy}}(mbox, buf, count)) return -EFAULT;\nmbox_len = {{length}};\nreturn count;",
+      "slots": [
+        {
+          "id": "capacity",
+          "label": "Errore capacita",
+          "answers": [
+            "ENOSPC"
+          ],
+          "explanation": "Questa e la politica della soluzione fornita: rifiuto delle richieste troppo grandi."
+        },
+        {
+          "id": "copy",
+          "label": "Copia da user",
+          "answers": [
+            "copy_from_user"
+          ],
+          "explanation": "Il buffer user e la sorgente."
+        },
+        {
+          "id": "length",
+          "label": "Lunghezza valida",
+          "answers": [
+            "count"
+          ],
+          "explanation": "La lunghezza viene aggiornata dopo la copia riuscita."
+        }
+      ]
+    }
+  },
+  {
+    "id": "mailbox-init",
+    "type": "programming",
+    "title": "Mailbox: errore durante init",
+    "prompt": "Completa i campi della callback mailbox. Scrivi solo il nome o l espressione richiesta, senza punto e virgola. Il codice e di riferimento e richiede Linux per l esecuzione.",
+    "hints": [
+      "Distingui i byte validi, quelli richiesti e quelli non copiati.",
+      "Le copie uaccess restituiscono zero solo al successo completo."
+    ],
+    "solution": "Il frammento isola il ramo di errore dopo cdev_add: non e una funzione init completa. Init deve annullare le proprie acquisizioni; exit non viene invocata quando init fallisce.",
+    "explanation": "Il frammento isola il ramo di errore dopo cdev_add: non e una funzione init completa. Init deve annullare le proprie acquisizioni; exit non viene invocata quando init fallisce.",
+    "completion": {
+      "language": "c",
+      "execution": "reference-only",
+      "code": "mbox_class = class_create(\"mailbox\");\nif ({{check}}(mbox_class)) {\n    ret = {{error}}(mbox_class);\n    goto err_cdev;\n}\n/* percorso di errore: classe non acquisita */\nerr_cdev:\n    {{remove}}(&mbox_cdev);\n    unregister_chrdev_region(devno, 1);\n    return ret;",
+      "slots": [
+        {
+          "id": "check",
+          "label": "Controllo puntatore",
+          "answers": [
+            "IS_ERR"
+          ],
+          "explanation": "La funzione restituisce un puntatore di errore codificato."
+        },
+        {
+          "id": "error",
+          "label": "Estrazione errno",
+          "answers": [
+            "PTR_ERR"
+          ],
+          "explanation": "Non e una correzione di allineamento: recupera il codice negativo."
+        },
+        {
+          "id": "remove",
+          "label": "Rilascio cdev",
+          "answers": [
+            "cdev_del"
+          ],
+          "explanation": "La cdev era stata aggiunta; la classe fallita non va distrutta."
+        }
+      ]
+    }
+  }
+]

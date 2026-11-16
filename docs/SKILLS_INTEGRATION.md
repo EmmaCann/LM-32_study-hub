@@ -1,5 +1,16 @@
 # Contratto di integrazione per le future skill — schema 1
 
+## AOS 12: mailbox
+
+`aos-mailbox` riusa player e primitive architetturali AOS. Due scene: buffer con
+cursori distinti/condivisi (open/dup), registrazione riuscita/rollback su errore
+classe. Route `/aos/lezione-12/driver-mailbox#mailbox`. Le copie non consumano
+il messaggio; EOF riguarda la descrizione aperta. Modello illustrativo senza
+esecuzione Linux. Tre completamenti `programming` sono inclusi nel playground;
+non sono il compito autonomo sulla coda o sul secondo minor delle slide.
+CodeCompletion abilita i campi solo quando il componente client e pronto, per
+evitare di perdere il primo inserimento durante il caricamento.
+
 ## Completamento di codice Linux AOS
 
 Gli esercizi `programming` possono includere `completion`: `language` (`c` o `sh`),

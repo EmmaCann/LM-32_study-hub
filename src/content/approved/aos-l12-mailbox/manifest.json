@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "aos-l12-mailbox",
+  "subject": "aos",
+  "chapter": {
+    "id": "lezione-12",
+    "title": "Lezione 12",
+    "order": 12
+  },
+  "slug": "driver-mailbox",
+  "title": "Mailbox: callback, cursori e registrazione",
+  "description": "Segui le copie tra user e kernel, confronta open e dup e osserva il rollback di init.",
+  "order": 1,
+  "demo": false,
+  "updated": "2026-11-16",
+  "revision": 1,
+  "review": {
+    "status": "approved",
+    "reviewer": "Revisione didattica da fonti e codice; pubblicazione subordinata a controlli browser/build.",
+    "sources": [
+      "Rielaborazione originale di dispositivi a caratteri e laboratorio mailbox AOS12. Nessuna fonte originale distribuita."
+    ]
+  },
+  "assets": []
+}

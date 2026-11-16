@@ -2,6 +2,7 @@
 import { AlgoritmiLesson6Lab } from './algoritmi-l06-lab';
 import { AlgoritmiLesson5Lab } from './algoritmi-l05-lab';
 import { AosModulesLab } from './aos-modules-lab';
+import { AosMailboxLab } from './aos-mailbox-lab';
 import { AosCarLab } from './aos-car-lab';
 import { AosContainerLab } from './aos-container-lab';
 import { AosMemoryLab } from './aos-memory-lab';
@@ -134,6 +135,7 @@ export function SimulationPlayer({ simulation: s }: { simulation: Simulation }) 
   if(s.component === 'algoritmi-rb-insert' || s.component === 'algoritmi-rod' || s.component === 'algoritmi-matrix-intro') return <AlgoritmiLesson6Lab id={s.id} title={s.title} mode={s.component === 'algoritmi-rb-insert' ? 'rb' : s.component === 'algoritmi-rod' ? 'rod' : 'matrix'}/>;
   if(s.component === 'algoritmi-containers' || s.component === 'algoritmi-list' || s.component === 'algoritmi-hash') return <AlgoritmiLesson5Lab id={s.id} title={s.title} mode={s.component === 'algoritmi-containers' ? 'containers' : s.component === 'algoritmi-list' ? 'list' : 'hash'}/>;
   if(s.component === 'aos-modules') return <AosModulesLab id={s.id} title={s.title}/>;
+  if(s.component === 'aos-mailbox') return <AosMailboxLab id={s.id} title={s.title}/>;
   if(s.component === 'aos-car') return <AosCarLab id={s.id} title={s.title}/>;
   if(s.component === 'aos-container') return <AosContainerLab id={s.id} title={s.title}/>;
   if(s.component === 'aos-memory') return <AosMemoryLab id={s.id} title={s.title}/>;
