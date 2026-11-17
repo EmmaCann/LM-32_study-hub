@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "cpp-integrazione-01-06",
+  "subject": "cpp",
+  "chapter": {
+    "id": "fondamenti",
+    "title": "Fondamenti e ownership",
+    "order": 1
+  },
+  "slug": "integrazione-01-06",
+  "title": "Integrazione: Matrix e CRTP",
+  "description": "Resize con conservazione delle coordinate, operatori di incremento e composizione statica ripetuta.",
+  "order": 9,
+  "demo": false,
+  "updated": "2026-11-17",
+  "revision": 1,
+  "review": {
+    "status": "approved",
+    "reviewer": "Codex - revisione di originalità e codice; autorizzazione permanente della proprietaria",
+    "sources": []
+  },
+  "assets": []
+}
