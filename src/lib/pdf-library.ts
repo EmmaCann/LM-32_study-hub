@@ -173,7 +173,7 @@ export const normalizeSearch = (value: string) =>
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase();
-export function pdfSearch(documents: LocalPdf[], query: string) {
+export function pdfSearch(documents: Pick<LocalPdf, 'id' | 'name' | 'pages'>[], query: string) {
   const terms = normalizeSearch(query).trim().split(/\s+/).filter(Boolean);
   if (!terms.length) return [];
   return documents.flatMap((doc) =>

@@ -51,13 +51,10 @@ test('route, link interni, contenuti approvati e 404', async ({ page, request })
 });
 test('catalogo e ricerca riflettono i contenuti approvati', async ({ page }) => {
   await page.goto('/');
-  await expect(
-    page.getByRole('heading', { name: 'Dai un filo al tuo studio.', exact: true }),
-  ).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Più connessioni/ })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Le tue materie' })).toBeVisible();
-  await expect(page.locator('.subject-card')).toHaveCount(4);
-  await expect(page.locator('.study-tool-grid > a')).toHaveCount(3);
-  await expect(page.locator('.study-resume')).toContainText('IL PROSSIMO PASSO');
+  await expect(page.locator('.portal-course')).toHaveCount(4);
+  await expect(page.locator('.portal-resume')).toBeVisible();
   await page.goto('/ricerca');
   await page.getByRole('textbox').fill('contenuto-inesistente-xyz999');
   await expect(page.getByRole('status')).toContainText('0 risultati');
@@ -70,8 +67,11 @@ test('sidebar chiudibile, navigazione e menu mobile', async ({ page }) => {
   await page.getByRole('button', { name: 'Chiudi sidebar', exact: true }).click();
   await expect(sidebar).toBeHidden();
   await expect(workspace).toHaveCSS('margin-left', '0px');
-  await page.getByRole('main').getByRole('link', { name: 'Tutte le materie' }).click();
-  await expect(page).toHaveURL(/\/materie$/);
+  await page
+    .getByRole('main')
+    .getByRole('link', { name: /Il percorso completo/ })
+    .click();
+  await expect(page).toHaveURL(/\/percorso$/);
   await expect(sidebar).toBeHidden();
   await page.getByRole('button', { name: 'Apri sidebar', exact: true }).click();
   await expect(sidebar).toBeVisible();

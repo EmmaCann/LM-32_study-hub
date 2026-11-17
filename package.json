@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "predev": "node scripts/prepare-pdf-runtime.mjs && node scripts/prepare-cpp-runtime.mjs",
-    "prebuild": "node scripts/prepare-pdf-runtime.mjs && node scripts/prepare-cpp-runtime.mjs",
+    "predev": "node scripts/prepare-pdf-runtime.mjs && node scripts/prepare-cpp-runtime.mjs && node scripts/sync-study-notes.mjs --if-available",
+    "prebuild": "node scripts/prepare-pdf-runtime.mjs && node scripts/prepare-cpp-runtime.mjs && node scripts/sync-study-notes.mjs --if-available",
     "cpp:verify": "tsx scripts/verify-cpp.ts",
     "dev": "next dev --hostname 127.0.0.1",
     "build": "tsx scripts/content.ts validate && next build",
@@ -15,7 +15,8 @@
     "content": "tsx scripts/content.ts",
     "test:e2e": "playwright test",
     "study:content": "tsx scripts/study-content.ts",
-    "test:study": "playwright test --config playwright.study.config.ts"
+    "test:study": "playwright test --config playwright.study.config.ts",
+    "notes:sync": "node scripts/sync-study-notes.mjs"
   },
   "dependencies": {
     "@bjorn3/browser_wasi_shim": "0.4.2",

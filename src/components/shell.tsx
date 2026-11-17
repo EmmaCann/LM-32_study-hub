@@ -6,14 +6,15 @@ import { useState } from 'react';
 import { ThemeSwitch } from './theme-switch';
 import {
   ChevronRight,
-  BookOpen,
+  Cpu,
+  Network,
+  ChartNoAxesCombined,
   Code2,
   House,
-  Library,
+  Library as LayersIcon,
   Menu,
   PanelLeftClose,
   PanelLeftOpen,
-  PenLine,
   Play,
   Search,
   X,
@@ -21,24 +22,29 @@ import {
 import subjects from '@/content/subjects.json';
 
 const groups = [
-  { title: 'SPAZIO', links: [{ href: '/', label: 'Panoramica', Icon: House }] },
   {
-    title: 'RACCOLTA',
+    title: 'IL TUO SPAZIO',
     links: [
-      { href: '/percorso', label: 'Percorso di studio', Icon: Library },
-      { href: '/biblioteca', label: 'I miei PDF', Icon: BookOpen },
-      { href: '/materie', label: 'Materie', Icon: Library },
-      { href: '/argomenti', label: 'Argomenti', Icon: BookOpen },
+      { href: '/', label: 'Il mio studio', Icon: House },
+      { href: '/percorso', label: 'Percorso', Icon: LayersIcon },
+      { href: '/ricerca', label: 'Cerca un concetto', Icon: Search },
     ],
   },
   {
-    title: 'PRATICA',
+    title: 'LE TUE MATERIE',
     links: [
-      { href: '/simulazioni', label: 'Simulazioni', Icon: Play },
-      { href: '/esercizi', label: 'Esercizi', Icon: PenLine },
+      { href: '/aos', label: 'Sistemi operativi', Icon: Cpu },
+      { href: '/algoritmi', label: 'Algoritmi', Icon: Network },
+      { href: '/cpp', label: 'Programmazione C++', Icon: Code2 },
+      { href: '/ottimizzazione', label: 'Ottimizzazione', Icon: ChartNoAxesCombined },
+    ],
+  },
+  {
+    title: 'STRUMENTI',
+    links: [
       { href: '/cpp/playground', label: 'Playground C++', Icon: Code2 },
       { href: '/aos/playground', label: 'Playground AOS', Icon: Code2 },
-      { href: '/ricerca', label: 'Ricerca', Icon: Search },
+      { href: '/simulazioni', label: 'Tutti i laboratori', Icon: Play },
     ],
   },
 ];
@@ -52,10 +58,15 @@ export function Shell({ children }: { children: React.ReactNode }) {
   const isTopicPath = isSubjectPath && segments.length >= 3;
   const isAosToolPath = pathname === '/aos/playground';
   const isCppToolPath = /^\/cpp\/(playground|esercitazioni|simulazioni)(\/|$)/.test(pathname);
-  const isAosToolPath = pathname === '/aos/playground';
 
   function isActive(href: string) {
     if (href === '/') return pathname === '/';
+    if (subjects.some((s) => href === `/${s.id}`))
+      return (
+        pathname === href ||
+        (pathname.startsWith(href + '/') && !isCppToolPath && !isAosToolPath) ||
+        (segments[0] === 'percorso' && segments[1]?.startsWith(href.slice(1) + '-'))
+      );
     if (href === '/materie')
       return (
         pathname === href || (isSubjectPath && !isTopicPath && !isCppToolPath && !isAosToolPath)
@@ -148,7 +159,9 @@ export function Shell({ children }: { children: React.ReactNode }) {
           <span>LM·32 · Ingegneria Informatica</span>
         </div>
       </aside>
-      <div className={`workspace${collapsed ? ' sidebar-collapsed' : ''}`}>
+      <div
+        className={`workspace${pathname.startsWith('/percorso/') ? ' is-lesson-workspace' : ''}${collapsed ? ' sidebar-collapsed' : ''}`}
+      >
         <div className="topbar">
           <div className="topbar-leading">
             <button

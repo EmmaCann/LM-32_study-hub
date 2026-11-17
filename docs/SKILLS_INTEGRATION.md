@@ -1,6 +1,43 @@
 # Contratto di integrazione per le future skill — schema 1
 
-## Percorsi, teoria locale e verifiche — estensione compatibile
+## Aggiornamento autorizzato del 17 novembre 2026 — PDF automatici
+
+La proprietaria ha autorizzato la pubblicazione dei nostri appunti rielaborati.
+Questo aggiornamento sostituisce le precedenti indicazioni che mantenevano
+anche tali PDF esclusivamente sul dispositivo. Restano esclusi slide, ZIP,
+trascrizioni e materiali originali del docente. Il sito rimane pubblico:
+l'assenza di un URL noto non costituisce controllo degli accessi.
+
+Gli appunti vengono associati a materia e lezione tramite il catalogo, senza
+selettori di file per chi studia. `npm run notes:sync` legge esclusivamente i
+file `Appunti_{AOS,Algoritmi,CPP}_Lezione-*.pdf` nelle cartelle `appunti pronti`
+delle tre materie sotto `STUDY_NOTES_ROOT` (default locale `C:/LM-32`). Non
+attraversa supporto, revisioni, collegamenti simbolici o directory dei materiali.
+Le fonti universitarie non vengono modificate. Le versioni devono coincidere
+con le impronte e le pagine revisionate nel catalogo.
+
+L'output approvato è `public/notes/<documentId>.pdf` e `public/notes/index.json`.
+L'indice contiene il testo per pagina per la ricerca; non viene ricostruita una
+copia HTML integrale della teoria. Ogni lezione apre automaticamente il suo PDF.
+Un file non dichiarato, un riferimento mancante o un digest incoerente bloccano
+la validazione. In locale predev/prebuild sincronizzano quando le fonti sono
+presenti; Vercel usa soltanto la raccolta inclusa nel repository, senza leggere
+percorsi del computer o importare materiali esterni.
+
+Per una nuova lezione: esportare il pacchetto e la voce di catalogo con il nome
+stabile del PDF rielaborato, impronta SHA-256, pagine e riferimenti didattici
+verificati; importare con il contratto esistente; eseguire notes:sync, validazione,
+verifiche browser e build. I vecchi campi PDF nei pacchetti generici restano
+bloccati: non usarli per aggirare questa raccolta esplicitamente approvata.
+
+L'esperienza principale è `/percorso/<lessonId>`: teoria, animazioni, codice e
+verifica nella stessa pagina. Gli URL pubblicati dei laboratori e del Playground
+restano compatibili. Il lavoro resta su feature/study-paths fino alla revisione
+locale; l'autorizzazione dei PDF non pubblica automaticamente il nuovo redesign.
+
+
+
+## Percorsi, teoria e verifiche — estensione compatibile
 
 Vedere [STUDY_PATHS.md](STUDY_PATHS.md) per comportamento, storage e controlli.
 Il formato dei pacchetti esistenti non cambia. Il catalogo indipendente
@@ -17,8 +54,9 @@ non devono dichiarare verifiche inesistenti. `topicIds` referenzia i pacchetti
 approvati della stessa materia, non copia la loro teoria.
 
 `document`, opzionale, contiene `id`, `title`, `filename` (solo basename PDF),
-`fingerprint` SHA-256 del documento revisionato e `pages`. Non esportare il PDF,
-percorsi personali, estratti teorici integrali, ZIP o indice full text. Le
+`fingerprint` SHA-256 del documento revisionato e `pages`. I soli appunti rielaborati
+autorizzati sono sincronizzati nella raccolta controllata descritta sopra; non
+esportare percorsi personali o materiali originali del docente. Le
 `sections` sono soli metadati `{id,title,page}`. Ogni riferimento `theory` contiene
 `{topicId,simulationId,page,section}`: tutti i laboratori associati alla lezione
 devono avere un riferimento verificato, entro il numero di pagine del PDF.
@@ -112,7 +150,7 @@ usano lo schema comune; non pubblicare gli originali car o dati di accesso.
 
 Estensione compatibile C++: il formato base resta schema 1. I pacchetti AOS e Algoritmi continuano a usare manifest, simulazioni ed esercizi precedenti. Per il nuovo tipo `cpp` si aggiunge una specifica strutturata e, dopo verifica tecnica, `cpp-verification.json`.
 
-**Per le skill C++ è obbligatorio seguire [CPP_SKILLS_CONTRACT.md](CPP_SKILLS_CONTRACT.md)**: descrive esercizi, file iniziali/supporto, test pubblici e aggiuntivi, suggerimenti, soluzioni, download e ricevuta tecnica. [CPP_PLAYGROUND.md](CPP_PLAYGROUND.md) documenta toolchain e limiti. La pubblicazione resta pubblica senza autenticazione; i PDF completi restano locali.
+**Per le skill C++ è obbligatorio seguire [CPP_SKILLS_CONTRACT.md](CPP_SKILLS_CONTRACT.md)**: descrive esercizi, file iniziali/supporto, test pubblici e aggiuntivi, suggerimenti, soluzioni, download e ricevuta tecnica. [CPP_PLAYGROUND.md](CPP_PLAYGROUND.md) documenta toolchain e limiti. La pubblicazione resta pubblica senza autenticazione; i nostri appunti rielaborati autorizzati sono inclusi nella raccolta controllata.
 
 Le skill `studio-fonti`, `appunti-aos`, `appunti-algoritmi`, `appunti-cpp` non vengono implementate qui. Questo contratto definisce il loro output. I materiali originali restano nelle directory universitarie; la piattaforma non li importa automaticamente.
 
@@ -234,7 +272,7 @@ Per ripristinare una revisione, copiarla in staging, assegnare una revisione num
 
 ## PDF e URL
 
-I PDF completi rimangono esclusivamente nelle cartelle universitarie locali. La pubblicazione di manifest con `pdf` o asset PDF viene ora rifiutata dal validatore pubblico. I campi legacy rimangono nello schema per leggere anteprime locali già esistenti; questo non ne autorizza la pubblicazione. Non esportare copie HTML integrali della teoria. Esportare soltanto istruzioni sintetiche necessarie agli interattivi originali. I collegamenti da inserire nei PDF locali devono usare il dominio HTTPS definitivo e gli ID stabili: `npm.cmd run content -- links https://dominio` include simulazioni ed esercizi. Il generatore rifiuta HTTP, file URL, credenziali e percorsi nella base.
+Slide, trascrizioni e materiali originali del docente rimangono locali; i nostri appunti rielaborati autorizzati seguono la raccolta controllata descritta all’inizio del contratto. La pubblicazione di manifest con `pdf` o asset PDF viene ora rifiutata dal validatore pubblico. I campi legacy rimangono nello schema per leggere anteprime locali già esistenti; questo non ne autorizza la pubblicazione. Non esportare copie HTML integrali della teoria. Esportare soltanto istruzioni sintetiche necessarie agli interattivi originali. I collegamenti da inserire nei PDF locali devono usare il dominio HTTPS definitivo e gli ID stabili: `npm.cmd run content -- links https://dominio` include simulazioni ed esercizi. Il generatore rifiuta HTTP, file URL, credenziali e percorsi nella base.
 
 
 
@@ -284,7 +322,7 @@ ancore `insertion-sort` e `merge`. Array modificabili, identità persistenti, sp
 interpolati, pseudocodice sincronizzato e controlli touch/tastiera; tempi illustrativi.
 La regola comune della skill `animazioni-didattiche` autorizza anche Algoritmi e tutte
 le altre materie alla pubblicazione pubblica senza Authentication, come AOS.
-Le fonti e i PDF restano locali; pubblicazione via push su main e verifica del deploy Git.
+Le fonti originali restano locali; per gli appunti rielaborati autorizzati vale la raccolta controllata iniziale. Pubblicazione via push su main e verifica del deploy Git.
 
 
 ## Profilo grafico AOS approvato — 14 novembre 2026

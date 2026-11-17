@@ -1,12 +1,12 @@
 # LM·32 Study Hub
 
-Piattaforma pubblica per gli interattivi originali di Ingegneria Informatica: codice, simulazioni ed esercizi. Funziona anche in locale senza account o database. Appunti teorici completi, PDF e fonti universitarie rimangono nelle cartelle locali; il catalogo del sito contiene soltanto schede sintetiche necessarie alle attività interattive approvate.
+Piattaforma pubblica per gli interattivi originali di Ingegneria Informatica: codice, simulazioni ed esercizi. Funziona anche in locale senza account o database. Gli appunti PDF rielaborati e approvati sono inclusi nelle lezioni; slide, trascrizioni e ZIP originali restano nelle cartelle locali; il catalogo del sito contiene soltanto schede sintetiche necessarie alle attività interattive approvate.
 
-Il progetto risiede in `C:\LM-32_study-hub`, nel repository già collegato a GitHub. Le directory universitarie originali in `C:\LM-32` non vengono lette dall’applicazione, copiate o pubblicate.
+Il progetto risiede in `C:\LM-32_study-hub`, nel repository già collegato a GitHub. Il sincronizzatore legge soltanto i nostri appunti revisionati in `appunti pronti`; le directory universitarie e i materiali originali non vengono modificati.
 
 ## C++ Playground
 
-Editor e compilazione C++ reali nel browser: `/cpp/playground`; catalogo degli esercizi: `/cpp/esercitazioni`. Tre esercitazioni originali progressive con test, aiuti e soluzioni su richiesta. La prima compilazione carica circa 100 MiB della toolchain dal sito; nessun codice viene eseguito sul server. I PDF e le fonti universitarie rimangono locali.
+Editor e compilazione C++ reali nel browser: `/cpp/playground`; catalogo degli esercizi: `/cpp/esercitazioni`. Tre esercitazioni originali progressive con test, aiuti e soluzioni su richiesta. La prima compilazione carica circa 100 MiB della toolchain dal sito; nessun codice viene eseguito sul server. Le fonti originali dei docenti rimangono locali; gli appunti rielaborati autorizzati si aprono automaticamente nelle lezioni.
 
 Dettagli: [toolchain, limiti e verifica](docs/CPP_PLAYGROUND.md), [contratto per le skill C++](docs/CPP_SKILLS_CONTRACT.md). `npm run cpp:verify -- staging/<id>` verifica codice e test prima dell'importazione; la build blocca pacchetti C++ con ricevuta mancante o non aggiornata. Pubblicazione tramite il deployment Git Vercel esistente, dopo merge su main.
 
@@ -84,7 +84,7 @@ npm.cmd run build
 
 ## PDF e Notes+
 
-I PDF completi non vengono pubblicati: il validatore rifiuta pacchetti approvati con `manifest.pdf` o asset PDF. I campi legacy rimangono leggibili nelle anteprime locali per compatibilità. Le schede del sito ospitano soltanto gli interattivi e le istruzioni essenziali, senza copie HTML integrali della teoria. Gli asset interattivi dichiarati sono serviti da una route controllata.
+Gli appunti rielaborati autorizzati sono pubblicati esclusivamente nella raccolta controllata `public/notes`, associata al curriculum e verificata tramite hash. I pacchetti interattivi non possono includere PDF arbitrari: il validatore rifiuta `manifest.pdf` o asset PDF. I campi legacy rimangono leggibili nelle anteprime locali per compatibilità. Le schede del sito ospitano soltanto gli interattivi e le istruzioni essenziali, senza copie HTML integrali della teoria. Gli asset interattivi dichiarati sono serviti da una route controllata.
 
 La generazione dei PDF didattici è affidata alle future skill. Per costruire i link HTTPS da inserire in un PDF:
 
@@ -141,3 +141,11 @@ lezione, progressi locali con backup, PDF selezionati dal dispositivo e framment
 C per AOS. Avvio, limiti e contratto: [docs/STUDY_PATHS.md](docs/STUDY_PATHS.md).
 `npm run test:study` verifica i nuovi flussi su Chromium e WebKit/iPad.
 Nessun PDF viene caricato sul server; il lavoro resta locale fino alla revisione.
+
+## Spazio di studio integrato — 17 novembre 2026
+
+Nel feature `feature/study-paths`, la pagina lezione comprende PDF automatico,
+indice, laboratori con teoria affiancata, codice C/C++ e verifica finale.
+Gli appunti rielaborati sono inclusi con autorizzazione esplicita; niente upload
+o selezione manuale per studiare. Dettagli: [STUDY_PATHS.md](docs/STUDY_PATHS.md).
+La revisione si prova in locale; nessun deploy del redesign durante lo sviluppo.

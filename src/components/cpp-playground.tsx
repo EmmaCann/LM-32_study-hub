@@ -200,7 +200,7 @@ function CppPlaygroundSession({
   return (
     <div className="cpp-playground">
       {progressBindings?.[0] && (
-        <Link className="study-return" href={`/percorso/${progressBindings[0].lessonId}#verifica`}>
+        <Link className="study-return" href={`/percorso/${progressBindings[0].lessonId}?view=check`}>
           Torna alla verifica della lezione
         </Link>
       )}

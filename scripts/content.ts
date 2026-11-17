@@ -1,3 +1,4 @@
+import { validatePublishedNotes } from '../src/lib/notes-content';
 import fs from 'node:fs';
 import { getCurriculum } from '../src/lib/study-content';
 import path from 'node:path';
@@ -12,6 +13,7 @@ async function main() {
       const lessons = fs.existsSync(path.join(process.cwd(), 'src/content/curriculum.json'))
         ? getCurriculum()
         : [];
+      if (lessons.length) validatePublishedNotes(lessons);
       console.log(
         `Validati ${topics.length} argomenti approvati e ${lessons.length} lezioni del percorso.`,
       );

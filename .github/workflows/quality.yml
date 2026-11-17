@@ -1,7 +1,7 @@
 name: Study Hub quality
 on:
   push:
-    branches: [main, develop, 'codex/**']
+    branches: [main, develop, 'feature/**', 'fix/**']
   pull_request:
 permissions:
   contents: read

@@ -5,11 +5,23 @@ import { pdfEngine, type LocalPdf } from '@/lib/pdf-library';
 export function PdfViewer({
   document,
   initialPage = 1,
+  page: controlledPage,
+  onPageChange,
 }: {
   document: LocalPdf;
   initialPage?: number;
+  page?: number;
+  onPageChange?: (page: number) => void;
 }) {
-  const [pageNumber, setPage] = useState(Math.min(Math.max(1, initialPage), document.pages.length));
+  const [internalPage, setPage] = useState(
+    Math.min(Math.max(1, initialPage), document.pages.length),
+  );
+  const pageNumber = Math.min(document.pages.length, Math.max(1, controlledPage ?? internalPage));
+  function changePage(value: number) {
+    const next = Math.min(document.pages.length, Math.max(1, Math.floor(value)));
+    setPage(next);
+    onPageChange?.(next);
+  }
   const [zoom, setZoom] = useState(1);
   const [message, setMessage] = useState('Apertura PDF…');
   const [pdf, setPdf] = useState<PDFDocumentProxy>();
@@ -35,7 +47,7 @@ export function PdfViewer({
         const loaded = await task.promise;
         if (active) setPdf(loaded);
       } catch {
-        if (active) setMessage('PDF non leggibile. Seleziona nuovamente il documento.');
+        if (active) setMessage('Appunti non leggibili. Riprova ad aprire la lezione.');
       }
     })();
     return () => {
@@ -92,7 +104,7 @@ export function PdfViewer({
         <button
           className="button secondary"
           disabled={pageNumber <= 1}
-          onClick={() => setPage((p) => p - 1)}
+          onClick={() => changePage(pageNumber - 1)}
           aria-label="Pagina precedente PDF"
         >
           ←
@@ -105,16 +117,14 @@ export function PdfViewer({
             min={1}
             max={document.pages.length}
             value={pageNumber}
-            onChange={(e) =>
-              setPage(Math.min(document.pages.length, Math.max(1, Number(e.target.value) || 1)))
-            }
+            onChange={(e) => changePage(Number(e.target.value) || 1)}
           />
         </label>
         <span>di {document.pages.length}</span>
         <button
           className="button secondary"
           disabled={pageNumber >= document.pages.length}
-          onClick={() => setPage((p) => p + 1)}
+          onClick={() => changePage(pageNumber + 1)}
           aria-label="Pagina successiva PDF"
         >
           →

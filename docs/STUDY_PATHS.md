@@ -1,11 +1,66 @@
-# Percorsi di studio e biblioteca privata
+# Spazio di studio integrato
 
-## Avvio e confini
+Revisione del 17 novembre 2026, branch `feature/study-paths`.
+Il lavoro include gli aggiornamenti già pubblicati su main, mantenendo URL,
+animazioni e verifiche esistenti. Sviluppo e test in locale; il redesign non è
+stato integrato in develop o main.
 
-Branch `feature/study-paths`, worktree `C:\LM-32_study-hub-study-paths`.
-Sviluppo e controlli locali, senza push o deployment. Le cartelle universitarie
-non vengono modificate. La base include solo il lavoro già committato su main;
-i contenuti in lavorazione negli altri worktree non vengono copiati.
+## Esperienza
+
+- Home con materie, ripresa della lezione e avanzamento.
+- Pagina materia con percorso ordinato e ingresso diretto nella lezione.
+- `/percorso/<lessonId>`: indice, PDF già aperto, laboratori, codice e verifica.
+- I tab lavorano nella stessa pagina e conservano lo stato già aperto.
+- Il laboratorio selezionato porta al punto corrispondente della teoria.
+- Codice C car/mailbox e compilazione C++ reale riusano i componenti verificati.
+- Le attività di comprensione e il salvataggio dei progressi restano attivi.
+- Ricerca nei PDF inclusi con accesso diretto alla pagina della lezione.
+- `/biblioteca` rimane un alias compatibile verso la lezione: nessuna scelta di file.
+
+I collegamenti condivisibili usano `?view=theory|labs|code|check`, `page` e `lab`.
+Gli URL e le ancore dei vecchi laboratori continuano a funzionare.
+
+## Appunti automatici
+
+La proprietaria ha autorizzato la pubblicazione dei nostri appunti rielaborati.
+La piattaforma e il repository sono pubblici: nessuna promessa di riservatezza
+basata sulla scarsa conoscenza dell'URL. Nessun login introdotto.
+
+Il catalogo contiene 28 tappe e 24 PDF. Ottimizzazione è ancora da preparare;
+i tre percorsi di pratica C++ non richiedono un PDF autonomo.
+`public/notes` contiene esclusivamente i PDF dichiarati e l'indice di ricerca.
+Le copie sono rielaborazioni, senza distribuire slide, trascrizioni o ZIP del docente.
+
+`npm run notes:sync` cerca i nomi dichiarati nel catalogo sotto le sole cartelle
+`appunti pronti` di AOS, Algoritmi e C++. Ignora supporto, revisioni e link
+simbolici. Le fonti in `C:/LM-32` sono soltanto lette, mai modificate. Una
+versione cambiata richiede riferimenti e impronta aggiornati dalla skill autrice,
+così non si associano silenziosamente pagine errate alle animazioni.
+
+Predev/prebuild eseguono la sincronizzazione quando la fonte locale esiste.
+Su Vercel o su un altro computer si usa la raccolta già inclusa nel progetto.
+La build controlla associazioni, numero di pagine, nomi ammessi, impronte SHA-256
+e assenza di file estranei. Nessun endpoint legge percorsi arbitrari del computer.
+
+Il browser carica automaticamente l'indice e il PDF della lezione scelta.
+Il lettore PDF.js è caricato dinamicamente; il codice C++ carica il compilatore
+solo quando si compila. I documenti in memoria sono limitati a quattro;
+una pagina PDF viene renderizzata alla volta, con densità pixel massima 2.
+
+## Progressi e verifiche
+
+Nessun backend personale: localStorage conserva risultati, bozze e ultima lezione.
+La verifica completa la lezione solo dopo tutte le attività obbligatorie.
+Le firme dipendono dalla verifica e, per C++, dal codice e dai test referenziati.
+Una modifica invalida il solo risultato interessato. Le risposte non sono segrete
+né costituiscono certificazione. Un risultato riguarda i controlli effettuati.
+
+Il backup è disponibile nei dettagli del percorso. Non include copie dei PDF.
+Il codice C Linux è verificato rispetto ai campi o ai frammenti previsti, senza
+simulare esecuzione Linux. Il C++ continua a essere compilato ed eseguito realmente
+nel browser, con i limiti della toolchain documentati in CPP_PLAYGROUND.md.
+
+## Avvio locale
 
 ```powershell
 cd C:\LM-32_study-hub-study-paths
@@ -14,90 +69,13 @@ npm run build
 npm run start -- --port 3217
 ```
 
-Aprire `http://localhost:3217`. Per sviluppare: `npm run dev -- --port 3217`.
-Le API Web Crypto usate per riconoscere i PDF richiedono localhost oppure HTTPS.
-I test WebKit emulano iPad; una prova su hardware iPad reale resta un controllo
-manuale distinto e richiede un'origine HTTPS per tutte le funzionalità.
-
-## Navigazione
-
-- `/`: ripresa personale e avanzamento delle materie.
-- `/percorso`: roadmap delle quattro materie e gestione backup.
-- `/percorso/<lessonId>`: obiettivi, sezioni PDF, laboratori e verifica finale.
-- `/biblioteca`: selezione dei PDF locali, ricerca per pagina e lettore.
-- `/ricerca`: ricerca unificata, con filtri per materia e tipo.
-- `/aos/playground`: frammenti C da completare, senza esecuzione Linux.
-- URL e ancore preesistenti conservati, compreso `/cpp/playground`.
-
-Il catalogo iniziale include le lezioni numerate con appunti revisionati
-disponibili alla preparazione del branch, la pratica C++ già esistente e una
-tappa esplicitamente da preparare per Ottimizzazione. Non pretende di inventare
-un programma completo del semestre. I laboratori AOS/Algoritmi ancora non
-committati negli altri worktree andranno associati quando saranno integrati.
-
-## Progressi
-
-Nessun account e nessun backend. `localStorage` conserva risultati, bozze e
-ultima lezione (`lm32-study-progress-v1`); lo schema dei backup è strict e
-versionato. Non usare i progressi come certificazione o sistema anti-cheating:
-sono personali e modificabili dal proprietario del browser.
-
-Una lezione è completata solo quando tutte le attività obbligatorie hanno una
-ricevuta con la firma attuale. La firma SHA-256 dipende dal contenuto
-dell'attività; per C++ comprende anche l'esercizio referenziato e i suoi test.
-Cambiare la verifica invalida quel risultato, conservando lo storico precedente
-nel backup fino a una nuova verifica. Le sezioni teoriche possono risultare
-consultate; il superamento riguarda la verifica della lezione nel suo insieme.
-
-I risultati attestano i controlli superati. Non provano correttezza universale,
-lettura effettiva o comprensione di ogni singola sezione. Aprire una soluzione
-non registra un risultato. Una nuova risposta errata non cancella un precedente
-superamento della stessa verifica. Le bozze C/C++ sono salvate separatamente.
-
-Importazione JSON con anteprima: unione dei record più recenti oppure
-sostituzione esplicita. Nessun file PDF, testo estratto o associazione documentale
-è nel backup dei progressi. LocalStorage disabilitato o pieno: avviso e stato in
-memoria esportabile. Cancellare i dati del browser elimina il salvataggio locale.
-
-## PDF esclusivamente locali
-
-PDF.js `6.5.438`, licenza Apache-2.0, fissato nel lockfile. Worker, font, CMap e
-risorse WASM sono serviti dalla stessa origine e preparati da predev/prebuild;
-il motore è caricato dinamicamente. Nessuna CDN o API remota per i documenti.
-
-IndexedDB (`lm32-private-pdfs-v1`) conserva Blob, testo estratto per pagina e
-riferimenti corretti dall'utente. Limiti per documento: 50 MiB, 500 pagine,
-5 milioni di caratteri indicizzati. È renderizzata una pagina alla volta,
-con densità pixel massima 2, zoom e testo accessibile separato.
-
-La selezione avviene tramite File API, compatibile anche con l'app File di iPad;
-nessun percorso Windows viene inviato al browser o al sito. Il nome suggerisce
-una lezione; il contenuto è riconosciuto tramite SHA-256. Un PDF differente
-mostra i riferimenti come da riconfermare. L'utente può correggere pagina e
-sezione sul proprio dispositivo, senza alterare il catalogo pubblico.
-
-PDF scansionati: consultabili, senza OCR o falsa ricerca. File illeggibili,
-protetti, limiti superati e annullamento hanno messaggi espliciti. Se IndexedDB
-non funziona, il documento rimane disponibile nella sessione con avviso.
-I PDF vanno selezionati su ogni dispositivo e le risorse locali possono essere
-eliminate dal browser. Nessun PDF o indice privato finisce in Git o nella build.
-
-## C AOS
-
-Solo frammenti C, con contesto fornito e alternative accettate esplicite.
-Il confronto usa token C: spazi e commenti fuori dai letterali non contano;
-operatori, stringhe, valori e argomenti diversi contano. Input non tokenizzabile
-è rifiutato. Nessun `eval`, compilatore simulato, syscall o processo Linux.
-
-Il feedback dice “Frammento verificato rispetto ai requisiti”. Alternative
-semanticamente valide ma non elencate possono essere rifiutate: il messaggio
-lo chiarisce. I contesti sono esempi originali minimi, non copie degli ZIP del
-docente e non implementazioni complete dei laboratori Linux.
+Aprire `http://127.0.0.1:3217`. Per sviluppare: `npm run dev -- --port 3217`.
+Per sincronizzare da un'altra cartella: impostare `STUDY_NOTES_ROOT`.
 
 ## Controlli
 
 ```powershell
-npm run study:content -- validate
+npm run content -- validate
 npm run typecheck
 npm run lint
 npm test
@@ -105,10 +83,9 @@ npm run build
 npm run test:study
 ```
 
-`test:study` usa un server dedicato sulla porta 3217, Chromium e WebKit/iPad.
-I PDF di prova sono generati dai test con testo originale minimo: nessun
-materiale universitario tra le fixture. I test controllano anche che durante
-importazione, ricerca e lettura non siano effettuate richieste POST.
+I test verificano PDF automatici, riferimenti, comprensione, car, compilazione
+C++ reale, ricerca, navigazione e dimensioni desktop/iPad/telefono. WebKit emula
+iPad: non equivale a una prova sull'hardware fisico.
 
-La pubblicazione non fa parte di questo branch: prima revisione locale, poi
-eventuale integrazione con develop e main con autorizzazione separata.
+Pubblicazione soltanto dopo revisione locale: feature → develop → main,
+con deployment Git Vercel da main. Nessun secondo deploy manuale.

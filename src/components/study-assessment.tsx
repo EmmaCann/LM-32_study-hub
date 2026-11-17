@@ -71,6 +71,7 @@ export function StudyActivityCard({
                 <label className="option" key={option}>
                   <input
                     type="radio"
+                    disabled={!ready}
                     name={key}
                     value={option}
                     checked={answer === option}

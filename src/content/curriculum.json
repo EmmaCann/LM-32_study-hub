@@ -1117,8 +1117,17 @@
         "Completa i frammenti C del supervisor distinguendo namespace, limiti e filesystem."
       ],
       "availability": "ready",
-      "topicIds": [],
-      "theory": [],
+      "topicIds": [
+        "aos-l09-car"
+      ],
+      "theory": [
+        {
+          "topicId": "aos-l09-car",
+          "simulationId": "car",
+          "page": 8,
+          "section": "Isolamento e costruzione dei container car"
+        }
+      ],
       "activities": [
         {
           "id": "cgroup",
@@ -1241,8 +1250,17 @@
         "Distingui inizializzazione, cleanup e osservabilità dei moduli Linux."
       ],
       "availability": "ready",
-      "topicIds": [],
-      "theory": [],
+      "topicIds": [
+        "aos-l10-modules"
+      ],
+      "theory": [
+        {
+          "topicId": "aos-l10-modules",
+          "simulationId": "moduli",
+          "page": 8,
+          "section": "Ciclo di vita del modulo e laboratorio"
+        }
+      ],
       "activities": [
         {
           "id": "init",
@@ -1644,8 +1662,29 @@
         "Distingui costo atteso, pivot e ordinamento per confronti."
       ],
       "availability": "ready",
-      "topicIds": [],
-      "theory": [],
+      "topicIds": [
+        "algoritmi-l03-ordinamenti"
+      ],
+      "theory": [
+        {
+          "topicId": "algoritmi-l03-ordinamenti",
+          "simulationId": "permutazione",
+          "page": 4,
+          "section": "Permutazione uniforme"
+        },
+        {
+          "topicId": "algoritmi-l03-ordinamenti",
+          "simulationId": "partition",
+          "page": 5,
+          "section": "Quicksort e partizione"
+        },
+        {
+          "topicId": "algoritmi-l03-ordinamenti",
+          "simulationId": "counting",
+          "page": 11,
+          "section": "Counting Sort"
+        }
+      ],
       "activities": [
         {
           "id": "pivot",
@@ -1757,8 +1796,29 @@
         "Confronta stabilità, distribuzione e scelta del rango."
       ],
       "availability": "ready",
-      "topicIds": [],
-      "theory": [],
+      "topicIds": [
+        "algoritmi-l04-lineari-selezione"
+      ],
+      "theory": [
+        {
+          "topicId": "algoritmi-l04-lineari-selezione",
+          "simulationId": "radix",
+          "page": 3,
+          "section": "Radix Sort"
+        },
+        {
+          "topicId": "algoritmi-l04-lineari-selezione",
+          "simulationId": "bucket",
+          "page": 5,
+          "section": "Bucket Sort"
+        },
+        {
+          "topicId": "algoritmi-l04-lineari-selezione",
+          "simulationId": "selezione",
+          "page": 10,
+          "section": "Randomized-Select e Select"
+        }
+      ],
       "activities": [
         {
           "id": "radix",
@@ -1870,8 +1930,29 @@
         "Distingui discipline di accesso e costo delle collisioni."
       ],
       "availability": "ready",
-      "topicIds": [],
-      "theory": [],
+      "topicIds": [
+        "algoritmi-l05-strutture-hash"
+      ],
+      "theory": [
+        {
+          "topicId": "algoritmi-l05-strutture-hash",
+          "simulationId": "pile-code",
+          "page": 2,
+          "section": "Pile e code su array"
+        },
+        {
+          "topicId": "algoritmi-l05-strutture-hash",
+          "simulationId": "liste",
+          "page": 5,
+          "section": "Liste concatenate"
+        },
+        {
+          "topicId": "algoritmi-l05-strutture-hash",
+          "simulationId": "hash",
+          "page": 12,
+          "section": "Costo della ricerca hash"
+        }
+      ],
       "activities": [
         {
           "id": "stack",
@@ -1983,8 +2064,29 @@
         "Collega invarianti, riuso dei sottoproblemi e ricostruzione."
       ],
       "availability": "ready",
-      "topicIds": [],
-      "theory": [],
+      "topicIds": [
+        "algoritmi-l06-rb-dinamica"
+      ],
+      "theory": [
+        {
+          "topicId": "algoritmi-l06-rb-dinamica",
+          "simulationId": "rb",
+          "page": 5,
+          "section": "Inserimento rosso-nero"
+        },
+        {
+          "topicId": "algoritmi-l06-rb-dinamica",
+          "simulationId": "aste",
+          "page": 8,
+          "section": "Programmazione dinamica e aste"
+        },
+        {
+          "topicId": "algoritmi-l06-rb-dinamica",
+          "simulationId": "matrici",
+          "page": 13,
+          "section": "Catene di matrici"
+        }
+      ],
       "activities": [
         {
           "id": "rosso",
@@ -2282,6 +2384,931 @@
       "topicIds": [],
       "theory": [],
       "activities": [],
+      "sections": []
+    },
+    {
+      "id": "aos-lezione-12",
+      "subject": "aos",
+      "chapter": "Percorso principale",
+      "order": 12,
+      "title": "Lezione 12 - Driver mailbox",
+      "description": "Driver mailbox: teoria, laboratori e verifica nello stesso spazio.",
+      "objectives": [
+        "Collega i concetti della lezione a casi concreti e verifica le tue scelte."
+      ],
+      "availability": "ready",
+      "topicIds": [
+        "aos-l12-mailbox"
+      ],
+      "theory": [
+        {
+          "topicId": "aos-l12-mailbox",
+          "simulationId": "mailbox",
+          "page": 7,
+          "section": "Stato del modulo, open e release"
+        }
+      ],
+      "activities": [
+        {
+          "id": "offset",
+          "type": "choice",
+          "title": "Due open distinti possono avere posizioni di lettura indipendenti.",
+          "prompt": "Due open distinti possono avere posizioni di lettura indipendenti.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Vero",
+          "explanation": "Ogni descrizione aperta ha il proprio stato; dup invece può condividere la descrizione.",
+          "required": true,
+          "hints": [
+            "Rileggi il contratto e le condizioni nella teoria."
+          ]
+        },
+        {
+          "id": "eof",
+          "type": "choice",
+          "title": "Leggere fino a EOF deve consumare globalmente il messaggio per ogni altro lettore.",
+          "prompt": "Leggere fino a EOF deve consumare globalmente il messaggio per ogni altro lettore.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Falso",
+          "explanation": "EOF dipende anche dalla posizione della descrizione aperta; non implica consumo globale del buffer.",
+          "required": true,
+          "hints": [
+            "Rileggi il contratto e le condizioni nella teoria."
+          ]
+        },
+        {
+          "id": "rollback",
+          "type": "choice",
+          "title": "Una registrazione parzialmente fallita richiede il rollback delle risorse già acquisite.",
+          "prompt": "Una registrazione parzialmente fallita richiede il rollback delle risorse già acquisite.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Vero",
+          "explanation": "Le risorse completate prima dell’errore devono essere rilasciate nel giusto ordine.",
+          "required": true,
+          "hints": [
+            "Rileggi il contratto e le condizioni nella teoria."
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "sezione-2",
+          "title": "Major, minor e identità del dispositivo",
+          "page": 2
+        },
+        {
+          "id": "sezione-3",
+          "title": "Il percorso da open alla callback",
+          "page": 3
+        },
+        {
+          "id": "sezione-4",
+          "title": "Registrazione, pubblicazione e rollback",
+          "page": 5
+        },
+        {
+          "id": "sezione-5",
+          "title": "Stato del modulo, open e release",
+          "page": 7
+        },
+        {
+          "id": "sezione-6",
+          "title": "Read: lunghezza, posizione e fine del messaggio",
+          "page": 8
+        },
+        {
+          "id": "sezione-7",
+          "title": "Attraversare il confine user/kernel",
+          "page": 9
+        },
+        {
+          "id": "sezione-8",
+          "title": "Write: sostituire un messaggio",
+          "page": 9
+        },
+        {
+          "id": "sezione-9",
+          "title": "Il laboratorio: file, build e prova ragionata",
+          "page": 11
+        },
+        {
+          "id": "sezione-10",
+          "title": "Limiti e seguito della lezione",
+          "page": 12
+        }
+      ],
+      "document": {
+        "id": "aos-lezione-12-appunti",
+        "title": "Appunti - Lezione 12 - Driver mailbox",
+        "filename": "Appunti_AOS_Lezione-12.pdf",
+        "fingerprint": "fa79059e800c20b7f5c7bbd58939d1499a03163a7b96b739db51236f642b30fd",
+        "pages": 13
+      }
+    },
+    {
+      "id": "algoritmi-lezione-07",
+      "subject": "algoritmi",
+      "chapter": "Percorso principale",
+      "order": 7,
+      "title": "Lezione 7 - Dipendenze e ricostruzione",
+      "description": "Dipendenze e ricostruzione: teoria, laboratori e verifica nello stesso spazio.",
+      "objectives": [
+        "Collega i concetti della lezione a casi concreti e verifica le tue scelte."
+      ],
+      "availability": "ready",
+      "topicIds": [
+        "algoritmi-l07-dinamica"
+      ],
+      "theory": [
+        {
+          "topicId": "algoritmi-l07-dinamica",
+          "simulationId": "matrici",
+          "page": 2,
+          "section": "Catene di matrici: stato e ricorrenza"
+        },
+        {
+          "topicId": "algoritmi-l07-dinamica",
+          "simulationId": "lcs",
+          "page": 8,
+          "section": "LCS e prefissi"
+        },
+        {
+          "topicId": "algoritmi-l07-dinamica",
+          "simulationId": "alberi",
+          "page": 12,
+          "section": "Alberi di ricerca ottimi"
+        },
+        {
+          "topicId": "algoritmi-l07-dinamica",
+          "simulationId": "triangoli",
+          "page": 14,
+          "section": "Triangolazione e funzione costo"
+        }
+      ],
+      "activities": [
+        {
+          "id": "catene",
+          "type": "choice",
+          "title": "Nella catena di matrici una parentesizzazione cambia sempre il risultato matematico del prodotto.",
+          "prompt": "Nella catena di matrici una parentesizzazione cambia sempre il risultato matematico del prodotto.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Falso",
+          "explanation": "Per matrici compatibili cambia il costo di calcolo, non il prodotto associativo matematico.",
+          "required": true,
+          "hints": [
+            "Rileggi il contratto e le condizioni nella teoria."
+          ]
+        },
+        {
+          "id": "lcs",
+          "type": "choice",
+          "title": "Una sottosequenza comune deve essere contigua in entrambe le stringhe.",
+          "prompt": "Una sottosequenza comune deve essere contigua in entrambe le stringhe.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Falso",
+          "explanation": "La sottosequenza conserva l’ordine ma può saltare posizioni.",
+          "required": true,
+          "hints": [
+            "Rileggi il contratto e le condizioni nella teoria."
+          ]
+        },
+        {
+          "id": "tabelle",
+          "type": "choice",
+          "title": "La ricostruzione richiede di conservare o ritrovare anche le scelte ottime.",
+          "prompt": "La ricostruzione richiede di conservare o ritrovare anche le scelte ottime.",
+          "options": [
+            "Vero",
+            "Falso"
+          ],
+          "answer": "Vero",
+          "explanation": "Il solo valore del costo non descrive sempre la soluzione da ricostruire.",
+          "required": true,
+          "hints": [
+            "Rileggi il contratto e le condizioni nella teoria."
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "sezione-2",
+          "title": "Catene di matrici: stato e ricorrenza",
+          "page": 2
+        },
+        {
+          "id": "sezione-3",
+          "title": "Riempire le tabelle e leggere l'esempio",
+          "page": 3
+        },
+        {
+          "id": "sezione-4",
+          "title": "Ricostruire le parentesi ed eseguire il prodotto",
+          "page": 6
+        },
+        {
+          "id": "sezione-5",
+          "title": "Massima sottosequenza comune: che cosa cerchiamo",
+          "page": 8
+        },
+        {
+          "id": "sezione-6",
+          "title": "Prefissi, sottostruttura e ricorrenza della LCS",
+          "page": 8
+        },
+        {
+          "id": "sezione-7",
+          "title": "Calcolare la tabella e ricostruire BCBA",
+          "page": 10
+        },
+        {
+          "id": "sezione-8",
+          "title": "Alberi di ricerca ottimi: il problema, senza l'algoritmo",
+          "page": 12
+        },
+        {
+          "id": "sezione-9",
+          "title": "Triangolazione: scegliere anche la funzione costo",
+          "page": 14
+        },
+        {
+          "id": "sezione-10",
+          "title": "Esercizi e punto di ripartenza",
+          "page": 15
+        }
+      ],
+      "document": {
+        "id": "algoritmi-lezione-07-appunti",
+        "title": "Appunti - Lezione 7 - Dipendenze e ricostruzione",
+        "filename": "Appunti_Algoritmi_Lezione-07.pdf",
+        "fingerprint": "a68be90b8213386328342208d673741007aaa9d325ee664eeb95964ecc53afe8",
+        "pages": 16
+      }
+    },
+    {
+      "id": "cpp-lezione-02",
+      "subject": "cpp",
+      "chapter": "Percorso principale",
+      "order": 2,
+      "title": "Lezione 2 - Funzioni e prime classi",
+      "description": "Funzioni e prime classi: teoria, laboratori e verifica nello stesso spazio.",
+      "objectives": [
+        "Collega i concetti della lezione a casi concreti e verifica le tue scelte."
+      ],
+      "availability": "ready",
+      "topicIds": [
+        "cpp-l02-funzioni-classi"
+      ],
+      "theory": [],
+      "activities": [
+        {
+          "id": "catture-offset",
+          "type": "cpp",
+          "title": "Snapshot e riferimento vivo",
+          "required": true,
+          "explanation": "Verifica i casi disponibili nel compilatore C++ integrato.",
+          "hints": [],
+          "topicId": "cpp-l02-funzioni-classi",
+          "exerciseId": "catture-offset"
+        },
+        {
+          "id": "counter-concatenamento",
+          "type": "cpp",
+          "title": "Costruisci e modifica lo stesso Counter",
+          "required": true,
+          "explanation": "Verifica i casi disponibili nel compilatore C++ integrato.",
+          "hints": [],
+          "topicId": "cpp-l02-funzioni-classi",
+          "exerciseId": "counter-concatenamento"
+        }
+      ],
+      "sections": [
+        {
+          "id": "sezione-1",
+          "title": "Matrix M1: riferimenti a dati del chiamante",
+          "page": 2
+        },
+        {
+          "id": "sezione-2",
+          "title": "Dichiarazione, definizione e organizzazione dei file",
+          "page": 3
+        },
+        {
+          "id": "sezione-3",
+          "title": "Scope, lifetime e storage duration",
+          "page": 4
+        },
+        {
+          "id": "sezione-4",
+          "title": "Overload: scegliere una funzione senza ambiguità",
+          "page": 5
+        },
+        {
+          "id": "sezione-5",
+          "title": "Categorie di valore, binding e temporanei",
+          "page": 7
+        },
+        {
+          "id": "sezione-6",
+          "title": "Argomenti di default, callback e alias di tipo",
+          "page": 9
+        },
+        {
+          "id": "sezione-7",
+          "title": "Lambda, auto e catture",
+          "page": 10
+        },
+        {
+          "id": "sezione-8",
+          "title": "Prime classi: dati, accesso e vector",
+          "page": 13
+        },
+        {
+          "id": "sezione-9",
+          "title": "This, ritorno dell'istanza e funzioni membro const",
+          "page": 14
+        },
+        {
+          "id": "sezione-10",
+          "title": "Costruttori e ordine di inizializzazione",
+          "page": 16
+        },
+        {
+          "id": "sezione-11",
+          "title": "Matrix M2 e lettura statica dell'archivio",
+          "page": 18
+        },
+        {
+          "id": "sezione-12",
+          "title": "Pratica, verifiche e stato dei documenti",
+          "page": 20
+        }
+      ],
+      "document": {
+        "id": "cpp-lezione-02-appunti",
+        "title": "Appunti - Lezione 2 - Funzioni e prime classi",
+        "filename": "Appunti_CPP_Lezione-02.pdf",
+        "fingerprint": "d238162558441ee730a3ebe9760bf9ed126e64a3317c44ae888f41e6ffaf7026",
+        "pages": 21
+      }
+    },
+    {
+      "id": "cpp-lezione-03",
+      "subject": "cpp",
+      "chapter": "Percorso principale",
+      "order": 3,
+      "title": "Lezione 3 - Operatori e risorse",
+      "description": "Operatori e risorse: teoria, laboratori e verifica nello stesso spazio.",
+      "objectives": [
+        "Collega i concetti della lezione a casi concreti e verifica le tue scelte."
+      ],
+      "availability": "ready",
+      "topicIds": [
+        "cpp-l03-operatori-risorse"
+      ],
+      "theory": [],
+      "activities": [
+        {
+          "id": "stream-intervalli",
+          "type": "cpp",
+          "title": "Scrivere sullo stream ricevuto",
+          "required": true,
+          "explanation": "Verifica i casi disponibili nel compilatore C++ integrato.",
+          "hints": [],
+          "topicId": "cpp-l03-operatori-risorse",
+          "exerciseId": "stream-intervalli"
+        },
+        {
+          "id": "copie-indipendenti",
+          "type": "cpp",
+          "title": "Una copia deve essere indipendente",
+          "required": true,
+          "explanation": "Verifica i casi disponibili nel compilatore C++ integrato.",
+          "hints": [],
+          "topicId": "cpp-l03-operatori-risorse",
+          "exerciseId": "copie-indipendenti"
+        }
+      ],
+      "sections": [
+        {
+          "id": "sezione-1",
+          "title": "Ripartenza: costruzione, accesso e conversioni",
+          "page": 2
+        },
+        {
+          "id": "sezione-2",
+          "title": "Membri statici e fine della vita di un oggetto",
+          "page": 3
+        },
+        {
+          "id": "sezione-3",
+          "title": "Dare una sintassi naturale a Matrix",
+          "page": 5
+        },
+        {
+          "id": "sezione-4",
+          "title": "Conversioni dell'oggetto e operatori logici",
+          "page": 8
+        },
+        {
+          "id": "sezione-5",
+          "title": "Prefisso, postfisso e forme di inizializzazione",
+          "page": 10
+        },
+        {
+          "id": "sezione-6",
+          "title": "Template: tipi e valori risolti in compilazione",
+          "page": 12
+        },
+        {
+          "id": "sezione-7",
+          "title": "Allocare e liberare una risorsa dinamica",
+          "page": 14
+        },
+        {
+          "id": "sezione-8",
+          "title": "RAII: un proprietario che rilascia nel distruttore",
+          "page": 16
+        },
+        {
+          "id": "sezione-9",
+          "title": "Copiare un owner: regola dei tre",
+          "page": 17
+        },
+        {
+          "id": "sezione-10",
+          "title": "Materiale pratico, errori verificati e allenamento",
+          "page": 20
+        },
+        {
+          "id": "sezione-11",
+          "title": "Stato cumulativo dei materiali dopo le lezioni 1–3",
+          "page": 21
+        },
+        {
+          "id": "sezione-12",
+          "title": "Riferimenti e verifica",
+          "page": 22
+        }
+      ],
+      "document": {
+        "id": "cpp-lezione-03-appunti",
+        "title": "Appunti - Lezione 3 - Operatori e risorse",
+        "filename": "Appunti_CPP_Lezione-03.pdf",
+        "fingerprint": "ea2e94ec3bc5de0d85970969e3e92f7ef9542e5f41f8361f8121cecfa6e17d3b",
+        "pages": 23
+      }
+    },
+    {
+      "id": "cpp-lezione-04",
+      "subject": "cpp",
+      "chapter": "Percorso principale",
+      "order": 4,
+      "title": "Lezione 4 - Move e polimorfismo",
+      "description": "Move e polimorfismo: teoria, laboratori e verifica nello stesso spazio.",
+      "objectives": [
+        "Collega i concetti della lezione a casi concreti e verifica le tue scelte."
+      ],
+      "availability": "ready",
+      "topicIds": [
+        "cpp-l04-move-polimorfismo"
+      ],
+      "theory": [],
+      "activities": [
+        {
+          "id": "trasferire-owner",
+          "type": "cpp",
+          "title": "Trasferire senza duplicare",
+          "required": true,
+          "explanation": "Verifica i casi disponibili nel compilatore C++ integrato.",
+          "hints": [],
+          "topicId": "cpp-l04-move-polimorfismo",
+          "exerciseId": "trasferire-owner"
+        },
+        {
+          "id": "riferimento-slicing",
+          "type": "cpp",
+          "title": "Riferimento o copia della base?",
+          "required": true,
+          "explanation": "Verifica i casi disponibili nel compilatore C++ integrato.",
+          "hints": [],
+          "topicId": "cpp-l04-move-polimorfismo",
+          "exerciseId": "riferimento-slicing"
+        }
+      ],
+      "sections": [
+        {
+          "id": "sezione-1",
+          "title": "RAII non significa rollback automatico",
+          "page": 2
+        },
+        {
+          "id": "sezione-2",
+          "title": "Move: trasferire una risorsa mantenendo vivi gli oggetti",
+          "page": 3
+        },
+        {
+          "id": "sezione-4",
+          "title": "Regola dei cinque e funzioni speciali",
+          "page": 8
+        },
+        {
+          "id": "sezione-5",
+          "title": "Regola dello zero: delegare alle componenti",
+          "page": 9
+        },
+        {
+          "id": "sezione-7",
+          "title": "Review Image: quali test non bastano",
+          "page": 14
+        },
+        {
+          "id": "sezione-8",
+          "title": "Ereditarietà: classe base e sotto-oggetto",
+          "page": 14
+        },
+        {
+          "id": "sezione-9",
+          "title": "Hiding, qualificazione e using",
+          "page": 16
+        },
+        {
+          "id": "sezione-10",
+          "title": "Dispatch statico, virtual e override",
+          "page": 17
+        },
+        {
+          "id": "sezione-11",
+          "title": "Object slicing e final",
+          "page": 19
+        },
+        {
+          "id": "sezione-12",
+          "title": "Allenamento e stato dei documenti",
+          "page": 20
+        },
+        {
+          "id": "sezione-3",
+          "title": "Un weak_ptr può garantire da solo la durata durante un accesso? No; un lock riuscito",
+          "page": 21
+        },
+        {
+          "id": "sezione-6",
+          "title": "Si può misurare la garanzia strong guardando soltanto il distruttore? No: il cleanup non",
+          "page": 21
+        },
+        {
+          "id": "sezione-13",
+          "title": "Fonti, correzioni e verifiche",
+          "page": 22
+        }
+      ],
+      "document": {
+        "id": "cpp-lezione-04-appunti",
+        "title": "Appunti - Lezione 4 - Move e polimorfismo",
+        "filename": "Appunti_CPP_Lezione-04.pdf",
+        "fingerprint": "7d0fe4f2d39cb3b8dab6777e41c6ba0f10c2066f24df1e337ee94a0cde8ac12b",
+        "pages": 23
+      }
+    },
+    {
+      "id": "cpp-lezione-05",
+      "subject": "cpp",
+      "chapter": "Percorso principale",
+      "order": 5,
+      "title": "Lezione 5 - Interfacce e gerarchie",
+      "description": "Interfacce e gerarchie: teoria, laboratori e verifica nello stesso spazio.",
+      "objectives": [
+        "Collega i concetti della lezione a casi concreti e verifica le tue scelte."
+      ],
+      "availability": "ready",
+      "topicIds": [
+        "cpp-l05-interfacce-gerarchie"
+      ],
+      "theory": [],
+      "activities": [
+        {
+          "id": "pipeline-numerica",
+          "type": "cpp",
+          "title": "Una sequenza di correzioni numeriche",
+          "required": true,
+          "explanation": "Verifica i casi disponibili nel compilatore C++ integrato.",
+          "hints": [],
+          "topicId": "cpp-l05-interfacce-gerarchie",
+          "exerciseId": "pipeline-numerica"
+        },
+        {
+          "id": "base-condivisa",
+          "type": "cpp",
+          "title": "Un'unica configurazione condivisa",
+          "required": true,
+          "explanation": "Verifica i casi disponibili nel compilatore C++ integrato.",
+          "hints": [],
+          "topicId": "cpp-l05-interfacce-gerarchie",
+          "exerciseId": "base-condivisa"
+        }
+      ],
+      "sections": [
+        {
+          "id": "sezione-1",
+          "title": "Richiami: vista pubblica, durata e dispatch",
+          "page": 2
+        },
+        {
+          "id": "sezione-2",
+          "title": "Classi astratte e funzioni pure virtuali",
+          "page": 3
+        },
+        {
+          "id": "sezione-3",
+          "title": "Distruttori virtuali e chiamate nei costruttori",
+          "page": 4
+        },
+        {
+          "id": "sezione-5",
+          "title": "TextOperation: leggere il contratto prima del codice",
+          "page": 7
+        },
+        {
+          "id": "sezione-6",
+          "title": "Pipeline: proprietà omogenea, oggetti concreti diversi",
+          "page": 9
+        },
+        {
+          "id": "sezione-7",
+          "title": "RTTI e quattro cast con scopi diversi",
+          "page": 11
+        },
+        {
+          "id": "sezione-8",
+          "title": "Ereditarietà multipla, ambiguità e viste dei sotto-oggetti",
+          "page": 13
+        },
+        {
+          "id": "sezione-9",
+          "title": "Il diamante e le basi virtuali",
+          "page": 14
+        },
+        {
+          "id": "sezione-10",
+          "title": "Mixin: riusare un comportamento trasversale",
+          "page": 16
+        },
+        {
+          "id": "sezione-11",
+          "title": "CRTP: personalizzazione verificata a compilazione",
+          "page": 17
+        },
+        {
+          "id": "sezione-12",
+          "title": "Ripasso, fonti e controllo degli errori",
+          "page": 18
+        },
+        {
+          "id": "sezione-4",
+          "title": "Perché una pipeline è un vector omogeneo pur avendo operazioni diverse? Gli",
+          "page": 18
+        },
+        {
+          "id": "sezione-13",
+          "title": "Schemino cumulativo dei PDF dopo la lezione 5",
+          "page": 19
+        }
+      ],
+      "document": {
+        "id": "cpp-lezione-05-appunti",
+        "title": "Appunti - Lezione 5 - Interfacce e gerarchie",
+        "filename": "Appunti_CPP_Lezione-05.pdf",
+        "fingerprint": "a18bbe672bbf202361b41a593f7d9df09ca00d431baeb79d93656e5271801f9e",
+        "pages": 20
+      }
+    },
+    {
+      "id": "cpp-lezione-06",
+      "subject": "cpp",
+      "chapter": "Percorso principale",
+      "order": 6,
+      "title": "Lezione 6 - Eccezioni e contenitori",
+      "description": "Eccezioni e contenitori: teoria, laboratori e verifica nello stesso spazio.",
+      "objectives": [
+        "Collega i concetti della lezione a casi concreti e verifica le tue scelte."
+      ],
+      "availability": "ready",
+      "topicIds": [
+        "cpp-l06-eccezioni-contenitori"
+      ],
+      "theory": [],
+      "activities": [
+        {
+          "id": "copia-intervallo",
+          "type": "cpp",
+          "title": "Copiare un intervallo in celle valide",
+          "required": true,
+          "explanation": "Verifica i casi disponibili nel compilatore C++ integrato.",
+          "hints": [],
+          "topicId": "cpp-l06-eccezioni-contenitori",
+          "exerciseId": "copia-intervallo"
+        },
+        {
+          "id": "consulta-mappa",
+          "type": "cpp",
+          "title": "Consultare una mappa senza modificarla",
+          "required": true,
+          "explanation": "Verifica i casi disponibili nel compilatore C++ integrato.",
+          "hints": [],
+          "topicId": "cpp-l06-eccezioni-contenitori",
+          "exerciseId": "consulta-mappa"
+        },
+        {
+          "id": "funzione-stato",
+          "type": "cpp",
+          "title": "Conservare uno stato dentro std::function",
+          "required": true,
+          "explanation": "Verifica i casi disponibili nel compilatore C++ integrato.",
+          "hints": [],
+          "topicId": "cpp-l06-eccezioni-contenitori",
+          "exerciseId": "funzione-stato"
+        }
+      ],
+      "sections": [
+        {
+          "id": "sezione-2",
+          "title": "La gerarchia standard e la cattura per riferimento",
+          "page": 2
+        },
+        {
+          "id": "sezione-3",
+          "title": "Ordine dei catch, cattura totale e rilancio",
+          "page": 3
+        },
+        {
+          "id": "sezione-4",
+          "title": "Una mappa dei contenitori, prima dei dettagli",
+          "page": 5
+        },
+        {
+          "id": "sezione-7",
+          "title": "Iteratori e intervalli semiaperti",
+          "page": 8
+        },
+        {
+          "id": "sezione-11",
+          "title": "Costruzione fallita e noexcept: il richiamo finale",
+          "page": 14
+        },
+        {
+          "id": "sezione-13",
+          "title": "Fonti, pratica e resoconto dei materiali",
+          "page": 16
+        },
+        {
+          "id": "sezione-1",
+          "title": "Copia di intervallo. Scrivi std::vector<int> shifted_copy(const std::vector<int>& source,",
+          "page": 16
+        },
+        {
+          "id": "sezione-15",
+          "title": "Nella 6: pp. 4–14, 15 selettiva,",
+          "page": 17
+        }
+      ],
+      "document": {
+        "id": "cpp-lezione-06-appunti",
+        "title": "Appunti - Lezione 6 - Eccezioni e contenitori",
+        "filename": "Appunti_CPP_Lezione-06.pdf",
+        "fingerprint": "9e658d27deca48d4374ad287afefcfd67ee5d913a21960e5dab8b639a5192472",
+        "pages": 17
+      }
+    },
+    {
+      "id": "cpp-code-01-05",
+      "subject": "cpp",
+      "chapter": "Percorso principale",
+      "order": 101,
+      "title": "Laboratorio codice - Lezioni 1–5",
+      "description": "Lezioni 1–5: teoria, laboratori e verifica nello stesso spazio.",
+      "objectives": [
+        "Collega i concetti della lezione a casi concreti e verifica le tue scelte."
+      ],
+      "availability": "ready",
+      "topicIds": [
+        "cpp-code-01-05"
+      ],
+      "theory": [],
+      "activities": [
+        {
+          "id": "callback-griglia",
+          "type": "cpp",
+          "title": "Trasformazioni su una griglia rettangolare",
+          "required": true,
+          "explanation": "Metti insieme i concetti già studiati e verifica i casi disponibili.",
+          "hints": [],
+          "topicId": "cpp-code-01-05",
+          "exerciseId": "callback-griglia"
+        },
+        {
+          "id": "forma-prima-mutazione",
+          "type": "cpp",
+          "title": "Controllare la forma prima di aggiornare",
+          "required": true,
+          "explanation": "Metti insieme i concetti già studiati e verifica i casi disponibili.",
+          "hints": [],
+          "topicId": "cpp-code-01-05",
+          "exerciseId": "forma-prima-mutazione"
+        },
+        {
+          "id": "move-invariante",
+          "type": "cpp",
+          "title": "Trasferire owner e dimensione insieme",
+          "required": true,
+          "explanation": "Metti insieme i concetti già studiati e verifica i casi disponibili.",
+          "hints": [],
+          "topicId": "cpp-code-01-05",
+          "exerciseId": "move-invariante"
+        },
+        {
+          "id": "filtro-valore",
+          "type": "cpp",
+          "title": "Mascherare cifre conservando il testo originale",
+          "required": true,
+          "explanation": "Metti insieme i concetti già studiati e verifica i casi disponibili.",
+          "hints": [],
+          "topicId": "cpp-code-01-05",
+          "exerciseId": "filtro-valore"
+        },
+        {
+          "id": "hook-crtp",
+          "type": "cpp",
+          "title": "Completare il punto di personalizzazione CRTP",
+          "required": true,
+          "explanation": "Metti insieme i concetti già studiati e verifica i casi disponibili.",
+          "hints": [],
+          "topicId": "cpp-code-01-05",
+          "exerciseId": "hook-crtp"
+        }
+      ],
+      "sections": []
+    },
+    {
+      "id": "cpp-integrazione-01-06",
+      "subject": "cpp",
+      "chapter": "Percorso principale",
+      "order": 102,
+      "title": "Integrazione - Matrix e CRTP",
+      "description": "Matrix e CRTP: teoria, laboratori e verifica nello stesso spazio.",
+      "objectives": [
+        "Collega i concetti della lezione a casi concreti e verifica le tue scelte."
+      ],
+      "availability": "ready",
+      "topicIds": [
+        "cpp-integrazione-01-06"
+      ],
+      "theory": [],
+      "activities": [
+        {
+          "id": "matrix-resize",
+          "type": "cpp",
+          "title": "Ridimensionare preservando le coordinate",
+          "required": true,
+          "explanation": "Metti insieme i concetti già studiati e verifica i casi disponibili.",
+          "hints": [],
+          "topicId": "cpp-integrazione-01-06",
+          "exerciseId": "matrix-resize"
+        },
+        {
+          "id": "matrix-incremento",
+          "type": "cpp",
+          "title": "Incremento: valore precedente e identità",
+          "required": true,
+          "explanation": "Metti insieme i concetti già studiati e verifica i casi disponibili.",
+          "hints": [],
+          "topicId": "cpp-integrazione-01-06",
+          "exerciseId": "matrix-incremento"
+        },
+        {
+          "id": "crtp-doppia",
+          "type": "cpp",
+          "title": "CRTP: applicare davvero due volte",
+          "required": true,
+          "explanation": "Metti insieme i concetti già studiati e verifica i casi disponibili.",
+          "hints": [],
+          "topicId": "cpp-integrazione-01-06",
+          "exerciseId": "crtp-doppia"
+        }
+      ],
       "sections": []
     }
   ]

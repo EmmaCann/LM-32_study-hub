@@ -7,6 +7,7 @@ import './study.css';
 import './cpp/playground/playground.css';
 import '../simulations/aos-visual.css';
 import '../simulations/algoritmi-sorting.css';
+import './desk.css';
 export const metadata: Metadata = {
   title: { default: 'LM·32 Study Hub', template: '%s · LM·32' },
   description:

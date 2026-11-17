@@ -1,3 +1,4 @@
+import { CourseOverview, StudyPortal } from '@/components/study-portal';
 import { getCurriculum } from '@/lib/study-content';
 import { StudyRoadmap } from '@/components/study-roadmap';
 import { TheorySimulation } from '@/components/theory-simulation';
@@ -7,7 +8,7 @@ import { ArrowLeft, ArrowRight, Download, FileText, Library, Play, PenLine } fro
 import { getTopics, subjects, headings, searchEntries } from '@/lib/content';
 import { topicPath, assetPath, cppExercisePath } from '@/lib/schema';
 import { CppNavigation } from '@/components/cpp-navigation';
-import { EmptyState, PageHeading, SubjectCards, TopicList } from '@/components/catalog';
+import { EmptyState, PageHeading, TopicList } from '@/components/catalog';
 import { Notes } from '@/components/markdown';
 import { ExerciseCard } from '@/components/exercise';
 import { SimulationPlayer } from '@/simulations/registry';
@@ -41,17 +42,7 @@ export default async function Page({ params }: { params: Promise<{ segments: str
     topics = getTopics(),
     [first, chapter] = segments;
   if (segments.length === 1) {
-    if (first === 'materie')
-      return (
-        <>
-          <PageHeading
-            eyebrow="LA TUA RACCOLTA"
-            title="Materie"
-            description="Ogni corso ha il suo spazio: appunti, capitoli e attività raccolti insieme."
-          />
-          <SubjectCards topics={topics} lessons={getCurriculum()} />
-        </>
-      );
+    if (first === 'materie') return <StudyPortal lessons={getCurriculum()} />;
     if (first === 'argomenti')
       return (
         <>
@@ -149,6 +140,13 @@ export default async function Page({ params }: { params: Promise<{ segments: str
   const subject = subjects.find((s) => s.id === first);
   if (!subject) notFound();
   const subjectTopics = topics.filter((t) => t.manifest.subject === first);
+  if (segments.length === 1)
+    return (
+      <CourseOverview
+        subjectId={first}
+        lessons={getCurriculum().filter((l) => l.subject === first)}
+      />
+    );
   if (segments.length <= 2) {
     const filtered = chapter
       ? subjectTopics.filter((t) => t.manifest.chapter.id === chapter)
