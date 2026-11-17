@@ -92,8 +92,8 @@ con deployment Git Vercel da main. Nessun secondo deploy manuale.
 
 ## Palette, mappa e lettore — revisione successiva
 
-Il tema chiaro usa lavanda e sabbia, con accenti malva/terracotta; quello scuro
-usa ardesia, malva e pesca, con superfici più luminose. Ogni pagina materia
+Il tema chiaro usa salvia e crema con accenti terracotta; quello scuro usa
+ ardesia e salvia, con superfici luminose e coordinate. Ogni pagina materia
 mostra una mappa ordinata per gruppo e lezione, con i sottoargomenti dichiarati
 nelle sezioni del catalogo e collegamenti alla pagina PDF. Gli stati distinguono
 le tappe da iniziare, in corso e completate. Il completamento deriva dalle
