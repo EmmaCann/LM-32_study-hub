@@ -1,10 +1,10 @@
 :root {
-  --desk-accent: #286790;
-  --desk-soft: #e6f0f7;
-  --desk-forest: #183b59;
+  --desk-accent: #197c69;
+  --desk-soft: #e8f2ed;
+  --desk-forest: #163e36;
   --bg: #f3f5f3;
-  --accent: #286790;
-  --soft: #e6f0f7;
+  --accent: #197c69;
+  --soft: #e8f2ed;
   --ink: #1a2c2b;
   --muted: #71807c;
   --line: #dfe6e1;
@@ -15,11 +15,11 @@
   --ink: #e0ebe8;
   --muted: #92a9a2;
   --line: #2a3b41;
-  --accent: #8bc8ed;
-  --soft: #203b50;
-  --desk-accent: #8bc8ed;
-  --desk-soft: #203b50;
-  --desk-forest: #142e43;
+  --accent: #7dd6bb;
+  --soft: #203b35;
+  --desk-accent: #7dd6bb;
+  --desk-soft: #203b35;
+  --desk-forest: #142f2b;
 }
 body {
   font-family:
@@ -33,14 +33,14 @@ body {
 }
 .sidebar {
   width: 216px;
-  background: #142c40;
+  background: #14221f;
   border-right: 0;
   padding: 27px 16px 18px;
-  color: #a9bdcb;
+  color: #9cafaa;
 }
 .sidebar .brand,
 .sidebar .brand small {
-  color: #f3f7fb;
+  color: #f3f7f4;
 }
 .sidebar .brand {
   font-size: 19px;
@@ -51,39 +51,39 @@ body {
   opacity: 0.55;
 }
 .sidebar .nav-group-title {
-  color: #738fa4;
+  color: #607a70;
   font-size: 9px;
   letter-spacing: 1.8px;
   padding: 0 12px;
 }
 .sidebar nav a {
   font-size: 12px;
-  color: #adbfcd;
+  color: #9fb2a9;
   border-radius: 6px;
   padding: 10px 12px;
   min-height: 40px;
 }
 .sidebar nav a:hover {
-  background: #203e54;
+  background: #20372f;
   color: white;
 }
 .sidebar nav a.active {
-  background: #285271;
-  color: #d4ecfa;
+  background: #254437;
+  color: #c6efd7;
 }
 .sidebar nav {
   overflow: auto;
   gap: 25px;
 }
 .sidebar-bottom {
-  border-color: #2d475a;
-  color: #738fa4;
+  border-color: #2b3c35;
+  color: #607a70;
 }
 .sidebar-bottom-mark {
-  color: #adbfcd;
+  color: #9fb2a9;
 }
 .sidebar .sidebar-bottom-mark span {
-  background: #8ac8eb;
+  background: #8acfb0;
 }
 .workspace {
   margin-left: 216px;
@@ -136,9 +136,9 @@ body {
 .portal-status-dot {
   width: 6px;
   height: 6px;
-  background: #5799c6;
+  background: #4ca584;
   border-radius: 50%;
-  box-shadow: 0 0 0 4px #5799c612;
+  box-shadow: 0 0 0 4px #4ca58412;
 }
 .portal-intro {
   display: flex;
@@ -192,16 +192,16 @@ body {
 .portal-today small {
   font-size: 21px;
   letter-spacing: -1px;
-  color: #9daebd;
+  color: #9caca4;
   font-weight: 400;
 }
 .portal-resume {
   display: grid;
   grid-template-columns: 160px minmax(0, 1fr) 210px;
   position: relative;
-  background: #193d5b;
-  color: #f0f5fb;
-  border: 1px solid #294d6a;
+  background: #183b30;
+  color: #f0f4ed;
+  border: 1px solid #26493a;
   border-radius: 16px;
   min-height: 218px;
   overflow: hidden;
@@ -214,7 +214,7 @@ body {
   z-index: 1;
 }
 .portal-resume-copy > .portal-overline {
-  color: #a2bed1;
+  color: #8eb19e;
   font-size: 8px;
   justify-content: space-between;
 }
@@ -229,7 +229,7 @@ body {
 .portal-resume-copy p {
   font-size: 11px;
   line-height: 1.75;
-  color: #b8cfdf;
+  color: #a5bcad;
   max-width: 480px;
   margin-bottom: 22px;
 }
@@ -238,9 +238,9 @@ body {
   align-items: center;
   justify-content: center;
   gap: 17px;
-  background: #c4e3f5;
-  color: #203e55;
-  border: 1px solid #c4e3f5;
+  background: #d1e9c3;
+  color: #203c28;
+  border: 1px solid #d1e9c3;
   border-radius: 6px;
   font-size: 11px;
   font-weight: 650;
@@ -251,7 +251,7 @@ body {
     transform 0.2s;
 }
 .portal-primary:hover {
-  background: #e0f2fc;
+  background: #e1f3d8;
   transform: translateY(-1px);
 }
 .portal-study-sequence {
@@ -259,11 +259,11 @@ body {
   flex-direction: column;
   justify-content: center;
   gap: 22px;
-  border-left: 1px solid #365874;
+  border-left: 1px solid #305343;
   margin: 32px 0;
   padding: 10px 22px;
   font-size: 10px;
-  color: #b8cfdf;
+  color: #a5bcad;
 }
 .portal-study-sequence span {
   display: flex;
@@ -272,7 +272,7 @@ body {
 }
 .portal-study-sequence b {
   font-size: 8px;
-  color: #80aac7;
+  color: #5e8d73;
   font-weight: 400;
 }
 .portal-resume-art {
@@ -284,12 +284,12 @@ body {
   position: absolute;
   top: calc(50% - 24px);
   left: 58px;
-  color: #c1deef;
+  color: #b9d9b2;
   transform: rotate(-15deg);
 }
 .portal-orbit {
   position: absolute;
-  border: 1px solid #7ca8c636;
+  border: 1px solid #6d986636;
   border-radius: 50%;
   transform: rotate(-30deg);
   left: -42px;
@@ -314,8 +314,8 @@ body {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #a9d7ef;
-  box-shadow: 0 0 12px #b8e2f6;
+  background: #b2d49a;
+  box-shadow: 0 0 12px #bbdc98;
 }
 .portal-orbit-point.a {
   top: 30%;
@@ -324,7 +324,7 @@ body {
 .portal-orbit-point.b {
   bottom: 22%;
   left: 34px;
-  background: #83b5d1;
+  background: #6d9e7c;
 }
 .portal-section-label {
   display: flex;
@@ -356,7 +356,7 @@ body {
   gap: 18px;
 }
 .portal-course {
-  --course-color: #789bb5;
+  --course-color: #7e9b87;
   position: relative;
   overflow: hidden;
   border: 1px solid var(--line);
@@ -375,20 +375,20 @@ body {
   box-shadow: 0 12px 24px #18342108;
 }
 .course-aos {
-  --course-color: #668fb0;
-  --course-soft: #e6eff6;
+  --course-color: #748eaa;
+  --course-soft: #e8edf2;
 }
 .course-algoritmi {
-  --course-color: #6e9ebd;
-  --course-soft: #e5f0f5;
+  --course-color: #b09971;
+  --course-soft: #f0ece4;
 }
 .course-cpp {
-  --course-color: #598bad;
-  --course-soft: #e3eef5;
+  --course-color: #6a9683;
+  --course-soft: #e6efe8;
 }
 .course-ottimizzazione {
-  --course-color: #809fbf;
-  --course-soft: #e9f0f8;
+  --course-color: #9690b1;
+  --course-soft: #eceaf2;
 }
 .portal-course-top {
   display: flex;
@@ -409,12 +409,12 @@ body {
 }
 .portal-course-number {
   font-size: 10px;
-  color: #a6b7c5;
+  color: #a8b7b0;
   letter-spacing: 1px;
 }
 .portal-course-top > svg {
   margin-left: auto;
-  color: #90a6b7;
+  color: #8e9f95;
 }
 .portal-course > .portal-overline {
   font-size: 8px;
@@ -510,7 +510,7 @@ body {
   display: flex;
   align-items: center;
   gap: 20px;
-  border: 1px dashed #bdccd7;
+  border: 1px dashed #bfcfc4;
   border-radius: 10px;
   padding: 22px 25px;
 }
@@ -700,7 +700,7 @@ body {
 .portal-subject-tabs button.is-active {
   background: var(--desk-forest);
   border-color: var(--desk-forest);
-  color: #d8eafa;
+  color: #d8e8da;
 }
 .desk-commandbar {
   display: flex;
@@ -875,7 +875,7 @@ body {
 .desk-outline-scroll > button > span {
   font-size: 8px;
   padding-top: 2px;
-  color: #9aaebc;
+  color: #9baaa1;
 }
 .desk-outline-scroll > button > strong {
   font-size: 10px;
@@ -1022,7 +1022,7 @@ body {
 .desk-document .study-pdf-canvas {
   max-height: calc(100dvh - 325px);
   border: 0;
-  background: #e1e9ef;
+  background: #e2e7e2;
   min-height: 300px;
   scrollbar-width: thin;
   overscroll-behavior: contain;
@@ -1686,8 +1686,8 @@ body {
 }
 
 
-:root { --complete: #286790; --complete-soft: #d7eaf6; --current: #42698b; --current-soft: #dbe9f4; }
-:root[data-theme="dark"] { --complete: #a8d9f5; --complete-soft: #315c78; --current: #bedcf3; --current-soft: #3d5870; }
+:root { --complete: #26734f; --complete-soft: #d5e7d9; --current: #955a35; --current-soft: #edd9bd; }
+:root[data-theme="dark"] { --complete: #a0e0c5; --complete-soft: #3d625e; --current: #f1cd99; --current-soft: #66564f; }
 .course-map {
   border: 1px solid var(--line);
   border-radius: 18px;
