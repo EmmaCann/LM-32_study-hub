@@ -1,4 +1,5 @@
 'use client';
+import { AlgoritmiLesson7Lab } from './algoritmi-l07-lab';
 import { AlgoritmiLesson6Lab } from './algoritmi-l06-lab';
 import { AlgoritmiLesson5Lab } from './algoritmi-l05-lab';
 import { AosModulesLab } from './aos-modules-lab';
@@ -132,6 +133,7 @@ function AvlDiagram({ step }: { step: number }) {
 // Components must be reviewed and registered in application code, never loaded from content.
 export const registry = { 'vm-exit': VmDiagram, 'avl-rotation': AvlDiagram };
 export function SimulationPlayer({ simulation: s }: { simulation: Simulation }) {
+  if(s.component === 'algoritmi-matrix-dp' || s.component === 'algoritmi-lcs' || s.component === 'algoritmi-bst-cost' || s.component === 'algoritmi-triangulation') return <AlgoritmiLesson7Lab id={s.id} title={s.title} mode={s.component === 'algoritmi-matrix-dp' ? 'matrix' : s.component === 'algoritmi-lcs' ? 'lcs' : s.component === 'algoritmi-bst-cost' ? 'bst' : 'triangle'}/>;
   if(s.component === 'algoritmi-rb-insert' || s.component === 'algoritmi-rod' || s.component === 'algoritmi-matrix-intro') return <AlgoritmiLesson6Lab id={s.id} title={s.title} mode={s.component === 'algoritmi-rb-insert' ? 'rb' : s.component === 'algoritmi-rod' ? 'rod' : 'matrix'}/>;
   if(s.component === 'algoritmi-containers' || s.component === 'algoritmi-list' || s.component === 'algoritmi-hash') return <AlgoritmiLesson5Lab id={s.id} title={s.title} mode={s.component === 'algoritmi-containers' ? 'containers' : s.component === 'algoritmi-list' ? 'list' : 'hash'}/>;
   if(s.component === 'aos-modules') return <AosModulesLab id={s.id} title={s.title}/>;

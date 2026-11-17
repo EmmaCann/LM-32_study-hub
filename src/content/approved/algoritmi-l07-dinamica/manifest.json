@@ -1,0 +1,27 @@
+{
+    "schemaVersion":  1,
+    "id":  "algoritmi-l07-dinamica",
+    "subject":  "algoritmi",
+    "chapter":  {
+                    "id":  "strutture-dati",
+                    "title":  "Strutture dati",
+                    "order":  2
+                },
+    "slug":  "catene-lcs",
+    "title":  "Programmazione dinamica: catene e LCS",
+    "description":  "Dipendenze, ricostruzione e confronti fra funzioni costo.",
+    "order":  7,
+    "demo":  false,
+    "updated":  "2026-11-17",
+    "revision":  1,
+    "review":  {
+                   "status":  "approved",
+                   "reviewer":  "Codex per autorizzazione permanente della proprietaria",
+                   "sources":  [
+                                   "Rielaborazioni originali dei concetti verificati della lezione 7 di Algoritmi."
+                               ]
+               },
+    "assets":  [
+
+               ]
+}

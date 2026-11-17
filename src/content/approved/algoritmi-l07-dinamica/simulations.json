@@ -1,0 +1,26 @@
+[
+  {
+    "id": "matrici",
+    "component": "algoritmi-matrix-dp",
+    "title": "Catene di matrici: dipendenze e ricostruzione",
+    "description": "Esperimento originale con input modificabile e passaggi controllabili."
+  },
+  {
+    "id": "lcs",
+    "component": "algoritmi-lcs",
+    "title": "LCS: prefissi, frecce e simboli",
+    "description": "Esperimento originale con input modificabile e passaggi controllabili."
+  },
+  {
+    "id": "alberi",
+    "component": "algoritmi-bst-cost",
+    "title": "Due alberi, costi medi diversi",
+    "description": "Esperimento originale con input modificabile e passaggi controllabili."
+  },
+  {
+    "id": "triangoli",
+    "component": "algoritmi-triangulation",
+    "title": "Triangolazioni: area e perimetri",
+    "description": "Esperimento originale con input modificabile e passaggi controllabili."
+  }
+]
