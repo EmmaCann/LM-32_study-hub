@@ -22,12 +22,14 @@ export function PdfViewer({
     setPage(next);
     onPageChange?.(next);
   }
-  const [zoom, setZoom] = useState(1);
+  const [zoom, setZoom] = useState<'page' | 'width' | number>('page');
   const [message, setMessage] = useState('Apertura PDF…');
   const [pdf, setPdf] = useState<PDFDocumentProxy>();
   const host = useRef<HTMLDivElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
+  const renderedScale = useRef(1);
   const [width, setWidth] = useState(600);
+  const [height, setHeight] = useState(600);
   useEffect(() => {
     let active = true;
     let task: ReturnType<(typeof import('pdfjs-dist'))['getDocument']> | undefined;
@@ -57,11 +59,26 @@ export function PdfViewer({
   }, [document.blob]);
   useEffect(() => {
     if (!host.current) return;
-    const observer = new ResizeObserver((entries) =>
-      setWidth(Math.max(150, entries[0].contentRect.width)),
-    );
+    const measure = () => {
+      if (!host.current) return;
+      const box = host.current;
+      setWidth(Math.max(1, box.clientWidth - 24));
+      const maximum = Number.parseFloat(getComputedStyle(box).maxHeight);
+      setHeight(
+        Math.max(
+          180,
+          Math.min(window.innerHeight * 0.7, Number.isFinite(maximum) ? maximum : 800) - 24,
+        ),
+      );
+    };
+    const observer = new ResizeObserver(measure);
     observer.observe(host.current);
-    return () => observer.disconnect();
+    window.addEventListener('resize', measure);
+    measure();
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', measure);
+    };
   }, []);
   useEffect(() => {
     if (!pdf || !canvas.current) return;
@@ -73,9 +90,22 @@ export function PdfViewer({
         const page = await pdf.getPage(pageNumber);
         if (!active || !canvas.current) return;
         const base = page.getViewport({ scale: 1 });
-        const scale = (width / base.width) * zoom;
+        const scale =
+          zoom === 'page'
+            ? Math.min(width / base.width, height / base.height, 1)
+            : zoom === 'width'
+              ? width / base.width
+              : zoom;
         const viewport = page.getViewport({ scale });
-        const ratio = Math.min(window.devicePixelRatio || 1, 2);
+        renderedScale.current = scale;
+        // Bound the bitmap even for large pages/zoom on high-density tablets.
+        const ratio = Math.min(
+          window.devicePixelRatio || 1,
+          2,
+          Math.sqrt(12_000_000 / (viewport.width * viewport.height)),
+          8192 / viewport.width,
+          8192 / viewport.height,
+        );
         const node = canvas.current;
         node.width = Math.floor(viewport.width * ratio);
         node.height = Math.floor(viewport.height * ratio);
@@ -97,7 +127,11 @@ export function PdfViewer({
       active = false;
       renderTask?.cancel();
     };
-  }, [pdf, pageNumber, width, zoom]);
+  }, [pdf, pageNumber, width, height, zoom]);
+  function adjustZoom(direction: number) {
+    const current = typeof zoom === 'number' ? zoom : renderedScale.current;
+    setZoom(Math.max(0.1, Math.min(3, Math.round((current + direction) * 100) / 100)));
+  }
   return (
     <div className="study-pdf-viewer">
       <div className="study-actions">
@@ -129,18 +163,47 @@ export function PdfViewer({
         >
           →
         </button>
+        <button
+          className="button secondary"
+          aria-label="Riduci zoom PDF"
+          onClick={() => adjustZoom(-0.25)}
+          disabled={zoom === 0.1}
+        >
+          −
+        </button>
         <label>
           Zoom{' '}
           <select
             aria-label="Zoom PDF"
             value={zoom}
-            onChange={(e) => setZoom(Number(e.target.value))}
+            onChange={(e) =>
+              setZoom(
+                e.target.value === 'page' || e.target.value === 'width'
+                  ? e.target.value
+                  : Number(e.target.value),
+              )
+            }
           >
-            <option value={1}>Adatta</option>
-            <option value={1.5}>150%</option>
-            <option value={2}>200%</option>
+            <option value="page">Pagina intera</option>
+            <option value="width">Larghezza</option>
+            {[0.1, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 2, 3, ...(typeof zoom === 'number' ? [zoom] : [])]
+              .filter((v, i, all) => all.indexOf(v) === i)
+              .sort((a, b) => a - b)
+              .map((v) => (
+                <option value={v} key={v}>
+                  {Math.round(v * 100)}%
+                </option>
+              ))}
           </select>
         </label>
+        <button
+          className="button secondary"
+          aria-label="Aumenta zoom PDF"
+          onClick={() => adjustZoom(0.25)}
+          disabled={zoom === 3}
+        >
+          +
+        </button>
       </div>
       <p role="status">{message}</p>
       <div className="study-pdf-canvas" ref={host}>

@@ -89,3 +89,18 @@ iPad: non equivale a una prova sull'hardware fisico.
 
 Pubblicazione soltanto dopo revisione locale: feature → develop → main,
 con deployment Git Vercel da main. Nessun secondo deploy manuale.
+
+## Palette, mappa e lettore — revisione successiva
+
+Il tema chiaro usa lavanda e sabbia, con accenti malva/terracotta; quello scuro
+usa ardesia, malva e pesca, con superfici più luminose. Ogni pagina materia
+mostra una mappa ordinata per gruppo e lezione, con i sottoargomenti dichiarati
+nelle sezioni del catalogo e collegamenti alla pagina PDF. Gli stati distinguono
+le tappe da iniziare, in corso e completate. Il completamento deriva dalle
+verifiche esistenti; non si attribuiscono risultati indipendenti ai sottoargomenti.
+
+Il lettore parte da Pagina intera, adattando larghezza e altezza senza ingrandire
+oltre la dimensione naturale. Larghezza adatta il documento al contenitore nei
+due sensi. Le percentuali manuali vanno dal 10% al 300%, con pulsanti per ridurre
+e aumentare. Il contenitore è isolato dalla larghezza intrinseca del canvas,
+così una pagina ingrandita non impedisce il successivo restringimento.

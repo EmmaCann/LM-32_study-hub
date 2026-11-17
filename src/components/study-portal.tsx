@@ -1,4 +1,5 @@
 'use client';
+import { CourseMap } from './course-map';
 import { CppNavigation } from './cpp-navigation';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -244,50 +245,7 @@ export function CourseOverview({
         </div>
         <span className="course-free-access">Ordine consigliato · accesso libero</span>
       </div>
-      <ol className="course-roadmap">
-        {lessons.map((l, i) => {
-          const status = lessonStatus(l, progress);
-          return (
-            <li key={l.id} className={status === 'Completata' ? 'is-complete' : ''}>
-              <span className="course-roadmap-index">
-                {status === 'Completata' ? <Check size={19} /> : String(i + 1).padStart(2, '0')}
-              </span>
-              <Link href={`/percorso/${l.id}`} className="course-lesson-card">
-                <div className="course-lesson-head">
-                  <span className="portal-overline">{l.chapter}</span>
-                  <span
-                    className={`course-lesson-status ${status === 'Completata' ? 'is-complete' : ''}`}
-                  >
-                    {status}
-                  </span>
-                </div>
-                <h3>{l.title}</h3>
-                <p>{l.description}</p>
-                <div className="course-lesson-bottom">
-                  <span>
-                    {l.document ? (
-                      <>
-                        <BookOpen size={14} /> Appunti inclusi
-                      </>
-                    ) : (
-                      <>
-                        <Code2 size={14} /> Pratica guidata
-                      </>
-                    )}
-                  </span>
-                  <span>
-                    <Layers3 size={14} />
-                    {l.topicIds.length} argomenti
-                  </span>
-                  <span className="course-enter">
-                    Entra <ArrowRight size={16} />
-                  </span>
-                </div>
-              </Link>
-            </li>
-          );
-        })}
-      </ol>
+      <CourseMap lessons={lessons} />
     </div>
   );
 }

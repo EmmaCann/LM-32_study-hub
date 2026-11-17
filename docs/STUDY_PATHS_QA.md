@@ -53,3 +53,22 @@ nessuna sincronizzazione personale tra dispositivi è stata introdotta.
 Anteprima locale: `http://127.0.0.1:3217`.
 Il redesign rimane locale per la revisione. Il rilascio seguirà l'ordine
 feature → develop → main → deployment Git Vercel.
+
+## Revisione palette, adattamento PDF e mappa materia
+
+- Build di produzione, TypeScript e lint passati.
+- Eseguiti 46 scenari browser relativi a navigazione, laboratori integrati,
+  comprensione, C++, ricerca, temi, mappe e lettore su Chromium e WebKit/iPad.
+  44 passati nella prima esecuzione; due nuovi test PDF usavano un selettore
+  ambiguo tra menu zoom e pulsanti. Selettore reso esatto.
+- Ripetizione finale dei sei nuovi scenari: 6/6 passati sulla build finale.
+- PDF: pagina intera iniziale entro il contenitore, 50% → 25% tramite Riduci,
+  Aumenta, Larghezza, restringimento a 390 px e riallargamento a 1440 px.
+- Mappa: tutte le tappe AOS presenti, sottoargomenti collegati alle pagine,
+  avanzamento parziale distinto dal completamento, colore diverso dopo tutte
+  le firme richieste e persistenza dopo reload.
+- Palette e mappe delle quattro materie senza overflow a 1440/768/390 px.
+- Ispezione visiva di home chiara/scura, mappa AOS e PDF adattato. Risoluzione
+  bitmap limitata a 12 milioni di pixel e 8192 px per lato per gli zoom elevati.
+
+Il lavoro resta su feature/study-paths e nell'anteprima locale; nessun rilascio.
