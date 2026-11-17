@@ -52,6 +52,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
   const isTopicPath = isSubjectPath && segments.length >= 3;
   const isAosToolPath = pathname === '/aos/playground';
   const isCppToolPath = /^\/cpp\/(playground|esercitazioni|simulazioni)(\/|$)/.test(pathname);
+  const isAosToolPath = pathname === '/aos/playground';
 
   function isActive(href: string) {
     if (href === '/') return pathname === '/';
@@ -61,6 +62,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
       );
     if (href === '/argomenti')
       return pathname === href || (isTopicPath && !isCppToolPath && !isAosToolPath);
+
     if (href === '/cpp/playground') return isCppToolPath;
     return pathname === href;
   }

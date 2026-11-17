@@ -1,0 +1,143 @@
+[
+  {
+    "id": "catture-offset",
+    "type": "cpp",
+    "title": "Snapshot e riferimento vivo",
+    "prompt": "Leggi base, x e delta (interi fra -1000 e 1000). Completa make_offset: restituisce una lambda che somma a x la copia dell’offset ricevuto. Completa live: usa per riferimento la base del main. Dopo base += delta stampa snapshot(x) e live(x), separati da uno spazio. Non conservare riferimenti al parametro locale della factory. Lo starter compila e termina, ma non implementa i due calcoli.",
+    "hints": [
+      "Una factory restituita non può prestare il suo parametro locale dopo il return.",
+      "Copia offset nella prima closure; il base del main resta vivo quando live viene invocata."
+    ],
+    "solution": "#include <iostream>\n\nauto make_offset(int offset) {\n    // TODO: conserva una copia di offset nella closure restituita.\n    return [offset](int x) { return x + offset; };\n}\n\nint main() {\n    int base=0, x=0, delta=0;\n    std::cin >> base >> x >> delta;\n    auto snapshot = make_offset(base);\n    // TODO: osserva la variabile base originale, viva fino a fine main.\n    auto live = [&base](int value) { return value + base; };\n    base += delta;\n    std::cout << snapshot(x) << ' ' << live(x) << '\\n';\n}\n",
+    "explanation": "La soluzione è una rielaborazione originale. I casi verificano gli esiti indicati; firma, catture, lifetime e inizializzazione richiedono anche lettura del codice.",
+    "cpp": {
+      "difficulty": "base",
+      "tags": [
+        "lambda",
+        "catture",
+        "lifetime"
+      ],
+      "standard": "c++20",
+      "starterCode": "#include <iostream>\n\nauto make_offset(int offset) {\n    // TODO: conserva una copia di offset nella closure restituita.\n    (void)offset;\n    return [](int x) { return x; };\n}\n\nint main() {\n    int base=0, x=0, delta=0;\n    std::cin >> base >> x >> delta;\n    auto snapshot = make_offset(base);\n    // TODO: osserva la variabile base originale, viva fino a fine main.\n    auto live = [&base](int value) { return value; };\n    base += delta;\n    std::cout << snapshot(x) << ' ' << live(x) << '\\n';\n}\n",
+      "files": [],
+      "tests": [
+        {
+          "id": "caso-1",
+          "title": "Valore modificato",
+          "visibility": "public",
+          "stdin": "3 2 7\n",
+          "stdout": "5 12\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-2",
+          "title": "Zeri",
+          "visibility": "additional",
+          "stdin": "0 0 0\n",
+          "stdout": "0 0\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-3",
+          "title": "Segni misti",
+          "visibility": "additional",
+          "stdin": "-5 4 2\n",
+          "stdout": "-1 1\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-4",
+          "title": "Riduzione della base",
+          "visibility": "additional",
+          "stdin": "10 -2 -3\n",
+          "stdout": "8 5\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        }
+      ],
+      "referenceLesson": {
+        "title": "Lezione 2 — funzioni e prime classi",
+        "url": "/cpp/fondamenti/funzioni-classi"
+      },
+      "execution": "browser"
+    }
+  },
+  {
+    "id": "counter-concatenamento",
+    "type": "cpp",
+    "title": "Costruisci e modifica lo stesso Counter",
+    "prompt": "Leggi start, a e b (interi fra -1000 e 1000). Completa il costruttore con MIL e add, che aggiorna l’istanza corrente e restituisce Counter&. Il main conserva l’alias restituito, applica il secondo incremento e legge tramite const Counter&. Stampa il valore finale e quello del Counter costruito senza argomenti (zero). Mantieni privato value_; non modificare il main.",
+    "hints": [
+      "L’inizializzazione di value_ deve avvenire prima del corpo.",
+      "this è un puntatore; *this è l’oggetto cui si lega il riferimento restituito."
+    ],
+    "solution": "#include <iostream>\n\nclass Counter {\n    int value_ = 0;\npublic:\n    // TODO: inizializza value_ con start nella member initializer list.\n    Counter(int start) : value_(start) {}\n    Counter() : Counter(0) {}\n    Counter& add(int amount = 1) {\n        // TODO: modifica questo oggetto e restituiscilo per riferimento.\n        value_ += amount;\n        return *this;\n    }\n    int value() const { return value_; }\n};\n\nint main() {\n    int start=0, a=0, b=0;\n    std::cin >> start >> a >> b;\n    Counter c(start);\n    Counter& alias = c.add(a);\n    alias.add(b);\n    const Counter& view = c;\n    Counter zero;\n    std::cout << view.value() << ' ' << zero.value() << '\\n';\n}\n",
+    "explanation": "La soluzione è una rielaborazione originale. I casi verificano gli esiti indicati; firma, catture, lifetime e inizializzazione richiedono anche lettura del codice.",
+    "cpp": {
+      "difficulty": "base",
+      "tags": [
+        "classi",
+        "costruttori",
+        "const",
+        "this"
+      ],
+      "standard": "c++20",
+      "starterCode": "#include <iostream>\n\nclass Counter {\n    int value_ = 0;\npublic:\n    // TODO: inizializza value_ con start nella member initializer list.\n    Counter(int start) { (void)start; }\n    Counter() : Counter(0) {}\n    Counter& add(int amount = 1) {\n        // TODO: modifica questo oggetto e restituiscilo per riferimento.\n        (void)amount;\n        return *this;\n    }\n    int value() const { return value_; }\n};\n\nint main() {\n    int start=0, a=0, b=0;\n    std::cin >> start >> a >> b;\n    Counter c(start);\n    Counter& alias = c.add(a);\n    alias.add(b);\n    const Counter& view = c;\n    Counter zero;\n    std::cout << view.value() << ' ' << zero.value() << '\\n';\n}\n",
+      "files": [],
+      "tests": [
+        {
+          "id": "caso-1",
+          "title": "Partenza non nulla",
+          "visibility": "public",
+          "stdin": "100 2 3\n",
+          "stdout": "105 0\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-2",
+          "title": "Incremento negativo",
+          "visibility": "additional",
+          "stdin": "0 -2 7\n",
+          "stdout": "5 0\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-3",
+          "title": "Nessuna modifica",
+          "visibility": "additional",
+          "stdin": "-10 0 0\n",
+          "stdout": "-10 0\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-4",
+          "title": "Somma nulla",
+          "visibility": "additional",
+          "stdin": "14 -6 -8\n",
+          "stdout": "0 0\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        }
+      ],
+      "referenceLesson": {
+        "title": "Lezione 2 — funzioni e prime classi",
+        "url": "/cpp/fondamenti/funzioni-classi"
+      },
+      "execution": "browser"
+    }
+  }
+]

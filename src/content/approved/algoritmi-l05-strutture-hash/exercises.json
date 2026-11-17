@@ -1,0 +1,35 @@
+[
+  {
+    "id": "pieno-circolare",
+    "type": "multiple-choice",
+    "title": "Una coda al bordo",
+    "prompt": "Coda con N=6 e una cella riservata: head=1, tail=6. È piena?",
+    "options": [
+      "Sì: NEXT(tail)=head",
+      "No: head è diverso da tail",
+      "Non si può sapere senza leggere i valori"
+    ],
+    "answer": "Sì: NEXT(tail)=head",
+    "hints": [
+      "Considera il passaggio dalla cella 6 alla cella 1."
+    ],
+    "solution": "La prossima posizione dopo 6 è 1, uguale a head: il contenitore è pieno.",
+    "explanation": "Il solo test head=tail+1 senza circolarità non riconosce questo caso."
+  },
+  {
+    "id": "delete-puntatore",
+    "type": "true-false",
+    "title": "Cancellare per chiave",
+    "prompt": "In una lista doppia non ordinata, cancellare per chiave costa sempre Θ(1).",
+    "options": [
+      "Vero",
+      "Falso"
+    ],
+    "answer": "Falso",
+    "hints": [
+      "Il nodo è già stato individuato?"
+    ],
+    "solution": "La ricerca preliminare può richiedere Θ(n); solo lo scollegamento di un nodo noto costa Θ(1).",
+    "explanation": "Il tipo di informazione in ingresso fa parte del contratto dell’operazione."
+  }
+]

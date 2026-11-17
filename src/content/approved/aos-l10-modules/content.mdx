@@ -1,0 +1,9 @@
+## Scegli il tuo esperimento
+
+Qui puoi seguire un oggetto .ko dal disco al kernel, cambiare l'esito dei controlli, ricaricare un consumer e confrontare due aggiornamenti concorrenti. Gli altri modelli sono nella sezione [Simulazioni](/simulazioni); il playground AOS è riservato alle esercitazioni di codice.
+
+## Prevedi, poi osserva
+
+Se init fallisce, exit non viene chiamata. Se cambia name a runtime, init non riparte. Se consumer mantiene un riferimento, provider non può essere rimosso. Due chiamate non significano Used by uguale a due.
+
+Il modello del contatore mostra un interleaving possibile: la RMW atomica protegge l'intera operazione, non soltanto la scrittura. Il lucchetto è una rappresentazione della semantica, non un mutex aggiunto al codice. Nessun modulo Linux viene compilato, caricato o eseguito dal browser.

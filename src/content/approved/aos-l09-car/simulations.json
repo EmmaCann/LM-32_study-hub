@@ -1,0 +1,8 @@
+[
+  {
+    "id": "car",
+    "component": "aos-car",
+    "title": "Car: esperimenti su isolamento e risorse",
+    "description": "Cambia le condizioni, segui gli oggetti e confronta gli esiti."
+  }
+]

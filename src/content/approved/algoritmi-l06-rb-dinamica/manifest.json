@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "algoritmi-l06-rb-dinamica",
+  "subject": "algoritmi",
+  "chapter": {
+    "id": "strutture-dati",
+    "title": "Strutture dati",
+    "order": 2
+  },
+  "slug": "rosso-neri-dinamica",
+  "title": "Rosso-neri e primi problemi dinamici",
+  "description": "Inserimento bilanciato, taglio delle aste e costo delle parentesi nelle matrici.",
+  "order": 6,
+  "demo": false,
+  "updated": "2026-11-15",
+  "revision": 1,
+  "review": {
+    "status": "approved",
+    "reviewer": "Codex per autorizzazione permanente della proprietaria",
+    "sources": [
+      "Rielaborazione originale sui contenuti verificati della lezione 6 di Algoritmi."
+    ]
+  },
+  "assets": []
+}

@@ -1,0 +1,10 @@
+import type {Frame} from './aos-models';
+export function mailboxPositions(shared:boolean,step:number):[number,number]{
+ const steps:[number,number][]=shared?[[0,0],[5,5],[10,10],[12,12],[12,12],[12,12]]:[[0,0],[5,0],[5,5],[10,5],[12,5],[12,5]];
+ return steps[Math.max(0,Math.min(5,step))];
+}
+export function mailboxFrames(registration:boolean,alternative:boolean):Frame[]{
+ const read=alternative?['dup: due descrittori, una struct file','A legge 5 byte: posizione condivisa 5','B legge altri 5 byte: posizione condivisa 10','A legge gli ultimi 2 byte: posizione 12','A trova EOF','B trova EOF: il messaggio esiste ancora']:['Due open indipendenti: due struct file','A legge hello: solo il cursore A avanza','B legge hello: il cursore B era ancora a zero','A riparte da 5 e legge altri 5 byte','A legge gli ultimi 2 byte','A trova EOF, B conserva posizione 5'];
+ const reg=alternative?['Prima di init: nessuna risorsa','Numeri riservati','cdev pubblicata: callback raggiungibili','class_create fallisce: nessuna classe acquisita','Rollback: cdev_del','Rollback: numeri restituiti; init restituisce errore']:['Prima di init: buffer statico pronto','alloc_chrdev_region: numeri riservati','cdev_add: callback raggiungibili','class_create: classe disponibile','device_create: device registrato in sysfs','Init riuscita: pubblicazione del nodo tramite infrastruttura /dev'];
+ return (registration?reg:read).map((title,i):Frame=>({title,detail:registration?'La posizione della tessera rappresenta il collegamento degli oggetti. Init fallita effettua il proprio rollback: exit non viene invocata.':'Il buffer kernel contiene hello world\\n (12 byte). Si copiano dati, non si sposta il buffer. EOF riguarda la posizione della descrizione aperta, non cancella il messaggio.',active:i,values:registration?{'Scenario':alternative?'errore classe e rollback':'init riuscita','Stadio':i}:{'Posizione A':mailboxPositions(alternative,i)[0],'Posizione B':mailboxPositions(alternative,i)[1],'Byte validi condivisi':12}}));
+}

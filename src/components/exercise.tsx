@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import type { Exercise } from '@/lib/schema';
+import { CodeCompletion } from './code-completion';
 export function ExerciseCard({
   exercise: e,
   download,
@@ -15,6 +16,7 @@ export function ExerciseCard({
     [solution, setSolution] = useState(false),
     [answer, setAnswer] = useState(''),
     [feedback, setFeedback] = useState('');
+  if (e.completion) return <CodeCompletion exercise={e} />;
   if (e.type === 'cpp')
     return (
       <section id={e.id} className="exercise panel">

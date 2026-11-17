@@ -1,9 +1,12 @@
+import { getTopics } from '@/lib/content';
+import { ExerciseCard } from '@/components/exercise';
 import Link from 'next/link';
 import { PageHeading } from '@/components/catalog';
 import { getCurriculum } from '@/lib/study-content';
 import { StudyActivityCard } from '@/components/study-assessment';
 export const metadata = { title: 'Playground AOS · C' };
 export default function AosPlayground() {
+  const published=getTopics().filter(t=>t.manifest.subject==='aos').flatMap(t=>t.exercises.filter(e=>e.type==='programming').map(e=>({topic:t,exercise:e})));
   const lessons = getCurriculum().filter(
     (l) => l.subject === 'aos' && l.activities.some((a) => a.type === 'c-fragment'),
   );
@@ -20,12 +23,14 @@ export default function AosPlayground() {
         piattaforma.
       </p>
       <nav className="study-actions" aria-label="Esercitazioni C per lezione">
-        {lessons.map((l) => (
+        {published.length>0&&<section><h2>Esercitazioni dei laboratori AOS</h2>{published.map(({topic,exercise})=><ExerciseCard key={`${topic.manifest.id}-${exercise.id}`} exercise={exercise}/>)}</section>}
+      {lessons.map((l) => (
           <a className="button secondary" key={l.id} href={`#${l.id}`}>
             {l.title.split(' - ')[0]}
           </a>
         ))}
       </nav>
+      {published.length>0&&<section><h2>Esercitazioni dei laboratori AOS</h2>{published.map(({topic,exercise})=><ExerciseCard key={`${topic.manifest.id}-${exercise.id}`} exercise={exercise}/>)}</section>}
       {lessons.map((l) => (
         <section key={l.id} id={l.id} className="study-aos-group">
           <div className="study-section-heading">

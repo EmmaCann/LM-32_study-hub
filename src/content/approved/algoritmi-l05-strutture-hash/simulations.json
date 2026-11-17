@@ -1,0 +1,20 @@
+[
+  {
+    "id": "pile-code",
+    "component": "algoritmi-containers",
+    "title": "Pile e code: pieno, vuoto e riuso delle celle",
+    "description": "Passa da FIFO a LIFO; segui i record e gli indici."
+  },
+  {
+    "id": "liste",
+    "component": "algoritmi-list",
+    "title": "Collegare nodi: estremi NIL e sentinella",
+    "description": "Inserisci, cerca e scollega; cambia rappresentazione e posizione."
+  },
+  {
+    "id": "hash",
+    "component": "algoritmi-hash",
+    "title": "Collisioni, liste e scelta della funzione",
+    "description": "Modifica chiavi, numero di liste e funzione; osserva i confronti reali dell’esempio."
+  }
+]

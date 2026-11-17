@@ -1,0 +1,31 @@
+.l7-scene {
+  width: 100%;
+  min-width: 640px;
+  height: auto;
+  display: block;
+}
+.l7-scene text {
+  fill: #203848 !important;
+  font:
+    17px Arial,
+    sans-serif;
+}
+.l7-code {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+.l7-results {
+  display: grid;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+.l7-results dt {
+  font-size: 0.85rem;
+}
+.l7-results dd {
+  margin: 0;
+  font-weight: 700;
+  font-size: 1.1rem;
+}

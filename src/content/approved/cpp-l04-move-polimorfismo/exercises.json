@@ -1,0 +1,142 @@
+[
+  {
+    "id": "trasferire-owner",
+    "type": "cpp",
+    "title": "Trasferire senza duplicare",
+    "prompt": "Leggi value e delta, interi fra -1000 e 1000. Trasferisci source in target usando il move assignment di unique_ptr. Poi crea per source un nuovo intero value+delta. Stampa i due controlli booleani e i due valori come nel main. Il buffer originale deve restare in target; non costruire owner aggiuntivi da get() e non dereferenziare source mentre è nullo.",
+    "hints": [
+      "std::move permette di trasferire la proprietà; target rilascia la sua vecchia risorsa.",
+      "Dopo il trasferimento source esiste ancora ma è nullo: assegnagli un nuovo make_unique."
+    ],
+    "solution": "#include <iostream>\n#include <memory>\n#include <utility>\nint main() {\n    int value=0, delta=0;\n    std::cin >> value >> delta;\n    auto source = std::make_unique<int>(value);\n    const int* original = source.get();\n    auto target = std::make_unique<int>(0);\n    // TODO: trasferisci source in target, sostituendo la vecchia risorsa.\n    target = std::move(source);\n    bool empty_source = !source;\n    bool same_resource = target.get() == original;\n    // TODO: ricrea source con un nuovo intero value + delta.\n    source = std::make_unique<int>(value + delta);\n    std::cout << empty_source << ' ' << same_resource << ' '\n              << *target << ' ' << *source << '\\n';\n}\n",
+    "explanation": "Rielaborazione originale. I test osservano i risultati dichiarati; ownership, categorie e firme richiedono anche lettura del codice.",
+    "cpp": {
+      "difficulty": "base",
+      "tags": [
+        "unique_ptr",
+        "move",
+        "ownership"
+      ],
+      "standard": "c++20",
+      "starterCode": "#include <iostream>\n#include <memory>\n#include <utility>\nint main() {\n    int value=0, delta=0;\n    std::cin >> value >> delta;\n    auto source = std::make_unique<int>(value);\n    const int* original = source.get();\n    auto target = std::make_unique<int>(0);\n    // TODO: trasferisci source in target, sostituendo la vecchia risorsa.\n    bool empty_source = !source;\n    bool same_resource = target.get() == original;\n    // TODO: ricrea source con un nuovo intero value + delta.\n    source = std::make_unique<int>(0);\n    std::cout << empty_source << ' ' << same_resource << ' '\n              << *target << ' ' << *source << '\\n';\n}\n",
+      "files": [],
+      "tests": [
+        {
+          "id": "caso-1",
+          "title": "Caso 1",
+          "visibility": "public",
+          "stdin": "7 3\n",
+          "stdout": "1 1 7 10\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-2",
+          "title": "Caso 2",
+          "visibility": "additional",
+          "stdin": "0 0\n",
+          "stdout": "1 1 0 0\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-3",
+          "title": "Caso 3",
+          "visibility": "additional",
+          "stdin": "-5 2\n",
+          "stdout": "1 1 -5 -3\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-4",
+          "title": "Caso 4",
+          "visibility": "additional",
+          "stdin": "10 -7\n",
+          "stdout": "1 1 10 3\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        }
+      ],
+      "referenceLesson": {
+        "title": "Lezione 4 di C++",
+        "url": "/cpp/fondamenti/move-polimorfismo"
+      },
+      "execution": "browser"
+    }
+  },
+  {
+    "id": "riferimento-slicing",
+    "type": "cpp",
+    "title": "Riferimento o copia della base?",
+    "prompt": "Leggi value e bonus, interi fra -1000 e 1000. Completa le due funzioni invocando score, mantenendo firme e classi. Il primo percorso riceve un riferimento Base a un Derived; il secondo riceve Base per valore. Non sommare manualmente bonus nelle funzioni: osserva il dispatch virtuale e lo slicing.",
+    "hints": [
+      "La chiamata virtuale attraverso const Base& vede ancora il Derived originale.",
+      "Il parametro Base per valore è un oggetto Base: la parte Derived non è stata copiata."
+    ],
+    "solution": "#include <iostream>\nstruct Base {\n    int value;\n    explicit Base(int n) : value(n) {}\n    virtual int score() const { return value; }\n};\nstruct Derived : Base {\n    int bonus;\n    Derived(int n, int b) : Base(n), bonus(b) {}\n    int score() const override { return value + bonus; }\n};\nint by_reference(const Base& x) {\n    // TODO: invoca score sull'oggetto ricevuto.\n    return x.score();\n}\nint by_value(Base x) {\n    // TODO: invoca score sulla copia Base ricevuta.\n    return x.score();\n}\nint main() {\n    int value=0, bonus=0;\n    std::cin >> value >> bonus;\n    Derived d(value, bonus);\n    std::cout << by_reference(d) << ' ' << by_value(d) << '\\n';\n}\n",
+    "explanation": "Rielaborazione originale. I test osservano i risultati dichiarati; ownership, categorie e firme richiedono anche lettura del codice.",
+    "cpp": {
+      "difficulty": "base",
+      "tags": [
+        "virtual",
+        "riferimenti",
+        "slicing"
+      ],
+      "standard": "c++20",
+      "starterCode": "#include <iostream>\nstruct Base {\n    int value;\n    explicit Base(int n) : value(n) {}\n    virtual int score() const { return value; }\n};\nstruct Derived : Base {\n    int bonus;\n    Derived(int n, int b) : Base(n), bonus(b) {}\n    int score() const override { return value + bonus; }\n};\nint by_reference(const Base& x) {\n    // TODO: invoca score sull'oggetto ricevuto.\n    (void)x; return 0;\n}\nint by_value(Base x) {\n    // TODO: invoca score sulla copia Base ricevuta.\n    (void)x; return 0;\n}\nint main() {\n    int value=0, bonus=0;\n    std::cin >> value >> bonus;\n    Derived d(value, bonus);\n    std::cout << by_reference(d) << ' ' << by_value(d) << '\\n';\n}\n",
+      "files": [],
+      "tests": [
+        {
+          "id": "caso-1",
+          "title": "Caso 1",
+          "visibility": "public",
+          "stdin": "10 7\n",
+          "stdout": "17 10\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-2",
+          "title": "Caso 2",
+          "visibility": "additional",
+          "stdin": "0 0\n",
+          "stdout": "0 0\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-3",
+          "title": "Caso 3",
+          "visibility": "additional",
+          "stdin": "-4 9\n",
+          "stdout": "5 -4\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-4",
+          "title": "Caso 4",
+          "visibility": "additional",
+          "stdin": "8 -3\n",
+          "stdout": "5 8\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        }
+      ],
+      "referenceLesson": {
+        "title": "Lezione 4 di C++",
+        "url": "/cpp/fondamenti/move-polimorfismo"
+      },
+      "execution": "browser"
+    }
+  }
+]

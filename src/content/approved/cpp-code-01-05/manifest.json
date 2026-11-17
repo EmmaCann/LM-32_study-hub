@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "cpp-code-01-05",
+  "subject": "cpp",
+  "chapter": {
+    "id": "fondamenti",
+    "title": "Fondamenti e ownership",
+    "order": 1
+  },
+  "slug": "laboratorio-codice-01-05",
+  "title": "Laboratorio codice: lezioni 1–5",
+  "description": "Cinque esercizi originali: callback, contratti di forma, invarianti del move, trasformazioni const e CRTP.",
+  "order": 7,
+  "demo": false,
+  "updated": "2026-11-16",
+  "revision": 1,
+  "review": {
+    "status": "approved",
+    "reviewer": "Codex - revisione didattica e codice; pubblicazione autorizzata dalla proprietaria",
+    "sources": []
+  },
+  "assets": []
+}

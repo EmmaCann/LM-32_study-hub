@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "aos-l10-modules",
+  "subject": "aos",
+  "chapter": {
+    "id": "lezione-11",
+    "title": "Lezione 11",
+    "order": 11
+  },
+  "slug": "moduli-kernel",
+  "title": "Moduli kernel: caricamento, dipendenze e atomicità",
+  "description": "Tre esperimenti per seguire il codice nel kernel, i riferimenti fra moduli e gli aggiornamenti concorrenti.",
+  "order": 1,
+  "demo": false,
+  "updated": "2026-11-15",
+  "revision": 3,
+  "review": {
+    "status": "approved",
+    "reviewer": "Codex: fonti, modello e contenuti originali revisionati; rilascio subordinato a browser e build.",
+    "sources": [
+      "Rielaborazione originale della lezione AOS sui moduli kernel, da fonti verificate; nessun sorgente originale distribuito."
+    ]
+  },
+  "assets": []
+}

@@ -1,0 +1,24 @@
+[
+  {
+    "id": "stabilita",
+    "type": "true-false",
+    "title": "Passate di Radix Sort",
+    "prompt": "Per il Radix Sort dalla cifra meno significativa, qualunque ordinamento per cifra funziona anche se non è stabile?",
+    "options": ["Vero", "Falso"],
+    "answer": "Falso",
+    "hints": ["Che cosa succede all’ordine costruito sulle cifre precedenti?"],
+    "solution": "Serve una passata stabile.",
+    "explanation": "Fra cifre correnti uguali deve rimanere l’ordine già ottenuto sulle cifre inferiori."
+  },
+  {
+    "id": "rango",
+    "type": "multiple-choice",
+    "title": "Il rango sul lato destro",
+    "prompt": "Cerchi il rango locale 9 e il pivot ha rango locale 5. Quale rango cerchi nella parte destra?",
+    "options": ["4", "5", "9"],
+    "answer": "4",
+    "hints": ["Escludi i quattro elementi a sinistra e il pivot."],
+    "solution": "9−5=4.",
+    "explanation": "Nella parte destra il nuovo rango è i−k, non l’indice assoluto del pivot."
+  }
+]

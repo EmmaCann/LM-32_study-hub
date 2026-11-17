@@ -1,5 +1,12 @@
 import type { NextConfig } from 'next';
 const config: NextConfig = {
+  async redirects() {
+    return [{
+      source: '/aos/lezione-10/moduli-kernel',
+      destination: '/aos/lezione-11/moduli-kernel',
+      permanent: true,
+    }];
+  },
   async headers() {
     return [
       {

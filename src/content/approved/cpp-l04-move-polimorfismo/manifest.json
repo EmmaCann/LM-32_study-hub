@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "cpp-l04-move-polimorfismo",
+  "subject": "cpp",
+  "chapter": {
+    "id": "fondamenti",
+    "title": "Fondamenti e ownership",
+    "order": 1
+  },
+  "slug": "move-polimorfismo",
+  "title": "Lezione 4: trasferimento e dispatch",
+  "description": "Due esercizi originali su unique_ptr, chiamate virtuali e slicing.",
+  "order": 5,
+  "demo": false,
+  "updated": "2026-11-16",
+  "revision": 1,
+  "review": {
+    "status": "approved",
+    "reviewer": "Codex - revisione didattica e codice; pubblicazione autorizzata dalla proprietaria",
+    "sources": []
+  },
+  "assets": []
+}

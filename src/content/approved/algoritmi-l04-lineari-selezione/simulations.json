@@ -1,0 +1,20 @@
+[
+  {
+    "id": "radix",
+    "component": "algoritmi-radix",
+    "title": "Tre passate stabili di Radix Sort",
+    "description": "Segui gli elementi interi mentre cambia la cifra usata come chiave."
+  },
+  {
+    "id": "bucket",
+    "component": "algoritmi-bucket",
+    "title": "Bucket: distribuzione e ordine locale",
+    "description": "Modifica le liste e osserva la concentrazione degli elementi."
+  },
+  {
+    "id": "selezione",
+    "component": "algoritmi-select",
+    "title": "Cerca un rango, scegli il pivot",
+    "description": "Un solo ramo da conservare; scelta casuale o mediana delle mediane."
+  }
+]

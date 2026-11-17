@@ -1,0 +1,70 @@
+[
+  {
+    "id": "diagonale",
+    "type": "multiple-choice",
+    "title": "La diagonale delle catene",
+    "prompt": "Che cosa significa m[i,i]=0?",
+    "options": [
+      "La matrice Ai è già disponibile",
+      "Ai deve essere moltiplicata per se stessa",
+      "Ai contiene solo zeri"
+    ],
+    "answer": "La matrice Ai è già disponibile",
+    "hints": [
+      "Interpreta lo stato e la funzione obiettivo."
+    ],
+    "solution": "La matrice Ai è già disponibile",
+    "explanation": "Lo stato rappresenta una catena di una sola matrice: non richiede prodotti."
+  },
+  {
+    "id": "bordo",
+    "type": "multiple-choice",
+    "title": "Un prefisso vuoto",
+    "prompt": "Quale condizione impone una LCS di lunghezza zero?",
+    "options": [
+      "i=0 oppure j=0",
+      "Solo i=0 e j=0",
+      "Solo i=j"
+    ],
+    "answer": "i=0 oppure j=0",
+    "hints": [
+      "Interpreta lo stato e la funzione obiettivo."
+    ],
+    "solution": "i=0 oppure j=0",
+    "explanation": "Se una sequenza è vuota non può condividere simboli con l’altra."
+  },
+  {
+    "id": "pareggio",
+    "type": "multiple-choice",
+    "title": "LCS non unica",
+    "prompt": "Cambiare la direzione in un pareggio alto/sinistra può:",
+    "options": [
+      "Cambiare la sequenza mantenendo la lunghezza ottima",
+      "Aumentare la lunghezza ottima",
+      "Cambiare l’ordine dei simboli dentro X"
+    ],
+    "answer": "Cambiare la sequenza mantenendo la lunghezza ottima",
+    "hints": [
+      "Interpreta lo stato e la funzione obiettivo."
+    ],
+    "solution": "Cambiare la sequenza mantenendo la lunghezza ottima",
+    "explanation": "Entrambi i predecessori hanno lo stesso valore, ma possono ricostruire corrispondenze differenti."
+  },
+  {
+    "id": "area",
+    "type": "multiple-choice",
+    "title": "Scegliere il costo",
+    "prompt": "Per un medesimo poligono, quale somma è invariata fra triangolazioni?",
+    "options": [
+      "Somma delle aree",
+      "Somma dei perimetri",
+      "Lunghezza totale delle diagonali"
+    ],
+    "answer": "Somma delle aree",
+    "hints": [
+      "Interpreta lo stato e la funzione obiettivo."
+    ],
+    "solution": "Somma delle aree",
+    "explanation": "I triangoli ricoprono la stessa regione senza sovrapposizioni interne."
+  }
+]

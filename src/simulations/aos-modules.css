@@ -1,0 +1,13 @@
+.modules-lab .module-canvas text{fill:#e8f1ff;font-family:system-ui,sans-serif;pointer-events:none}
+.modules-lab .module-canvas .mv-title{font-size:23px;font-weight:650}
+.modules-lab .module-canvas .mv-eyebrow{font:11px ui-monospace,monospace;letter-spacing:2px;fill:#9bb4d0}
+.modules-lab .module-canvas .mv-small{font-size:14px;fill:#b3c7dd}
+.modules-lab .module-canvas .mv-label,.modules-lab .module-canvas .mod-label{font-size:17px;font-weight:650}
+.modules-lab .module-canvas .mv-tiny,.modules-lab .module-canvas .mod-tiny,.modules-lab .module-canvas .mv-tag{font-size:12px;fill:#b3c7dd}
+.modules-lab .module-canvas .mv-chip-title{font:700 19px ui-monospace,monospace}
+.modules-lab .module-canvas .mv-code,.modules-lab .module-canvas .mod-code{font:14px ui-monospace,monospace}
+.modules-lab .module-canvas .mod-result{font-size:16px;font-weight:600}
+.modules-lab .mod-tabs{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.modules-lab .mod-tabs button{white-space:normal}
+.modules-lab .mod-tabs button[aria-pressed=true]{background:#123149;color:#a6eaff;border-color:#57d9f8}
+@media(max-width:700px){.modules-lab .mod-tabs{grid-template-columns:1fr}}

@@ -57,6 +57,58 @@ fallisce. Non esegue commit, push o deployment. Nuove simulazioni restano
 soggette alla revisione separata del codice prevista dal contratto base.
 Nel lavoro `feature/study-paths` tutti i test e le anteprime rimangono locali:
 non applicare le vecchie istruzioni di pubblicazione automatica a questo lavoro.
+## AOS 12: mailbox
+
+`aos-mailbox` riusa player e primitive architetturali AOS. Due scene: buffer con
+cursori distinti/condivisi (open/dup), registrazione riuscita/rollback su errore
+classe. Route `/aos/lezione-12/driver-mailbox#mailbox`. Le copie non consumano
+il messaggio; EOF riguarda la descrizione aperta. Modello illustrativo senza
+esecuzione Linux. Tre completamenti `programming` sono inclusi nel playground;
+non sono il compito autonomo sulla coda o sul secondo minor delle slide.
+CodeCompletion abilita i campi solo quando il componente client e pronto, per
+evitare di perdere il primo inserimento durante il caricamento.
+
+## Completamento di codice Linux AOS
+
+Gli esercizi `programming` possono includere `completion`: `language` (`c` o `sh`),
+`execution: reference-only`, `code` con segnaposto `{{id}}`, `slots` con `id`,
+`label`, `answers` (forme ammesse) ed `explanation`. Ogni campo compare una volta.
+Il componente CodeCompletion corregge soltanto i campi per confronto con le forme
+ammesse, ignorando spazi iniziali/finali; non compila, non esegue syscall e non
+valida codice arbitrario. Mostra conteggio, feedback per campo, suggerimenti,
+soluzione nascosta e reset. Non usare il tipo cpp o ricevute C++ per questi esercizi.
+Car contiene sette esercizi rielaborati dai blocchi del supervisor: clone, rete,
+setns, controller cgroup, migrazione/vista, OverlayFS e pivot_root.
+
+## AOS 11: moduli kernel
+
+`aos-modules` offre tre scene architetturali con dieci scenari deterministici:
+caricamento/init/parametri/rimozione, export e riferimenti provider-consumer,
+RMW ordinaria contro atomica. Il codice è in `aos-modules-model.ts` e
+`aos-modules-lab.tsx`; usa il player e le primitive AOS approvate.
+Route stabile: `/aos/lezione-11/moduli-kernel#moduli`, inclusa in Simulazioni.
+La vecchia route `lezione-10` reindirizza alla lezione 11. Identità del pacchetto
+`aos-l10-modules` conservata per non azzerare i progressi; la numerazione segue l'audio.
+Non compila né carica moduli Linux. I tempi sono illustrativi, la firma è una
+condizione di policy del modello e il lucchetto della RMW non è un mutex nel sorgente.
+
+## Playground AOS e laboratorio car
+
+`/aos/playground` è riservato alle esercitazioni di codice (`type: programming`
+nel contratto attuale): mostra i singoli esercizi, mai il catalogo delle lezioni,
+animazioni, modelli guidati o quiz. Se mancano esercizi di codice approvati,
+mostrare uno stato vuoto esplicito. Non promettere esecuzione Linux nel browser
+e non usare la toolchain C++ per syscall Linux non supportate.
+Animazioni e modelli restano nelle lezioni e nel catalogo `/simulazioni`.
+Una scena con parametri modificabili non diventa per questo un esercizio di codice.
+Il componente `aos-car` delle lezioni 9–10 offre
+quattro esperimenti originali in `aos-car-model.ts` e `aos-car-lab.tsx`: rete e
+filtro della sorgente, sostituzione del percorso radar, budget/tempo di risposta,
+dipendenze nella costruzione del container. Sono modelli deterministici, non
+esecuzioni native di clone/mount/cgroup, e non certificano la sicurezza della
+soluzione car fornita (priva di riduzione delle capabilities).
+Route della lezione: `/aos/lezione-09/car-container#car`. Gli esercizi associati
+usano lo schema comune; non pubblicare gli originali car o dati di accesso.
 
 Estensione compatibile C++: il formato base resta schema 1. I pacchetti AOS e Algoritmi continuano a usare manifest, simulazioni ed esercizi precedenti. Per il nuovo tipo `cpp` si aggiunge una specifica strutturata e, dopo verifica tecnica, `cpp-verification.json`.
 
