@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "cpp-l06-eccezioni-contenitori",
+  "subject": "cpp",
+  "chapter": {
+    "id": "fondamenti",
+    "title": "Fondamenti e ownership",
+    "order": 1
+  },
+  "slug": "eccezioni-contenitori",
+  "title": "Lezione 6: contratti dei contenitori",
+  "description": "Tre esercizi originali su copia di intervalli, consultazione senza inserimento e callable con stato.",
+  "order": 8,
+  "demo": false,
+  "updated": "2026-11-17",
+  "revision": 1,
+  "review": {
+    "status": "approved",
+    "reviewer": "Codex - revisione didattica e codice; pubblicazione autorizzata dalla proprietaria",
+    "sources": []
+  },
+  "assets": []
+}

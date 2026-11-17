@@ -1,0 +1,212 @@
+[
+  {
+    "id": "copia-intervallo",
+    "type": "cpp",
+    "title": "Copiare un intervallo in celle valide",
+    "prompt": "Leggi n (0–8), delta e n interi, tutti fra -100 e 100. Completa shifted_copy: crea gli elementi della destinazione, copia con std::copy e aggiungi delta soltanto alla copia. Non sostituire std::copy con un’assegnazione fra vector. Il main stampa dimensione e celle della copia, poi dimensione e celle originali. La sola reserve non crea elementi.",
+    "hints": [
+      "Prima della copia result deve avere size uguale a source.size().",
+      "Usa l’intervallo [source.begin(),source.end()) e poi modifica result per riferimento."
+    ],
+    "solution": "#include <algorithm>\n#include <iostream>\n#include <vector>\nstd::vector<int> shifted_copy(const std::vector<int>& source, int delta) {\n    std::vector<int> result;\n    // TODO: crea le celle, copia con std::copy e modifica solo la copia.\n    result.resize(source.size());\n    std::copy(source.begin(), source.end(), result.begin());\n    for (int& x : result) x += delta;\n    return result;\n}\nint main() {\n    int n=0,delta=0;std::cin >> n >> delta;\n    std::vector<int> source(n);\n    for(int& x:source) std::cin >> x;\n    auto result=shifted_copy(source,delta);\n    std::cout << result.size() << ' ';\n    for(int x:result) std::cout << x << ' ';\n    std::cout << source.size() << ' ';\n    for(int x:source) std::cout << x << ' ';\n}\n",
+    "explanation": "I test confrontano i risultati dei casi dichiarati. Controlla anche il rispetto del contratto: intervalli validi, input conservato, assenza distinta dal valore zero e durata dello stato catturato. Non rappresentano una prova di correttezza universale.",
+    "cpp": {
+      "difficulty": "base",
+      "tags": [
+        "vector",
+        "iteratori",
+        "copy"
+      ],
+      "standard": "c++20",
+      "starterCode": "#include <algorithm>\n#include <iostream>\n#include <vector>\nstd::vector<int> shifted_copy(const std::vector<int>& source, int delta) {\n    std::vector<int> result;\n    // TODO: crea le celle, copia con std::copy e modifica solo la copia.\n    (void)source; (void)delta;\n    return result;\n}\nint main() {\n    int n=0,delta=0;std::cin >> n >> delta;\n    std::vector<int> source(n);\n    for(int& x:source) std::cin >> x;\n    auto result=shifted_copy(source,delta);\n    std::cout << result.size() << ' ';\n    for(int x:result) std::cout << x << ' ';\n    std::cout << source.size() << ' ';\n    for(int x:source) std::cout << x << ' ';\n}\n",
+      "files": [],
+      "tests": [
+        {
+          "id": "caso-1",
+          "title": "Caso 1",
+          "visibility": "public",
+          "stdin": "3 2 1 -1 4\n",
+          "stdout": "3 3 1 6 3 1 -1 4\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-2",
+          "title": "Caso 2",
+          "visibility": "additional",
+          "stdin": "0 5\n",
+          "stdout": "0 0\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-3",
+          "title": "Caso 3",
+          "visibility": "additional",
+          "stdin": "1 -3 7\n",
+          "stdout": "1 4 1 7\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-4",
+          "title": "Caso 4",
+          "visibility": "additional",
+          "stdin": "4 0 0 1 0 -1\n",
+          "stdout": "4 0 1 0 -1 4 0 1 0 -1\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        }
+      ],
+      "referenceLesson": {
+        "title": "Lezione 6 di C++",
+        "url": "/cpp/fondamenti/eccezioni-contenitori"
+      },
+      "execution": "browser"
+    }
+  },
+  {
+    "id": "consulta-mappa",
+    "type": "cpp",
+    "title": "Consultare una mappa senza modificarla",
+    "prompt": "Leggi n (0–5), fallback, n coppie nome/valore e un nome da cercare. I nomi sono parole ASCII; numeri fra -100 e 100. lookup prende una mappa const e deve distinguere una chiave assente da una presente con valore zero. Usa find e il confronto con end. I nomi ripetuti nei dati iniziali sostituiscono il valore precedente. Il main mostra risultato e dimensioni prima/dopo la consultazione.",
+    "hints": [
+      "Non usare zero come indicatore di assenza: può essere il valore corretto.",
+      "find restituisce end solo quando manca la chiave; altrimenti il mapped value è it->second."
+    ],
+    "solution": "#include <iostream>\n#include <map>\n#include <string>\nint lookup(const std::map<std::string,int>& values,\n           const std::string& key, int fallback) {\n    // TODO: restituisci il valore esistente o fallback, senza inserire.\n    auto it = values.find(key);\n    if (it == values.end()) return fallback;\n    return it->second;\n}\nint main() {\n    int n=0,fallback=0;std::cin >> n >> fallback;\n    std::map<std::string,int> values;\n    for(int i=0;i<n;++i) {\n        std::string key;int value=0;std::cin >> key >> value;\n        values.insert_or_assign(key,value);\n    }\n    std::string query;std::cin >> query;\n    const auto before=values.size();\n    std::cout << lookup(values,query,fallback) << ' '\n              << before << ' ' << values.size();\n}\n",
+    "explanation": "I test confrontano i risultati dei casi dichiarati. Controlla anche il rispetto del contratto: intervalli validi, input conservato, assenza distinta dal valore zero e durata dello stato catturato. Non rappresentano una prova di correttezza universale.",
+    "cpp": {
+      "difficulty": "base",
+      "tags": [
+        "map",
+        "const",
+        "find"
+      ],
+      "standard": "c++20",
+      "starterCode": "#include <iostream>\n#include <map>\n#include <string>\nint lookup(const std::map<std::string,int>& values,\n           const std::string& key, int fallback) {\n    // TODO: restituisci il valore esistente o fallback, senza inserire.\n    (void)values; (void)key; (void)fallback; return 0;\n}\nint main() {\n    int n=0,fallback=0;std::cin >> n >> fallback;\n    std::map<std::string,int> values;\n    for(int i=0;i<n;++i) {\n        std::string key;int value=0;std::cin >> key >> value;\n        values.insert_or_assign(key,value);\n    }\n    std::string query;std::cin >> query;\n    const auto before=values.size();\n    std::cout << lookup(values,query,fallback) << ' '\n              << before << ' ' << values.size();\n}\n",
+      "files": [],
+      "tests": [
+        {
+          "id": "caso-1",
+          "title": "Caso 1",
+          "visibility": "public",
+          "stdin": "2 -9 alice 0 bob 7 alice\n",
+          "stdout": "0 2 2\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-2",
+          "title": "Caso 2",
+          "visibility": "additional",
+          "stdin": "1 -9 bob 7 absent\n",
+          "stdout": "-9 1 1\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-3",
+          "title": "Caso 3",
+          "visibility": "additional",
+          "stdin": "0 42 nobody\n",
+          "stdout": "42 0 0\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-4",
+          "title": "Caso 4",
+          "visibility": "additional",
+          "stdin": "3 -1 a 3 b 2 a 8 a\n",
+          "stdout": "8 2 2\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        }
+      ],
+      "referenceLesson": {
+        "title": "Lezione 6 di C++",
+        "url": "/cpp/fondamenti/eccezioni-contenitori"
+      },
+      "execution": "browser"
+    }
+  },
+  {
+    "id": "funzione-stato",
+    "type": "cpp",
+    "title": "Conservare uno stato dentro std::function",
+    "prompt": "Leggi offset, x e new_offset, interi fra -100 e 100. Completa make_offset con una lambda che somma lo snapshot di offset al parametro. Mantieni il ritorno std::function<int(int)>; non usare globali e non catturare il locale per riferimento. Il main copia il wrapper e cambia la variabile del chiamante: entrambi i wrapper devono conservare lo snapshot iniziale.",
+    "hints": [
+      "std::function conserva una copia del callable compatibile: la lambda può avere stato.",
+      "La cattura per valore conserva offset dopo il ritorno di make_offset; quella per riferimento sarebbe dangling."
+    ],
+    "solution": "#include <functional>\n#include <iostream>\nstd::function<int(int)> make_offset(int offset) {\n    // TODO: restituisci una lambda con uno snapshot proprio di offset.\n    return [offset](int x) { return x + offset; };\n}\nint main() {\n    int offset=0,x=0,new_offset=0;\n    std::cin >> offset >> x >> new_offset;\n    auto first=make_offset(offset);\n    auto copied=first;\n    offset=new_offset;\n    std::cout << first(x) << ' ' << copied(x) << ' ' << offset;\n}\n",
+    "explanation": "I test confrontano i risultati dei casi dichiarati. Controlla anche il rispetto del contratto: intervalli validi, input conservato, assenza distinta dal valore zero e durata dello stato catturato. Non rappresentano una prova di correttezza universale.",
+    "cpp": {
+      "difficulty": "base",
+      "tags": [
+        "function",
+        "lambda",
+        "lifetime"
+      ],
+      "standard": "c++20",
+      "starterCode": "#include <functional>\n#include <iostream>\nstd::function<int(int)> make_offset(int offset) {\n    // TODO: restituisci una lambda con uno snapshot proprio di offset.\n    (void)offset;\n    return [](int x) { return x; };\n}\nint main() {\n    int offset=0,x=0,new_offset=0;\n    std::cin >> offset >> x >> new_offset;\n    auto first=make_offset(offset);\n    auto copied=first;\n    offset=new_offset;\n    std::cout << first(x) << ' ' << copied(x) << ' ' << offset;\n}\n",
+      "files": [],
+      "tests": [
+        {
+          "id": "caso-1",
+          "title": "Caso 1",
+          "visibility": "public",
+          "stdin": "5 3 100\n",
+          "stdout": "8 8 100\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-2",
+          "title": "Caso 2",
+          "visibility": "additional",
+          "stdin": "0 7 -3\n",
+          "stdout": "7 7 -3\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-3",
+          "title": "Caso 3",
+          "visibility": "additional",
+          "stdin": "-4 2 9\n",
+          "stdout": "-2 -2 9\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        },
+        {
+          "id": "caso-4",
+          "title": "Caso 4",
+          "visibility": "additional",
+          "stdin": "10 -10 0\n",
+          "stdout": "0 0 0\n",
+          "stderr": "",
+          "exitCode": 0,
+          "comparison": "tokens"
+        }
+      ],
+      "referenceLesson": {
+        "title": "Lezione 6 di C++",
+        "url": "/cpp/fondamenti/eccezioni-contenitori"
+      },
+      "execution": "browser"
+    }
+  }
+]
