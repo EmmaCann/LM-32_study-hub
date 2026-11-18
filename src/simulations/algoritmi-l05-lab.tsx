@@ -348,13 +348,13 @@ export function AlgoritmiLesson5Lab({
               })}
               {opts.container === 'queue' ? (
                 <>
-                  <text x="370" y="214" fontSize="16" style={ink}>
+                  <text x="650" y="214" fontSize="16" style={ink}>
                     head = {current.head}
                   </text>
-                  <text x="370" y="240" fontSize="16" style={ink}>
+                  <text x="650" y="240" fontSize="16" style={ink}>
                     tail = {current.tail}
                   </text>
-                  <text x="350" y="266" fontSize="14" style={ink}>
+                  <text x="650" y="266" fontSize="14" style={ink}>
                     {current.size === 0
                       ? 'vuota'
                       : current.size === opts.capacity - 1

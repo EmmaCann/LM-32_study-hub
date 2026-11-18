@@ -15,6 +15,15 @@ test('LIFO/FIFO, wraparound e rifiuto senza sovrascrittura', () => {
         assert.equal(f.order.length, f.size);
         assert.equal(new Set(f.order).size, f.size);
         assert.equal(f.nodes.filter((n) => n.state === 'stored').length, f.size);
+        if (container === 'queue') {
+          f.order.forEach((id, j) => {
+            const node = f.nodes.find((n) => n.id === id)!;
+            const slot = ((f.head - 1 + j) % capacity) + 1;
+            const angle = ((slot - 1) * Math.PI * 2) / capacity - Math.PI / 2;
+            assert.ok(Math.abs(node.x - (440 + 115 * Math.cos(angle))) < 1e-9);
+            assert.ok(Math.abs(node.y - (255 + 115 * Math.sin(angle))) < 1e-9);
+          });
+        }
         if (f.event === 'overflow' || f.event === 'underflow')
           assert.deepEqual(f.nodes, frames[i - 1].nodes);
       });

@@ -119,8 +119,8 @@ export function l5Trace(values: number[], mode: L5Mode, o: L5Options) {
           n.state = 'stored';
           if (o.container === 'queue') {
             const angle = ((slot - 1) * Math.PI * 2) / o.capacity - Math.PI / 2;
-            n.x = 440 + 165 * Math.cos(angle);
-            n.y = 315 + 165 * Math.sin(angle);
+            n.x = 440 + 115 * Math.cos(angle);
+            n.y = 255 + 115 * Math.sin(angle);
           } else {
             n.x = 440;
             n.y = 490 - (slot - 1) * 43;
