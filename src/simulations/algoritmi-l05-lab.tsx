@@ -75,10 +75,10 @@ export function AlgoritmiLesson5Lab({
     g = model.frames[Math.min(last, step + 1)],
     u = shown - step,
     t = u * u * (3 - 2 * u),
-    current = u > 0.001 ? g : f;
+    current = u >= 0.5 ? g : f;
   const nodes = f.nodes.map((a, i) => {
     const b = g.nodes[i];
-    return { ...(u > 0.001 ? b : a), x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t };
+    return { ...(u >= 0.5 ? b : a), x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t };
   });
   const ink = { fill: '#203848' },
     height = mode === 'hash' ? 260 + opts.m * 65 : mode === 'containers' ? 650 : 540;

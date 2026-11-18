@@ -58,7 +58,7 @@ export function AlgoritmiLesson6Lab({
     g = frames[Math.min(last, step + 1)],
     u = shown - step,
     t = u * u * (3 - 2 * u),
-    current = u > 0.001 ? g : f;
+    current = u >= 0.5 ? g : f;
   const nodes = f.nodes.map((a, i) => ({
     ...a,
     x: a.x + (g.nodes[i].x - a.x) * t,

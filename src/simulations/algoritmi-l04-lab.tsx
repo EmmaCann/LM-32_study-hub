@@ -76,7 +76,7 @@ export function AlgoritmiLesson4Lab({
     g = model.frames[Math.min(last, step + 1)],
     u = shown - step,
     ease = u * u * (3 - 2 * u),
-    current = u > 0.001 ? g : f,
+    current = u >= 0.5 ? g : f,
     ink = { fill: '#203848' },
     height = mode === 'bucket' ? 260 + 65 * m : 540;
   return (
