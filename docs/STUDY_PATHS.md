@@ -2,8 +2,8 @@
 
 Revisione del 17 novembre 2026, branch `feature/study-paths`.
 Il lavoro include gli aggiornamenti già pubblicati su main, mantenendo URL,
-animazioni e verifiche esistenti. Sviluppo e test in locale; il redesign non è
-stato integrato in develop o main.
+animazioni e verifiche esistenti. La pubblicazione segue il flusso
+feature → develop → main.
 
 ## Esperienza
 
@@ -87,7 +87,7 @@ I test verificano PDF automatici, riferimenti, comprensione, car, compilazione
 C++ reale, ricerca, navigazione e dimensioni desktop/iPad/telefono. WebKit emula
 iPad: non equivale a una prova sull'hardware fisico.
 
-Pubblicazione soltanto dopo revisione locale: feature → develop → main,
+Pubblicazione dopo revisione locale: feature → develop → main,
 con deployment Git Vercel da main. Nessun secondo deploy manuale.
 
 ## Palette, mappa e lettore — revisione successiva

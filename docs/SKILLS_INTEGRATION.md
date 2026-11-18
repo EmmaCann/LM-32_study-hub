@@ -32,8 +32,8 @@ bloccati: non usarli per aggirare questa raccolta esplicitamente approvata.
 
 L'esperienza principale è `/percorso/<lessonId>`: teoria, animazioni, codice e
 verifica nella stessa pagina. Gli URL pubblicati dei laboratori e del Playground
-restano compatibili. Il lavoro resta su feature/study-paths fino alla revisione
-locale; l'autorizzazione dei PDF non pubblica automaticamente il nuovo redesign.
+restano compatibili. Il rilascio segue il flusso feature → develop → main,
+dopo revisione e verifiche; Vercel pubblica la produzione da main.
 
 
 
