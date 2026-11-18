@@ -148,7 +148,7 @@ test('home, tema e spazi di studio responsive: desktop, iPad e telefono', async 
   await page.setViewportSize({ width: 1440, height: 1080 });
   await page.goto('/');
   await page.waitForLoadState('networkidle');
-  await expect(page.getByRole('heading', { name: /Più connessioni/ })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Il tuo orario' })).toBeVisible();
   await expect(page.locator('.portal-course')).toHaveCount(4);
   await page.screenshot({ path: testInfo.outputPath('portal-desktop.png'), fullPage: true });
   await page.getByRole('button', { name: 'Tema scuro', exact: true }).click();
@@ -170,8 +170,7 @@ test('home, tema e spazi di studio responsive: desktop, iPad e telefono', async 
         await expect(page.locator('.desk-panel:not([hidden]) canvas')).toBeVisible();
       else if (route.includes('view=code'))
         await expect(page.locator('.desk-code .cm-content')).toBeVisible();
-      else
-        await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+      else await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
       expect(
         await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
         `${route} ${width}`,

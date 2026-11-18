@@ -1,4 +1,5 @@
 'use client';
+import { WeeklySchedule } from './weekly-schedule';
 import { CourseMap } from './course-map';
 import { CppNavigation } from './cpp-navigation';
 import Link from 'next/link';
@@ -95,33 +96,9 @@ function CourseCard({
 export function StudyPortal({ lessons }: { lessons: StudyLesson[] }) {
   const { progress } = useStudyProgress();
   const next = recommendedLesson(lessons, progress);
-  const completed = lessons.filter((l) => lessonStatus(l, progress) === 'Completata').length;
   return (
     <div className="study-portal">
-      <header className="portal-intro">
-        <div>
-          <span className="portal-overline">
-            <span className="portal-status-dot" /> IL TUO CAMPUS DIGITALE
-          </span>
-          <h1>
-            Più connessioni.
-            <br />
-            <em>Meno distrazioni.</em>
-          </h1>
-          <p>
-            La teoria, il laboratorio, la prova. Tutto quello che serve per fare il prossimo passo,
-            nello stesso posto.
-          </p>
-        </div>
-        <div className="portal-today">
-          <span>IL TUO PERCORSO</span>
-          <strong>
-            {String(completed).padStart(2, '0')}
-            <small> / {lessons.filter((l) => l.availability === 'ready').length}</small>
-          </strong>
-          <span>lezioni completate</span>
-        </div>
-      </header>
+      <WeeklySchedule />
       <section className="portal-resume">
         <div className="portal-resume-art" aria-hidden="true">
           <div className="portal-orbit one" />

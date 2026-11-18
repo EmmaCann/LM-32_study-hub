@@ -103,3 +103,11 @@ oltre la dimensione naturale. Larghezza adatta il documento al contenitore nei
 due sensi. Le percentuali manuali vanno dal 10% al 300%, con pulsanti per ridurre
 e aumentare. Il contenitore è isolato dalla larghezza intrinseca del canvas,
 così una pagina ingrandita non impedisce il successivo restringimento.
+
+## Orario settimanale
+
+La home mostra gli impegni del giorno e la settimana tipo. Le lezioni si
+inseriscono e rimuovono manualmente; giorno, ora e titolo sono obbligatori,
+l'aula è facoltativa. L'orario si ripete ogni settimana ed è salvato nel browser
+del dispositivo, separatamente dai progressi: non è sincronizzato né incluso
+nel backup dei progressi. Nessun orario universitario è stato inventato.
