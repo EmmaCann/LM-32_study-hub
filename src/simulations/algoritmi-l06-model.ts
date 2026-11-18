@@ -31,9 +31,9 @@ export function l6Trace(mode: L6Mode, input: number[], choice = 0): L6Frame[] {
     let root: number | null = null;
     const get = (k: number) => ns.get(k)!;
     const color = (k: number | null) => (k === null ? 'N' : get(k).color);
-    const sorted = [...input].sort((a, b) => a - b);
     function record(title: string, detail: string, code: string) {
       const depth = new Map<number, number>();
+      const treeX = new Map<number, number>();
       const edges: [string, string][] = [];
       function visit(k: number | null, d: number) {
         if (k === null) return;
@@ -45,6 +45,24 @@ export function l6Trace(mode: L6Mode, input: number[], choice = 0): L6Frame[] {
           }
       }
       visit(root, 0);
+      function layout(k: number | null): { x: Map<number, number>; min: number; max: number } {
+        if (k === null) return { x: new Map(), min: 0, max: 0 };
+        const n = get(k),
+          left = layout(n.left),
+          right = layout(n.right),
+          gap = 76,
+          leftShift = n.left === null ? 0 : -gap - left.max,
+          rightShift = n.right === null ? 0 : gap - right.min,
+          x = new Map<number, number>([[k, 0]]);
+        for (const [key, value] of left.x) x.set(key, value + leftShift);
+        for (const [key, value] of right.x) x.set(key, value + rightShift);
+        const min = Math.min(0, n.left === null ? 0 : left.min + leftShift, n.right === null ? 0 : right.min + rightShift),
+          max = Math.max(0, n.left === null ? 0 : left.max + leftShift, n.right === null ? 0 : right.max + rightShift);
+        return { x, min, max };
+      }
+      const positioned = layout(root),
+        centerShift = 450 - (positioned.min + positioned.max) / 2;
+      for (const [key, x] of positioned.x) treeX.set(key, x + centerShift);
       function bh(k: number | null): number {
         if (k === null) return 1;
         const n = get(k),
@@ -69,7 +87,7 @@ export function l6Trace(mode: L6Mode, input: number[], choice = 0): L6Frame[] {
         nodes: input.map((k, i) => ({
           id: String(k),
           label: String(k) + (depth.has(k) ? ' ' + color(k) : ''),
-          x: depth.has(k) ? 80 + sorted.indexOf(k) * 85 : 90 + i * 85,
+          x: treeX.get(k) ?? 90 + i * 85,
           y: depth.has(k) ? 250 + depth.get(k)! * 95 : 80,
           color: depth.has(k) ? color(k) : 'attesa',
         })),

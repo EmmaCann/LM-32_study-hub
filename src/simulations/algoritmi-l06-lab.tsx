@@ -181,20 +181,25 @@ export function AlgoritmiLesson6Lab({
         </>
       }
       scene={
-        <svg className="aos-scene algoritmi-scene" viewBox={`0 0 900 ${mode === 'rb' ? 820 : 760}`} role="img" aria-label={title}>
+        <svg className={`aos-scene algoritmi-scene ${mode === 'rb' ? 'red-black-scene' : ''}`} viewBox={`0 0 900 ${mode === 'rb' ? 820 : 760}`} role="img" aria-label={title}>
           <rect className="algorithm-backdrop" width="900" height={mode === 'rb' ? 820 : 760} />
+          {mode === 'rb' && (
+            <g className="tree-zone-labels">
+              <text x="55" y="40" className="tree-zone-title">CHIAVI IN ATTESA</text>
+              <path d="M55 132H845" />
+              <text x="55" y="190" className="tree-zone-title">ALBERO ROSSO-NERO · INSERIMENTO BST + FIXUP</text>
+            </g>
+          )}
           {current.edges.map(([a, b]) => {
             const x = get(a),
               y = get(b);
             return (
-              <line
+              <path
                 key={a + '-' + b}
-                x1={x.x}
-                y1={x.y + 23}
-                x2={y.x}
-                y2={y.y - 23}
+                d={`M${x.x} ${x.y + 27} C${x.x} ${x.y + 60},${y.x} ${y.y - 60},${y.x} ${y.y - 27}`}
                 stroke="#537b93"
                 strokeWidth="3"
+                fill="none"
               />
             );
           })}
