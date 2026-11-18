@@ -92,7 +92,7 @@ con deployment Git Vercel da main. Nessun secondo deploy manuale.
 
 ## Palette, mappa e lettore — revisione successiva
 
-La palette originale usa superfici chiare e accenti verdi, con un tema scuro coordinato. Ogni pagina materia
+La palette usa superfici color carta e accenti blu petrolio; i colori delle materie identificano le rispettive pagine. Ogni pagina materia
 mostra una mappa ordinata per gruppo e lezione, con i sottoargomenti dichiarati
 nelle sezioni del catalogo e collegamenti alla pagina PDF. Gli stati distinguono
 le tappe da iniziare, in corso e completate. Il completamento deriva dalle

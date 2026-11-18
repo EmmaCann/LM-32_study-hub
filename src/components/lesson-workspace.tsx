@@ -140,7 +140,7 @@ export function LessonWorkspace({
     },
   ];
   return (
-    <div className="lesson-desk" data-view={view}>
+    <div className={`lesson-desk course-${lesson.subject}`} data-view={view}>
       <LessonVisit id={lesson.id} />
       <div className="desk-commandbar">
         <Link href={`/${lesson.subject}`} className="desk-back">

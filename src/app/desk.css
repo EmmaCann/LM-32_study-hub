@@ -1,25 +1,26 @@
 :root {
-  --desk-accent: #197c69;
-  --desk-soft: #e8f2ed;
-  --desk-forest: #163e36;
-  --bg: #f3f5f3;
-  --accent: #197c69;
-  --soft: #e8f2ed;
+  --desk-accent: #285d7b;
+  --desk-soft: #e6eef0;
+  --desk-forest: #1e4357;
+  --bg: #ede8dc;
+  --surface: #f8f3e9;
+  --accent: #285d7b;
+  --soft: #e6eef0;
   --ink: #1a2c2b;
   --muted: #71807c;
   --line: #dfe6e1;
 }
 :root[data-theme='dark'] {
-  --bg: #101a20;
-  --surface: #17252d;
+  --bg: #162731;
+  --surface: #203641;
   --ink: #e0ebe8;
   --muted: #92a9a2;
   --line: #2a3b41;
-  --accent: #7dd6bb;
-  --soft: #203b35;
-  --desk-accent: #7dd6bb;
-  --desk-soft: #203b35;
-  --desk-forest: #142f2b;
+  --accent: #8fc8dc;
+  --soft: #294553;
+  --desk-accent: #8fc8dc;
+  --desk-soft: #294553;
+  --desk-forest: #193849;
 }
 body {
   font-family:
@@ -33,7 +34,7 @@ body {
 }
 .sidebar {
   width: 216px;
-  background: #14221f;
+  background: #172f3e;
   border-right: 0;
   padding: 27px 16px 18px;
   color: #9cafaa;
@@ -64,12 +65,12 @@ body {
   min-height: 40px;
 }
 .sidebar nav a:hover {
-  background: #20372f;
+  background: #234354;
   color: white;
 }
 .sidebar nav a.active {
-  background: #254437;
-  color: #c6efd7;
+  background: #295368;
+  color: #d7edf4;
 }
 .sidebar nav {
   overflow: auto;
@@ -83,7 +84,7 @@ body {
   color: #9fb2a9;
 }
 .sidebar .sidebar-bottom-mark span {
-  background: #8acfb0;
+  background: #8fcadd;
 }
 .workspace {
   margin-left: 216px;
@@ -136,9 +137,9 @@ body {
 .portal-status-dot {
   width: 6px;
   height: 6px;
-  background: #4ca584;
+  background: #579bb5;
   border-radius: 50%;
-  box-shadow: 0 0 0 4px #4ca58412;
+  box-shadow: 0 0 0 4px #579bb512;
 }
 .portal-intro {
   display: flex;
@@ -199,9 +200,9 @@ body {
   display: grid;
   grid-template-columns: 160px minmax(0, 1fr) 210px;
   position: relative;
-  background: #183b30;
+  background: #214960;
   color: #f0f4ed;
-  border: 1px solid #26493a;
+  border: 1px solid #335d70;
   border-radius: 16px;
   min-height: 218px;
   overflow: hidden;
@@ -214,7 +215,7 @@ body {
   z-index: 1;
 }
 .portal-resume-copy > .portal-overline {
-  color: #8eb19e;
+  color: #a9c8d2;
   font-size: 8px;
   justify-content: space-between;
 }
@@ -229,7 +230,7 @@ body {
 .portal-resume-copy p {
   font-size: 11px;
   line-height: 1.75;
-  color: #a5bcad;
+  color: #c2d8dc;
   max-width: 480px;
   margin-bottom: 22px;
 }
@@ -238,9 +239,9 @@ body {
   align-items: center;
   justify-content: center;
   gap: 17px;
-  background: #d1e9c3;
-  color: #203c28;
-  border: 1px solid #d1e9c3;
+  background: #c8e0e8;
+  color: #193d51;
+  border: 1px solid #c8e0e8;
   border-radius: 6px;
   font-size: 11px;
   font-weight: 650;
@@ -251,7 +252,7 @@ body {
     transform 0.2s;
 }
 .portal-primary:hover {
-  background: #e1f3d8;
+  background: #dfedf0;
   transform: translateY(-1px);
 }
 .portal-study-sequence {
@@ -259,11 +260,11 @@ body {
   flex-direction: column;
   justify-content: center;
   gap: 22px;
-  border-left: 1px solid #305343;
+  border-left: 1px solid #456c7a;
   margin: 32px 0;
   padding: 10px 22px;
   font-size: 10px;
-  color: #a5bcad;
+  color: #c2d8dc;
 }
 .portal-study-sequence span {
   display: flex;
@@ -272,7 +273,7 @@ body {
 }
 .portal-study-sequence b {
   font-size: 8px;
-  color: #5e8d73;
+  color: #7eabba;
   font-weight: 400;
 }
 .portal-resume-art {
@@ -284,12 +285,12 @@ body {
   position: absolute;
   top: calc(50% - 24px);
   left: 58px;
-  color: #b9d9b2;
+  color: #c0dce5;
   transform: rotate(-15deg);
 }
 .portal-orbit {
   position: absolute;
-  border: 1px solid #6d986636;
+  border: 1px solid #89b4c036;
   border-radius: 50%;
   transform: rotate(-30deg);
   left: -42px;
@@ -314,8 +315,8 @@ body {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #b2d49a;
-  box-shadow: 0 0 12px #bbdc98;
+  background: #aad9e6;
+  box-shadow: 0 0 12px #b9e4ed;
 }
 .portal-orbit-point.a {
   top: 30%;
@@ -324,7 +325,7 @@ body {
 .portal-orbit-point.b {
   bottom: 22%;
   left: 34px;
-  background: #6d9e7c;
+  background: #7eb0c1;
 }
 .portal-section-label {
   display: flex;
@@ -1686,8 +1687,8 @@ body {
 }
 
 
-:root { --complete: #26734f; --complete-soft: #d5e7d9; --current: #955a35; --current-soft: #edd9bd; }
-:root[data-theme="dark"] { --complete: #a0e0c5; --complete-soft: #3d625e; --current: #f1cd99; --current-soft: #66564f; }
+:root { --complete: #286790; --complete-soft: #d7eaf6; --current: #955a35; --current-soft: #edd9bd; }
+:root[data-theme="dark"] { --complete: #a8d9f5; --complete-soft: #315c78; --current: #f1cd99; --current-soft: #66564f; }
 .course-map {
   border: 1px solid var(--line);
   border-radius: 18px;
@@ -1930,3 +1931,12 @@ body {
     font-size: 16px;
   }
 }
+
+/* Subject colours remain accents, while blue and paper carry the interface. */
+.course-cover { border-top: 4px solid var(--course-color); background-image: radial-gradient(ellipse at 90% 10%, color-mix(in srgb, var(--course-color), transparent 84%), transparent 48%); }
+.course-overview .course-cover-symbol { opacity: .32; }
+.course-overview .course-map { border-top: 3px solid var(--course-color); }
+.course-overview .map-group > h3 { color: var(--course-color); }
+.lesson-desk .desk-heading { border-left: 4px solid var(--course-color); padding-left: 16px; background: linear-gradient(90deg, color-mix(in srgb, var(--course-color), transparent 92%), transparent 60%); }
+.lesson-desk .desk-course-mark { border-left-color: var(--course-color); }
+.lesson-desk .desk-panel-top { border-top: 3px solid color-mix(in srgb, var(--course-color), transparent 35%); }

@@ -120,10 +120,10 @@ test('palette e mappe responsive nelle quattro materie', async ({ page }, info) 
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('/');
   await page.getByRole('button', { name: 'Tema chiaro', exact: true }).click();
-  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(243, 245, 243)');
+  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(237, 232, 220)');
   await page.screenshot({ path: info.outputPath('palette-light.png'), fullPage: true });
   await page.getByRole('button', { name: 'Tema scuro', exact: true }).click();
-  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(16, 26, 32)');
+  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(22, 39, 49)');
   await page.screenshot({ path: info.outputPath('palette-dark.png'), fullPage: true });
   for (const subject of ['aos', 'algoritmi', 'cpp', 'ottimizzazione']) {
     await page.goto(`/${subject}`);
