@@ -1,5 +1,4 @@
 'use client';
-import { WeeklySchedule } from './weekly-schedule';
 import { CourseMap } from './course-map';
 import { CppNavigation } from './cpp-navigation';
 import Link from 'next/link';
@@ -98,7 +97,7 @@ export function StudyPortal({ lessons }: { lessons: StudyLesson[] }) {
   const next = recommendedLesson(lessons, progress);
   return (
     <div className="study-portal">
-      <WeeklySchedule />
+      <h1 className="portal-heading">Il mio studio</h1>
       <section className="portal-resume">
         <div className="portal-resume-art" aria-hidden="true">
           <div className="portal-orbit one" />

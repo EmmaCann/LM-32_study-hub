@@ -148,7 +148,7 @@ test('home, tema e spazi di studio responsive: desktop, iPad e telefono', async 
   await page.setViewportSize({ width: 1440, height: 1080 });
   await page.goto('/');
   await page.waitForLoadState('networkidle');
-  await expect(page.getByRole('heading', { name: 'Il tuo orario' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Il mio studio' })).toBeVisible();
   await expect(page.locator('.portal-course')).toHaveCount(4);
   await page.screenshot({ path: testInfo.outputPath('portal-desktop.png'), fullPage: true });
   await page.getByRole('button', { name: 'Tema scuro', exact: true }).click();

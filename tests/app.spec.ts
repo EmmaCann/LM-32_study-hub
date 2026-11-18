@@ -51,7 +51,7 @@ test('route, link interni, contenuti approvati e 404', async ({ page, request })
 });
 test('catalogo e ricerca riflettono i contenuti approvati', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('heading', { name: 'Il tuo orario' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Il mio studio' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Le tue materie' })).toBeVisible();
   await expect(page.locator('.portal-course')).toHaveCount(4);
   await expect(page.locator('.portal-resume')).toBeVisible();
