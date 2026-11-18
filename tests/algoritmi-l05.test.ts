@@ -60,7 +60,7 @@ test('Hash: destinazioni, caso concentrato, ricerca per chiave e cancellazione l
         const { frames } = l5Trace(values, 'hash', opts);
         for (const k of values) assert.ok(l5Hash(k, opts) >= 0 && l5Hash(k, opts) < m);
         const complete = frames.filter((f) => f.event === 'insert').at(-1)!;
-        for (const n of complete.nodes) assert.equal(n.y, 180 + l5Hash(Number(n.key), opts) * 65);
+        for (const n of complete.nodes) assert.equal(n.y, 152 + l5Hash(Number(n.key), opts) * 48);
         const outcome = frames.find((f) => f.event === 'found' || f.event === 'absent')!;
         const chain = values.filter((k) => l5Hash(k, opts) === l5Hash(query, opts)).reverse();
         const index = chain.indexOf(query);

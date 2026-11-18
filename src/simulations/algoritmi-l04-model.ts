@@ -254,7 +254,7 @@ export function lesson4Trace(
 export function l4Position(id: string, f: L4Frame, mode: L4Mode) {
   if (mode === 'bucket' && f.phase !== 'done') {
     const b = f.buckets.findIndex((a) => a.includes(id));
-    if (b >= 0) return { x: 225 + 60 * f.buckets[b].indexOf(id), y: 210 + b * 65 };
+      if (b >= 0) return { x: 225 + 60 * f.buckets[b].indexOf(id), y: 163 + b * 42 };
   }
   if (
     mode === 'select' &&

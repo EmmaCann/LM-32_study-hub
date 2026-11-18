@@ -336,7 +336,7 @@ export function l5Trace(values: number[], mode: L5Mode, o: L5Options) {
         chain.forEach((id, i) => {
           const n = nodes.find((x) => x.id === id)!;
           n.x = 235 + i * 112;
-          n.y = 180 + j * 65;
+          n.y = 152 + j * 48;
           n.state = 'stored';
         }),
       );

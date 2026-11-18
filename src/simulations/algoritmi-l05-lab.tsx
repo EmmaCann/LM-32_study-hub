@@ -81,11 +81,11 @@ export function AlgoritmiLesson5Lab({
     return { ...(u >= 0.5 ? b : a), x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t };
   });
   const ink = {},
-    height = mode === 'hash' ? 260 + opts.m * 65 : mode === 'containers' ? 650 : 390;
+    height = mode === 'hash' ? 180 + opts.m * 48 : mode === 'containers' ? 450 : 420;
   const node = (id: string) => nodes.find((x) => x.id === id)!;
   const slot = (i: number) => {
     const angle = ((i - 1) * Math.PI * 2) / opts.capacity - Math.PI / 2;
-    return { x: 440 + 165 * Math.cos(angle), y: 315 + 165 * Math.sin(angle) };
+    return { x: 440 + 115 * Math.cos(angle), y: 255 + 115 * Math.sin(angle) };
   };
   function edgePath(a: L5Node, b: L5Node, kind: 'next' | 'prev') {
     const y = kind === 'next' ? -10 : 10;
@@ -329,7 +329,7 @@ export function AlgoritmiLesson5Lab({
           {mode === 'containers' && (
             <>
               {Array.from({ length: opts.capacity }, (_, j) => {
-                const p = opts.container === 'queue' ? slot(j + 1) : { x: 440, y: 490 - j * 43 };
+                const p = opts.container === 'queue' ? slot(j + 1) : { x: 440, y: 390 - j * 32 };
                 return (
                   <g key={j}>
                     <rect
@@ -348,13 +348,13 @@ export function AlgoritmiLesson5Lab({
               })}
               {opts.container === 'queue' ? (
                 <>
-                  <text x="370" y="300" fontSize="20" style={ink}>
+                  <text x="370" y="214" fontSize="16" style={ink}>
                     head = {current.head}
                   </text>
-                  <text x="370" y="335" fontSize="20" style={ink}>
+                  <text x="370" y="240" fontSize="16" style={ink}>
                     tail = {current.tail}
                   </text>
-                  <text x="350" y="370" fontSize="17" style={ink}>
+                  <text x="350" y="266" fontSize="14" style={ink}>
                     {current.size === 0
                       ? 'vuota'
                       : current.size === opts.capacity - 1
@@ -370,7 +370,7 @@ export function AlgoritmiLesson5Lab({
               <text x="25" y="135" fontSize="16" style={ink}>
                 In attesa
               </text>
-              <text x="25" y="620" fontSize="16" style={ink}>
+              <text x="25" y="420" fontSize="14" style={ink}>
                 Estratti: ordine da sinistra a destra
               </text>
             </>
@@ -381,13 +381,13 @@ export function AlgoritmiLesson5Lab({
                 <rect
                   className="algorithm-lane"
                   x="180"
-                  y={150 + j * 65}
+                  y={130 + j * 48}
                   width="680"
-                  height="58"
+                  height="44"
                   fill="#eaf0f5"
                   stroke="#b8c9d4"
                 />
-                <text x="30" y={184 + j * 65} fontSize="20" style={ink}>
+                <text x="30" y={158 + j * 48} fontSize="16" style={ink}>
                   T[{j}]
                 </text>
               </g>

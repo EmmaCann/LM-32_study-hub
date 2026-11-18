@@ -78,7 +78,7 @@ export function AlgoritmiLesson4Lab({
     ease = u * u * (3 - 2 * u),
     current = u >= 0.5 ? g : f,
     ink = { fill: '#203848' },
-    height = mode === 'bucket' ? 260 + 65 * m : 540;
+    height = mode === 'bucket' ? 220 + 42 * m : mode === 'select' ? 470 : 430;
   return (
     <VisualPlayer
       id={id}
@@ -226,13 +226,13 @@ export function AlgoritmiLesson4Lab({
                 <rect
                   className="algorithm-lane"
                   x="195"
-                  y={185 + b * 65}
+                  y={145 + b * 42}
                   width="680"
-                  height="50"
+                  height="36"
                   fill="#eaf1f6"
                   stroke="#abc0ce"
                 />
-                <text x="20" y={216 + b * 65} fontSize="18" style={ink}>
+                <text x="20" y={169 + b * 42} fontSize="15" style={ink}>
                   B[{b}] · {current.buckets[b].length} elementi
                 </text>
               </g>
@@ -294,14 +294,14 @@ export function AlgoritmiLesson4Lab({
           })}
           {mode === 'radix' && (
             <>
-              <text x="25" y="300" fontSize="22" style={ink}>
+              <text x="25" y="278" fontSize="20" style={ink}>
                 Criterio attivo:{' '}
                 {current.digit <= 1 ? 'unità' : current.digit === 2 ? 'decine' : 'centinaia'}
               </text>
-              <text x="25" y="345" fontSize="18" style={ink}>
+              <text x="25" y="315" fontSize="16" style={ink}>
                 La cifra più significativa viene elaborata per ultima.
               </text>
-              <text x="25" y="385" fontSize="18" style={ink}>
+              <text x="25" y="348" fontSize="16" style={ink}>
                 Sulle cifre uguali si conserva il precedente ordine degli oggetti.
               </text>
             </>

@@ -65,7 +65,7 @@ export function AlgoritmiLesson6Lab({
     return {
       ...a,
       x: a.x + (b.x - a.x) * t,
-      y: y + (mode === 'rb' && b.y > a.y ? Math.sin(Math.PI * t) * 38 : 0),
+      y: y + (mode === 'rb' && b.y > a.y ? Math.sin(Math.PI * t) * 18 : 0),
       color: u > 0.5 ? b.color : a.color,
       label: u > 0.5 ? b.label : a.label,
     };
@@ -181,13 +181,13 @@ export function AlgoritmiLesson6Lab({
         </>
       }
       scene={
-        <svg className={`aos-scene algoritmi-scene ${mode === 'rb' ? 'red-black-scene' : ''}`} viewBox={`0 0 900 ${mode === 'rb' ? 820 : 760}`} role="img" aria-label={title}>
-          <rect className="algorithm-backdrop" width="900" height={mode === 'rb' ? 820 : 760} />
+        <svg className={`aos-scene algoritmi-scene ${mode === 'rb' ? 'red-black-scene' : ''}`} viewBox={`0 0 900 ${mode === 'rb' ? 470 : 460}`} role="img" aria-label={title}>
+          <rect className="algorithm-backdrop" width="900" height={mode === 'rb' ? 470 : 460} />
           {mode === 'rb' && (
             <g className="tree-zone-labels">
-              <text x="55" y="40" className="tree-zone-title">CHIAVI IN ATTESA</text>
-              <path d="M55 132H845" />
-              <text x="55" y="190" className="tree-zone-title">ALBERO ROSSO-NERO · INSERIMENTO BST + FIXUP</text>
+              <text x="55" y="23" className="tree-zone-title">CHIAVI IN ATTESA</text>
+              <path d="M55 94H845" />
+              <text x="55" y="119" className="tree-zone-title">ALBERO ROSSO-NERO · BST + FIXUP</text>
             </g>
           )}
           {current.edges.map(([a, b]) => {
@@ -196,7 +196,7 @@ export function AlgoritmiLesson6Lab({
             return (
               <path
                 key={a + '-' + b}
-                d={`M${x.x} ${x.y + 27} C${x.x} ${x.y + 60},${y.x} ${y.y - 60},${y.x} ${y.y - 27}`}
+                d={`M${x.x} ${x.y + 23} C${x.x} ${x.y + 26},${y.x} ${y.y - 26},${y.x} ${y.y - 23}`}
                 stroke="#537b93"
                 strokeWidth="3"
                 fill="none"
@@ -207,7 +207,7 @@ export function AlgoritmiLesson6Lab({
             <g key={n.id} data-l06-item={n.id} className={`node-${n.color}`} transform={`translate(${n.x} ${n.y})`}>
               {mode === 'rb' ? (
                 <circle
-                  r="27"
+                  r={mode === 'rb' ? 23 : 27}
                   fill={n.color === 'R' ? '#ffe0dc' : n.color === 'N' ? '#d4e2ed' : '#ffffff'}
                   stroke={n.color === 'R' ? '#9d3634' : '#345c75'}
                   strokeWidth="3"
@@ -226,13 +226,13 @@ export function AlgoritmiLesson6Lab({
               <text
                 textAnchor="middle"
                 y="6"
-                style={{ fill: '#203848', fontSize: mode === 'matrix' ? 21 : 19, fontWeight: 600 }}
+                style={{ fill: '#203848', fontSize: mode === 'matrix' ? 21 : mode === 'rb' ? 16 : 19, fontWeight: 600 }}
               >
                 {n.label}
               </text>
             </g>
           ))}
-          <text x="40" y={mode === 'rb' ? 785 : 705} style={{ fill: '#203848', fontSize: 20 }}>
+          <text x="40" y={mode === 'rb' ? 455 : 440} style={{ fill: '#203848', fontSize: 15 }}>
             {mode === 'rb'
               ? 'Fascia superiore: chiavi ancora da inserire.'
               : mode === 'rod'
