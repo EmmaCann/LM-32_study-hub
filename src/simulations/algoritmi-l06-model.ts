@@ -70,7 +70,7 @@ export function l6Trace(mode: L6Mode, input: number[], choice = 0): L6Frame[] {
           id: String(k),
           label: String(k) + (depth.has(k) ? ' ' + color(k) : ''),
           x: depth.has(k) ? 80 + sorted.indexOf(k) * 85 : 90 + i * 85,
-          y: depth.has(k) ? 170 + depth.get(k)! * 65 : 55,
+          y: depth.has(k) ? 250 + depth.get(k)! * 95 : 80,
           color: depth.has(k) ? color(k) : 'attesa',
         })),
         values: {

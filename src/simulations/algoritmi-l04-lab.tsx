@@ -203,8 +203,8 @@ export function AlgoritmiLesson4Lab({
         </>
       }
       scene={
-        <svg className="aos-scene" viewBox={`0 0 900 ${height}`} role="img" aria-label={title}>
-          <rect width="900" height={height} fill="#f5f8fb" />
+        <svg className="aos-scene algoritmi-scene" viewBox={`0 0 900 ${height}`} role="img" aria-label={title}>
+          <rect className="algorithm-backdrop" width="900" height={height} />
           <text x="25" y="32" fontSize="21" style={ink}>
             {mode === 'radix'
               ? `Tre cifre: ${current.digit === 0 ? 'input' : current.digit === 1 ? 'unità' : current.digit === 2 ? 'decine' : 'centinaia'}`
@@ -224,6 +224,7 @@ export function AlgoritmiLesson4Lab({
             Array.from({ length: m }, (_, b) => (
               <g key={b}>
                 <rect
+                  className="algorithm-lane"
                   x="195"
                   y={185 + b * 65}
                   width="680"
@@ -248,8 +249,7 @@ export function AlgoritmiLesson4Lab({
               b = l4Position(item.id, g, mode),
               x = a.x + (b.x - a.x) * ease;
             let y = a.y + (b.y - a.y) * ease;
-            if (mode === 'radix' && a.x !== b.x)
-              y += Math.sin(Math.PI * u) * (b.x > a.x ? -40 : 40);
+            if (mode === 'radix' && a.x !== b.x) y -= Math.sin(Math.PI * ease) * 34;
             const active = current.active.includes(item.id),
               pivot = current.pivot === item.id,
               small =

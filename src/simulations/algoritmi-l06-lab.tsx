@@ -59,13 +59,17 @@ export function AlgoritmiLesson6Lab({
     u = shown - step,
     t = u * u * (3 - 2 * u),
     current = u >= 0.5 ? g : f;
-  const nodes = f.nodes.map((a, i) => ({
-    ...a,
-    x: a.x + (g.nodes[i].x - a.x) * t,
-    y: a.y + (g.nodes[i].y - a.y) * t,
-    color: u > 0.5 ? g.nodes[i].color : a.color,
-    label: u > 0.5 ? g.nodes[i].label : a.label,
-  }));
+  const nodes = f.nodes.map((a, i) => {
+    const b = g.nodes[i];
+    const y = a.y + (b.y - a.y) * t;
+    return {
+      ...a,
+      x: a.x + (b.x - a.x) * t,
+      y: y + (mode === 'rb' && b.y > a.y ? Math.sin(Math.PI * t) * 38 : 0),
+      color: u > 0.5 ? b.color : a.color,
+      label: u > 0.5 ? b.label : a.label,
+    };
+  });
   const get = (key: string) => nodes.find((n) => n.id === key)!;
   function apply() {
     try {
@@ -177,8 +181,8 @@ export function AlgoritmiLesson6Lab({
         </>
       }
       scene={
-        <svg className="aos-scene" viewBox="0 0 900 760" role="img" aria-label={title}>
-          <rect width="900" height="760" fill="#f5f8fb" />
+        <svg className="aos-scene algoritmi-scene" viewBox={`0 0 900 ${mode === 'rb' ? 820 : 760}`} role="img" aria-label={title}>
+          <rect className="algorithm-backdrop" width="900" height={mode === 'rb' ? 820 : 760} />
           {current.edges.map(([a, b]) => {
             const x = get(a),
               y = get(b);
@@ -195,7 +199,7 @@ export function AlgoritmiLesson6Lab({
             );
           })}
           {nodes.map((n) => (
-            <g key={n.id} data-l06-item={n.id} transform={`translate(${n.x} ${n.y})`}>
+            <g key={n.id} data-l06-item={n.id} className={`node-${n.color}`} transform={`translate(${n.x} ${n.y})`}>
               {mode === 'rb' ? (
                 <circle
                   r="27"
@@ -223,7 +227,7 @@ export function AlgoritmiLesson6Lab({
               </text>
             </g>
           ))}
-          <text x="40" y="705" style={{ fill: '#203848', fontSize: 20 }}>
+          <text x="40" y={mode === 'rb' ? 785 : 705} style={{ fill: '#203848', fontSize: 20 }}>
             {mode === 'rb'
               ? 'Fascia superiore: chiavi ancora da inserire.'
               : mode === 'rod'

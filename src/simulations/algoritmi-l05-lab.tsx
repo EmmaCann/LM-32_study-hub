@@ -80,8 +80,8 @@ export function AlgoritmiLesson5Lab({
     const b = g.nodes[i];
     return { ...(u >= 0.5 ? b : a), x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t };
   });
-  const ink = { fill: '#203848' },
-    height = mode === 'hash' ? 260 + opts.m * 65 : mode === 'containers' ? 650 : 540;
+  const ink = {},
+    height = mode === 'hash' ? 260 + opts.m * 65 : mode === 'containers' ? 650 : 390;
   const node = (id: string) => nodes.find((x) => x.id === id)!;
   const slot = (i: number) => {
     const angle = ((i - 1) * Math.PI * 2) / opts.capacity - Math.PI / 2;
@@ -282,7 +282,7 @@ export function AlgoritmiLesson5Lab({
         </>
       }
       scene={
-        <svg className="aos-scene" viewBox={`0 0 900 ${height}`} role="img" aria-label={title}>
+        <svg className="aos-scene algoritmi-scene" viewBox={`0 0 900 ${height}`} role="img" aria-label={title}>
           <defs>
             <marker
               id={`${id}-next`}
@@ -305,7 +305,7 @@ export function AlgoritmiLesson5Lab({
               <path d="M0 0L7 3L0 6Z" fill="#7b638c" />
             </marker>
           </defs>
-          <rect width="900" height={height} fill="#f5f8fb" />
+          <rect className="algorithm-backdrop" width="900" height={height} />
           <text x="25" y="32" fontSize="21" style={ink}>
             {mode === 'containers'
               ? opts.container === 'queue'
@@ -379,6 +379,7 @@ export function AlgoritmiLesson5Lab({
             Array.from({ length: opts.m }, (_, j) => (
               <g key={j}>
                 <rect
+                  className="algorithm-lane"
                   x="180"
                   y={150 + j * 65}
                   width="680"
@@ -393,10 +394,10 @@ export function AlgoritmiLesson5Lab({
             ))}
           {mode === 'list' && (
             <>
-              <text x="25" y="170" fontSize="17" style={ink}>
+              <text x="25" y="330" fontSize="17" style={ink}>
                 Blu: next · viola: prev · giallo: nodo speciale o confronto
               </text>
-              <text x="25" y="205" fontSize="18" style={ink}>
+              <text x="25" y="360" fontSize="18" style={ink}>
                 {opts.sentinel
                   ? 'S.next è la testa; S.prev è l’ultimo.'
                   : `head → ${current.order.length ? node(current.order[0]).key : 'NIL'}; estremi non collegati → NIL`}

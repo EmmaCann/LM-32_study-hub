@@ -3,6 +3,7 @@ import { createContext, useContext, useEffect, useId, useRef, useState, type Rea
 import { Play, Pause, RotateCcw, ChevronLeft, ChevronRight, Maximize2, Minimize2, ZoomIn, ZoomOut } from 'lucide-react';
 import type { Frame } from './aos-models';
 import './aos-architecture.css';
+import './algoritmi-labs.css';
 const ArchitectureContext=createContext(false);
 
 export function useLabTransport(count: number, step: number, setStep: (n: number) => void) {
@@ -48,7 +49,7 @@ export function VisualPlayer({id,title,frame,step,count,onStep,transport,options
     return()=>{document.body.style.overflow=previous;};
   },[expanded]);
   function move(n:number){transport.stop();onStep(Math.max(0,Math.min(count-1,n)));}
-  return <ArchitectureContext.Provider value={design==='architecture'}><section ref={root} tabIndex={-1} id={id} data-visual-version="2" data-design={design} data-playing={transport.playing} className={`simulation aos-lab aos-theatre ${design==='architecture'?'architectural-player':''} ${expanded?'is-expanded':''}`} aria-label={title} onKeyDown={e=>{
+  return <ArchitectureContext.Provider value={design==='architecture'}><section ref={root} tabIndex={-1} id={id} data-visual-version="2" data-design={design} data-playing={transport.playing} className={`simulation aos-lab aos-theatre ${subjectLabel.startsWith('ALGORITMI')?'algorithm-player':''} ${design==='architecture'?'architectural-player':''} ${expanded?'is-expanded':''}`} aria-label={title} onKeyDown={e=>{
     if(e.key==='Escape')setExpanded(false);
     if((e.target as HTMLElement).closest('input,select,button'))return;
     if(e.key==='ArrowRight'){e.preventDefault();move(step+1);}
