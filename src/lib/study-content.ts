@@ -75,11 +75,13 @@ export function validateCurriculum(lessons: Lesson[], topics: Topic[]) {
       )
         throw new Error(`Riferimento teoria non valido: ${key}`);
     }
-    for (const topicId of lesson.topicIds)
-      for (const simulation of topics.find((t) => t.manifest.id === topicId)!.simulations) {
-        if (!refs.has(`${topicId}/${simulation.id}`))
-          throw new Error(`Teoria mancante per animazione: ${simulation.id}`);
-      }
+    if (lesson.document) {
+      for (const topicId of lesson.topicIds)
+        for (const simulation of topics.find((t) => t.manifest.id === topicId)!.simulations) {
+          if (!refs.has(`${topicId}/${simulation.id}`))
+            throw new Error(`Teoria mancante per animazione: ${simulation.id}`);
+        }
+    }
   }
   return lessons;
 }

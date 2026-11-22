@@ -23,13 +23,16 @@ export default async function LessonPage({
   const lesson = lessons.find((l) => l.id === lessonId);
   if (!lesson) notFound();
   const topics = getTopics().filter((t) => lesson.topicIds.includes(t.manifest.id));
+  const simulations = topics.flatMap((t) =>
+    t.simulations.map((s) => ({ ...s, topicId: t.manifest.id })),
+  );
   const requestedPage = Number(query.page);
   const initialPage = Number.isSafeInteger(requestedPage)
     ? Math.min(lesson.document?.pages ?? 1, Math.max(1, requestedPage))
     : 1;
   const view = ['theory', 'labs', 'code', 'check'].includes(query.view ?? '')
     ? (query.view as 'theory' | 'labs' | 'code' | 'check')
-    : 'theory';
+    : !lesson.document && simulations.length ? 'labs' : 'theory';
   return (
     <LessonWorkspace
       key={lesson.id}
@@ -37,9 +40,7 @@ export default async function LessonPage({
       courseLessons={lessons
         .filter((l) => l.subject === lesson.subject)
         .map((l) => ({ id: l.id, title: l.title }))}
-      simulations={topics.flatMap((t) =>
-        t.simulations.map((s) => ({ ...s, topicId: t.manifest.id })),
-      )}
+      simulations={simulations}
       exercises={topics.flatMap((t) =>
         t.exercises.map((exercise) => ({ topicId: t.manifest.id, exercise })),
       )}

@@ -2659,6 +2659,78 @@
       }
     },
     {
+      "id": "algoritmi-lezione-08",
+      "subject": "algoritmi",
+      "chapter": "Percorso principale",
+      "order": 8,
+      "title": "Lezione 8 - Greedy, analisi ammortizzata e alberi arricchiti",
+      "description": "Esplora le fusioni di Huffman, il costo aggregato di MULTIPOP e la ricerca per rango.",
+      "objectives": [
+        "Riconosci una scelta greedy valida.",
+        "Calcola il costo di una sequenza di operazioni.",
+        "Usa size per cercare un rango."
+      ],
+      "availability": "ready",
+      "topicIds": [
+        "algoritmi-l08-greedy"
+      ],
+      "theory": [],
+      "activities": [
+        {
+          "id": "risorsa",
+          "type": "choice",
+          "title": "Un intervallo che finisce presto",
+          "prompt": "Su una risorsa hai A=[0,8), B=[1,3), C=[3,6), D=[6,8). Qual è la selezione per fine minima?",
+          "options": [
+            "B, C, D",
+            "A",
+            "B, D"
+          ],
+          "answer": "B, C, D",
+          "explanation": "B finisce prima. C e D iniziano esattamente alla fine dell’attività precedente.",
+          "required": true,
+          "hints": [
+            "Gli intervalli sono semiaperti."
+          ]
+        },
+        {
+          "id": "frazioni",
+          "type": "choice",
+          "title": "Quanto vale una frazione?",
+          "prompt": "Hai capacità 5, una merce di peso 3 e valore totale 12 e una di peso 4 e valore totale 8. Quanto vale la scelta frazionaria ottima?",
+          "options": [
+            "16",
+            "12",
+            "20"
+          ],
+          "answer": "16",
+          "explanation": "Prendi 3 unità al valore unitario 4 e 2 unità al valore unitario 2.",
+          "required": true,
+          "hints": [
+            "Calcola i valori unitari prima di riempire la capacità."
+          ]
+        },
+        {
+          "id": "rotazione",
+          "type": "choice",
+          "title": "Aggiornare size",
+          "prompt": "Ruoti a sinistra attorno a x. α ha 2 nodi, β ne ha 1, γ ne ha 3. Quanto valgono size(x) e size(y) dopo la rotazione?",
+          "options": [
+            "4 e 8",
+            "8 e 5",
+            "3 e 7"
+          ],
+          "answer": "4 e 8",
+          "explanation": "x conserva α e riceve β, quindi 2+1+1=4. Il nuovo padre y eredita tutti gli 8 nodi.",
+          "required": true,
+          "hints": [
+            "Ogni size include il nodo alla radice."
+          ]
+        }
+      ],
+      "sections": []
+    },
+    {
       "id": "cpp-lezione-02",
       "subject": "cpp",
       "chapter": "Percorso principale",

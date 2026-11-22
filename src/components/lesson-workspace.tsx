@@ -287,8 +287,8 @@ export function LessonWorkspace({
                   <Code2 size={42} />
                   <h2>Qui si impara facendo.</h2>
                   <p>{lesson.description}</p>
-                  <button className="button primary" onClick={() => selectView('code')}>
-                    Apri gli esercizi <ArrowRight size={16} />
+                  <button className="button primary" onClick={() => selectView(simulations.length ? 'labs' : codeCount ? 'code' : 'check')}>
+                    {simulations.length ? 'Apri i laboratori' : 'Apri gli esercizi'} <ArrowRight size={16} />
                   </button>
                 </div>
               )}
