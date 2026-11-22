@@ -1,0 +1,14 @@
+[
+  {
+    "id": "intervalli",
+    "component": "algoritmi-interval-search",
+    "title": "Cerca un intervallo che interseca",
+    "description": "Cambia gli estremi e osserva come il massimo del ramo sinistro guida la ricerca."
+  },
+  {
+    "id": "btree",
+    "component": "algoritmi-btree-search",
+    "title": "Cerca una chiave tra i blocchi",
+    "description": "Cambia chiave e distingui i confronti in RAM dalle letture dei figli."
+  }
+]

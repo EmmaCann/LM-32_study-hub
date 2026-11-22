@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "algoritmi-l09-alberi",
+  "subject": "algoritmi",
+  "chapter": {
+    "id": "strutture-dati",
+    "title": "Strutture dati",
+    "order": 2
+  },
+  "slug": "intervalli-b-alberi",
+  "title": "Lezione 9 · Alberi di intervalli e B-alberi",
+  "description": "Due ricerche passo passo fra intervalli e blocchi.",
+  "order": 9,
+  "demo": false,
+  "updated": "2026-11-22",
+  "revision": 1,
+  "review": {
+    "status": "approved",
+    "reviewer": "Codex per autorizzazione permanente della proprietaria",
+    "sources": [
+      "Simulazioni didattiche e verifiche originali."
+    ]
+  },
+  "assets": []
+}

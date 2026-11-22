@@ -1,6 +1,7 @@
 'use client';
 import { AlgoritmiLesson7Lab } from './algoritmi-l07-lab';
 import { Lesson8Lab } from './algoritmi-l08-lab';
+import { Lesson9Lab } from './algoritmi-l09-lab';
 import { AlgoritmiLesson6Lab } from './algoritmi-l06-lab';
 import { AlgoritmiLesson5Lab } from './algoritmi-l05-lab';
 import { AosModulesLab } from './aos-modules-lab';
@@ -134,6 +135,8 @@ function AvlDiagram({ step }: { step: number }) {
 // Components must be reviewed and registered in application code, never loaded from content.
 export const registry = { 'vm-exit': VmDiagram, 'avl-rotation': AvlDiagram };
 export function SimulationPlayer({ simulation: s }: { simulation: Simulation }) {
+  if (s.component === 'algoritmi-interval-search' || s.component === 'algoritmi-btree-search')
+    return <Lesson9Lab id={s.id} title={s.title} mode={s.component === 'algoritmi-interval-search' ? 'interval' : 'btree'} />;
   if (s.component === 'algoritmi-huffman' || s.component === 'algoritmi-multipop' || s.component === 'algoritmi-order-statistic')
     return <Lesson8Lab id={s.id} title={s.title} mode={s.component === 'algoritmi-huffman' ? 'huffman' : s.component === 'algoritmi-multipop' ? 'multipop' : 'select'} />;
   if(s.component === 'algoritmi-matrix-dp' || s.component === 'algoritmi-lcs' || s.component === 'algoritmi-bst-cost' || s.component === 'algoritmi-triangulation') return <AlgoritmiLesson7Lab id={s.id} title={s.title} mode={s.component === 'algoritmi-matrix-dp' ? 'matrix' : s.component === 'algoritmi-lcs' ? 'lcs' : s.component === 'algoritmi-bst-cost' ? 'bst' : 'triangle'}/>;

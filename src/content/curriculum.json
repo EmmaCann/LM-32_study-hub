@@ -2731,6 +2731,78 @@
       "sections": []
     },
     {
+      "id": "algoritmi-lezione-09",
+      "subject": "algoritmi",
+      "chapter": "Percorso principale",
+      "order": 9,
+      "title": "Lezione 9 - Alberi di intervalli e B-alberi",
+      "description": "Segui la ricerca di una intersezione e misura le letture dei blocchi.",
+      "objectives": [
+        "Usa max per scegliere il ramo.",
+        "Distingui il costo CPU dalle letture.",
+        "Verifica i limiti di chiavi e figli."
+      ],
+      "availability": "ready",
+      "topicIds": [
+        "algoritmi-l09-alberi"
+      ],
+      "theory": [],
+      "activities": [
+        {
+          "id": "confini",
+          "type": "choice",
+          "title": "Intervalli che si toccano",
+          "prompt": "Qual è l’intersezione fra [3,7] e [7,9]?",
+          "options": [
+            "{7}",
+            "Insieme vuoto",
+            "[3,9]"
+          ],
+          "answer": "{7}",
+          "explanation": "Il punto 7 appartiene a entrambi gli intervalli chiusi.",
+          "required": true,
+          "hints": [
+            "Controlla se gli estremi sono inclusi."
+          ]
+        },
+        {
+          "id": "grado",
+          "type": "choice",
+          "title": "Contare i figli",
+          "prompt": "Un nodo interno non radice ha grado minimo t=3. Quante chiavi può contenere?",
+          "options": [
+            "Da 2 a 5",
+            "Da 3 a 6",
+            "Da 1 a 5"
+          ],
+          "answer": "Da 2 a 5",
+          "explanation": "I limiti t−1 e 2t−1 valgono per le chiavi. I figli sono uno in più.",
+          "required": true,
+          "hints": [
+            "Distingui chiavi e figli."
+          ]
+        },
+        {
+          "id": "letture",
+          "type": "choice",
+          "title": "Il costo della ricerca",
+          "prompt": "Si trova la chiave dopo due discese da una radice già in RAM. Quante letture conti?",
+          "options": [
+            "Due",
+            "Tre",
+            "Una"
+          ],
+          "answer": "Due",
+          "explanation": "Si carica un blocco per figlio incontrato. La radice è già disponibile.",
+          "required": true,
+          "hints": [
+            "Conta gli archi percorsi."
+          ]
+        }
+      ],
+      "sections": []
+    },
+    {
       "id": "cpp-lezione-02",
       "subject": "cpp",
       "chapter": "Percorso principale",

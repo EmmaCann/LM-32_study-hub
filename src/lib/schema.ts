@@ -143,6 +143,8 @@ export const simulationSchema = z
       'algoritmi-matrix-dp',
       'algoritmi-lcs',
       'algoritmi-huffman',
+      'algoritmi-interval-search',
+      'algoritmi-btree-search',
       'algoritmi-multipop',
       'algoritmi-order-statistic',
       'algoritmi-bst-cost',
