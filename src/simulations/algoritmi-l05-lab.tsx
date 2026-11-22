@@ -8,6 +8,7 @@ import {
   type L5Node,
   type L5Options,
 } from './algoritmi-l05-model';
+import { algorithmEase } from './algoritmi-motion';
 
 export function AlgoritmiLesson5Lab({
   id,
@@ -26,7 +27,7 @@ export function AlgoritmiLesson5Lab({
   const model = useMemo(() => l5Trace(values, mode, opts), [values, mode, opts]);
   const [time, setTime] = useState(0),
     [running, setRunning] = useState(false),
-    [delay, setDelay] = useState(2400),
+    [delay, setDelay] = useState(1300),
     [reduced, setReduced] = useState(false);
   const last = model.frames.length - 1,
     playing = running && time < last;
@@ -74,7 +75,7 @@ export function AlgoritmiLesson5Lab({
     f = model.frames[step],
     g = model.frames[Math.min(last, step + 1)],
     u = shown - step,
-    t = u * u * (3 - 2 * u),
+    t = algorithmEase(u),
     current = u >= 0.5 ? g : f;
   const nodes = f.nodes.map((a, i) => {
     const b = g.nodes[i];

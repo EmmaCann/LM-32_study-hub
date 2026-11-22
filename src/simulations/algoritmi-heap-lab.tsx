@@ -3,6 +3,7 @@ import { useEffect, useId, useMemo, useState } from 'react';
 import { VisualPlayer } from './aos-visual-player';
 import { heapTrace, heapPosition, heapExamples, type HeapOperation } from './algoritmi-heap-model';
 import { parseInput } from './algoritmi-sorting-models';
+import { algorithmEase } from './algoritmi-motion';
 export function AlgoritmiHeapLab({ id, title }: { id: string; title: string }) {
   const [operation, setOperation] = useState<HeapOperation>('sort'),
     [draft, setDraft] = useState(heapExamples.sort.join(','));
@@ -11,7 +12,7 @@ export function AlgoritmiHeapLab({ id, title }: { id: string; title: string }) {
   const model = useMemo(() => heapTrace(input, operation), [input, operation]);
   const [time, setTime] = useState(0),
     [running, setRunning] = useState(false),
-    [delay, setDelay] = useState(2400),
+    [delay, setDelay] = useState(1300),
     [reduced, setReduced] = useState(false);
   const last = model.frames.length - 1,
     playing = running && time < last,
@@ -41,7 +42,7 @@ export function AlgoritmiHeapLab({ id, title }: { id: string; title: string }) {
     f = model.frames[step],
     g = model.frames[Math.min(last, step + 1)],
     u = shown - step,
-    ease = u * u * (3 - 2 * u),
+    ease = algorithmEase(u),
     current = u > 0.001 ? g : f;
   function apply(next: HeapOperation = operation, text = draft) {
     setRunning(false);

@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useMemo, useState } from 'react';
 import { VisualPlayer } from './aos-visual-player';
+import { algorithmEase } from './algoritmi-motion';
 import {
   boundRatio,
   recurrencePosition,
@@ -11,7 +12,7 @@ import {
 function useClock(last: number) {
   const [time, setTime] = useState(0),
     [running, setRunning] = useState(false);
-  const [delay, setDelay] = useState(2400),
+  const [delay, setDelay] = useState(1300),
     [reduced, setReduced] = useState(false);
   const playing = running && time < last;
   useEffect(() => {
@@ -231,7 +232,7 @@ export function AlgoritmiRecurrenceLab({ id, title }: { id: string; title: strin
     if (!node.depth) return target;
     const from = recurrencePosition(node.depth - 1, Math.floor(node.index / config.a), config.a);
     const u = Math.max(0, Math.min(1, clock.shown - node.depth + 1)),
-      eased = u * u * (3 - 2 * u);
+      eased = algorithmEase(u);
     return { x: from.x + (target.x - from.x) * eased, y: from.y + (target.y - from.y) * eased };
   }
   const frame = {

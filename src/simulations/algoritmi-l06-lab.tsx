@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { VisualPlayer } from './aos-visual-player';
 import { l6Trace, type L6Mode } from './algoritmi-l06-model';
+import { algorithmEase } from './algoritmi-motion';
 export function AlgoritmiLesson6Lab({
   id,
   title,
@@ -24,7 +25,7 @@ export function AlgoritmiLesson6Lab({
   const frames = useMemo(() => l6Trace(mode, input, choice), [mode, input, choice]);
   const [time, setTime] = useState(0),
     [running, setRunning] = useState(false),
-    [delay, setDelay] = useState(2400),
+    [delay, setDelay] = useState(1300),
     [reduced, setReduced] = useState(false);
   const last = frames.length - 1,
     playing = running && time < last;
@@ -57,7 +58,7 @@ export function AlgoritmiLesson6Lab({
     f = frames[step],
     g = frames[Math.min(last, step + 1)],
     u = shown - step,
-    t = u * u * (3 - 2 * u),
+    t = algorithmEase(u),
     current = u >= 0.5 ? g : f;
   const nodes = f.nodes.map((a, i) => {
     const b = g.nodes[i];
@@ -65,12 +66,19 @@ export function AlgoritmiLesson6Lab({
     return {
       ...a,
       x: a.x + (b.x - a.x) * t,
-      y: y + (mode === 'rb' && b.y > a.y ? Math.sin(Math.PI * t) * 18 : 0),
+      y,
       color: u > 0.5 ? b.color : a.color,
       label: u > 0.5 ? b.label : a.label,
     };
   });
   const get = (key: string) => nodes.find((n) => n.id === key)!;
+  const links = new Map<string, { edge: [string, string]; before: boolean; after: boolean }>();
+  for (const edge of f.edges) links.set(edge.join('->'), { edge, before: true, after: false });
+  for (const edge of g.edges) {
+    const key = edge.join('->'), prior = links.get(key);
+    if (prior) prior.after = true;
+    else links.set(key, { edge, before: false, after: true });
+  }
   function apply() {
     try {
       const values = draft.split(',').map((x) => (x.trim() ? Number(x) : NaN));
@@ -190,16 +198,24 @@ export function AlgoritmiLesson6Lab({
               <text x="55" y="119" className="tree-zone-title">ALBERO ROSSO-NERO · BST + FIXUP</text>
             </g>
           )}
-          {current.edges.map(([a, b]) => {
-            const x = get(a),
-              y = get(b);
+          {[...links.entries()].map(([key, link]) => {
+            const x = get(link.edge[0]),
+              y = get(link.edge[1]),
+              dx = y.x - x.x,
+              dy = y.y - x.y,
+              length = Math.hypot(dx, dy) || 1,
+              radius = mode === 'rb' ? 24 : 0,
+              opacity = link.before && link.after ? 1 : link.before ? 1 - t : t;
             return (
-              <path
-                key={a + '-' + b}
-                d={`M${x.x} ${x.y + 23} C${x.x} ${x.y + 26},${y.x} ${y.y - 26},${y.x} ${y.y - 23}`}
+              <line
+                key={key}
+                x1={x.x + (dx / length) * radius}
+                y1={x.y + (dy / length) * radius}
+                x2={y.x - (dx / length) * radius}
+                y2={y.y - (dy / length) * radius}
                 stroke="#537b93"
-                strokeWidth="3"
-                fill="none"
+                strokeWidth="2.4"
+                opacity={opacity}
               />
             );
           })}

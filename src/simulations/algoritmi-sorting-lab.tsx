@@ -2,6 +2,7 @@
 import {useEffect,useId,useMemo,useRef,useState} from 'react';
 import {ChevronLeft,ChevronRight,Play,Pause,RotateCcw,Maximize2,Minimize2} from 'lucide-react';
 import {insertion,merge,parseInput} from './algoritmi-sorting-models';
+import {algorithmEase} from './algoritmi-motion';
 const codes={insertion:[[0,'for j = 2..n'],[2,'  key ← A[j]; i ← j−1'],[5,'  while i > 0 and A[i] > key'],[6,'    A[i+1] ← A[i]; i ← i−1'],[8,'  A[i+1] ← key']] as const,
   merge:[[0,'i ← 1; j ← 1'],[1,'if L[i] ≤ R[j]'],[2,'  scrivi L[i]; i ← i+1'],[3,'else scrivi R[j]; j ← j+1']] as const};
 export function AlgoritmiSortingLab({id,title,mode}:{id:string;title:string;mode:'insertion'|'merge'}){
@@ -39,7 +40,7 @@ export function AlgoritmiSortingLab({id,title,mode}:{id:string;title:string;mode
       setInput({left:a,right:b});setTime(0);setError('');
     }catch(e){setError((e as Error).message);}
   }
-  const shown=reduced?Math.floor(time):time,k=Math.min(last,Math.floor(shown)),f=model.frames[k],g=model.frames[Math.min(k+1,last)],u=shown-k,ease=u*u*(3-2*u),d=u>.001?g:f;
+  const shown=reduced?Math.floor(time):time,k=Math.min(last,Math.floor(shown)),f=model.frames[k],g=model.frames[Math.min(k+1,last)],u=shown-k,ease=algorithmEase(u),d=u>.001?g:f;
   const moving=u>.001?model.items.find(item=>f.pos[item.id].x!==g.pos[item.id].x||f.pos[item.id].y!==g.pos[item.id].y):undefined;
   const rows:[number,number,string][]=isMerge?[[80,model.lengths[0],'L'],[175,model.lengths[1],'R'],[310,model.items.length,'Output']]:[[180,model.items.length,'A / indici da 1']];
   return <section ref={root} id={id} tabIndex={-1} className={`simulation alg-lab ${expanded?'alg-expanded':''}`} aria-label={title} data-playing={playing} data-time={shown.toFixed(4)} onKeyDown={e=>{

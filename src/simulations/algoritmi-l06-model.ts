@@ -45,24 +45,16 @@ export function l6Trace(mode: L6Mode, input: number[], choice = 0): L6Frame[] {
           }
       }
       visit(root, 0);
-      function layout(k: number | null): { x: Map<number, number>; min: number; max: number } {
-        if (k === null) return { x: new Map(), min: 0, max: 0 };
-        const n = get(k),
-          left = layout(n.left),
-          right = layout(n.right),
-          gap = 76,
-          leftShift = n.left === null ? 0 : -gap - left.max,
-          rightShift = n.right === null ? 0 : gap - right.min,
-          x = new Map<number, number>([[k, 0]]);
-        for (const [key, value] of left.x) x.set(key, value + leftShift);
-        for (const [key, value] of right.x) x.set(key, value + rightShift);
-        const min = Math.min(0, n.left === null ? 0 : left.min + leftShift, n.right === null ? 0 : right.min + rightShift),
-          max = Math.max(0, n.left === null ? 0 : left.max + leftShift, n.right === null ? 0 : right.max + rightShift);
-        return { x, min, max };
+      function layout(k: number | null, depth: number, x: number) {
+        if (k === null) return;
+        treeX.set(k, x);
+        const childOffset = 360 / 2 ** (depth + 1);
+        layout(get(k).left, depth + 1, x - childOffset);
+        layout(get(k).right, depth + 1, x + childOffset);
       }
-      const positioned = layout(root),
-        centerShift = 450 - (positioned.min + positioned.max) / 2;
-      for (const [key, x] of positioned.x) treeX.set(key, x + centerShift);
+      // Binary slots keep the root centered and both branches visually balanced.
+      // Each existing node keeps its identity; only its tree position changes.
+      layout(root, 0, 450);
       function bh(k: number | null): number {
         if (k === null) return 1;
         const n = get(k),

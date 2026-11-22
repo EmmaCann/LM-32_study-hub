@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { VisualPlayer } from './aos-visual-player';
 import { lesson3Trace, itemPosition, type Mode } from './algoritmi-l03-model';
+import { algorithmEase } from './algoritmi-motion';
 export function AlgoritmiLesson3Lab({
   id,
   title,
@@ -24,7 +25,7 @@ export function AlgoritmiLesson3Lab({
   const model = useMemo(() => lesson3Trace(values, mode, seed), [values, mode, seed]);
   const [time, setTime] = useState(0),
     [running, setRunning] = useState(false),
-    [delay, setDelay] = useState(2400),
+    [delay, setDelay] = useState(1300),
     [reduced, setReduced] = useState(false);
   const last = model.frames.length - 1,
     playing = running && time < last;
@@ -53,7 +54,7 @@ export function AlgoritmiLesson3Lab({
     f = model.frames[step],
     g = model.frames[Math.min(step + 1, last)],
     u = shown - step,
-    ease = u * u * (3 - 2 * u),
+    ease = algorithmEase(u),
     current = u > 0.001 ? g : f;
   function move(n: number) {
     setRunning(false);

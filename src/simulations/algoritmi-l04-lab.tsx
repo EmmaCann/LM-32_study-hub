@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { VisualPlayer } from './aos-visual-player';
 import { lesson4Trace, l4Position, type L4Mode } from './algoritmi-l04-model';
+import { algorithmEase } from './algoritmi-motion';
 export function AlgoritmiLesson4Lab({
   id,
   title,
@@ -30,7 +31,7 @@ export function AlgoritmiLesson4Lab({
   );
   const [time, setTime] = useState(0),
     [running, setRunning] = useState(false),
-    [delay, setDelay] = useState(2400),
+    [delay, setDelay] = useState(1300),
     [reduced, setReduced] = useState(false);
   const last = model.frames.length - 1,
     playing = running && time < last;
@@ -75,7 +76,7 @@ export function AlgoritmiLesson4Lab({
     f = model.frames[step],
     g = model.frames[Math.min(last, step + 1)],
     u = shown - step,
-    ease = u * u * (3 - 2 * u),
+    ease = algorithmEase(u),
     current = u >= 0.5 ? g : f,
     ink = { fill: '#203848' },
     height = mode === 'bucket' ? 220 + 42 * m : mode === 'select' ? 470 : 430;
