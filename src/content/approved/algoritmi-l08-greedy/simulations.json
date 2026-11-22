@@ -1,0 +1,20 @@
+[
+  {
+    "id": "huffman",
+    "component": "algoritmi-huffman",
+    "title": "Huffman: dai pesi all’albero",
+    "description": "Modifica le frequenze e segui le fusioni dei minimi."
+  },
+  {
+    "id": "multipop",
+    "component": "algoritmi-multipop",
+    "title": "MULTIPOP e costo aggregato",
+    "description": "Cambia la sequenza e confronta chiamate, inserimenti ed estrazioni."
+  },
+  {
+    "id": "select",
+    "component": "algoritmi-order-statistic",
+    "title": "Select: trova una chiave per rango",
+    "description": "Cambia il rango e osserva come si aggiorna lungo il cammino."
+  }
+]

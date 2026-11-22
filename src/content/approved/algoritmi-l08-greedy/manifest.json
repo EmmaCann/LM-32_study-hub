@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "algoritmi-l08-greedy",
+  "subject": "algoritmi",
+  "chapter": {
+    "id": "strutture-dati",
+    "title": "Strutture dati",
+    "order": 2
+  },
+  "slug": "greedy-alberi-arricchiti",
+  "title": "Lezione 8 · Greedy e alberi arricchiti",
+  "description": "Fusioni di Huffman, sequenze sulla pila e ricerca per rango.",
+  "order": 8,
+  "demo": false,
+  "updated": "2026-11-22",
+  "revision": 1,
+  "review": {
+    "status": "approved",
+    "reviewer": "Codex per autorizzazione permanente della proprietaria",
+    "sources": [
+      "Esercizi e simulazioni didattiche originali."
+    ]
+  },
+  "assets": []
+}
