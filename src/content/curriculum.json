@@ -2587,12 +2587,14 @@
     {
       "id": "aos-lezione-14",
       "subject": "aos",
-      "chapter": "Percorso principale",
+      "chapter": "Real-time",
       "order": 14,
-      "title": "Lezione 1 Real-time - Introduzione ai sistemi real-time",
-      "description": "Confronta due tracce di scheduling con la stessa deadline e un lock condiviso.",
+      "title": "Lezione 1-2 Real-time - Introduzione e modello dei task",
+      "description": "Leggi uno schedule preemptive, calcola risposta e margine e interpreta l’utilizzazione dei task periodici.",
       "objectives": [
-        "Confronta due tracce di scheduling con la stessa deadline e un lock condiviso."
+        "Distinguere tempo di risposta, lateness, tardiness e slack.",
+        "Leggere uno scheduling preemptive e calcolare l’utilizzazione di un task periodico.",
+        "Osservare come un lock può cambiare il rispetto della deadline."
       ],
       "availability": "ready",
       "topicIds": [
@@ -2602,7 +2604,7 @@
         {
           "topicId": "aos-l14-realtime",
           "simulationId": "cpu-deadline",
-          "page": 4,
+          "page": 6,
           "section": "Velocità della CPU, lock e deadline"
         }
       ],
@@ -2618,6 +2620,34 @@
           ],
           "answer": "τ₂ acquisisce prima il lock condiviso",
           "explanation": "τ₁ usa meno tempo di CPU, ma aspetta il rilascio del lock detenuto da τ₂."
+        },
+        {
+          "id": "risposta-preemptive",
+          "type": "choice",
+          "title": "Tempo di risposta",
+          "prompt": "Un job arriva a t = 5, esegue fino a t = 8, riprende a t = 11 e termina a t = 14. Quanto vale il tempo di risposta?",
+          "options": [
+            "6 unità",
+            "9 unità",
+            "14 unità"
+          ],
+          "answer": "9 unità",
+          "explanation": "Il tempo di risposta va da t = 5 a t = 14 e include l’attesa durante la preemption.",
+          "required": false
+        },
+        {
+          "id": "utilizzazione",
+          "type": "choice",
+          "title": "Utilizzazione periodica",
+          "prompt": "Un task ha budget C = 2 ms e periodo T = 10 ms. Quanto vale la sua utilizzazione?",
+          "options": [
+            "2%",
+            "20%",
+            "50%"
+          ],
+          "answer": "20%",
+          "explanation": "Il rapporto C/T vale 0,2. La deadline va controllata separatamente.",
+          "required": false
         }
       ],
       "sections": [
@@ -2632,22 +2662,42 @@
           "page": 2
         },
         {
-          "id": "prevedibilita",
-          "title": "Prevedibilità e inversione di priorità",
+          "id": "lateness-slack",
+          "title": "Lateness, tardiness e margine residuo",
           "page": 3
+        },
+        {
+          "id": "schedule",
+          "title": "Leggere uno schedule preemptive",
+          "page": 3
+        },
+        {
+          "id": "periodici",
+          "title": "Attivazioni e task periodici",
+          "page": 4
+        },
+        {
+          "id": "prevedibilita",
+          "title": "Prevedibilità e analisi del caso peggiore",
+          "page": 5
         },
         {
           "id": "variabilita",
           "title": "Da dove viene la variabilità",
-          "page": 5
+          "page": 6
+        },
+        {
+          "id": "garanzie",
+          "title": "Progettare e verificare le garanzie",
+          "page": 7
         }
       ],
       "document": {
         "id": "aos-lezione-14-appunti",
-        "title": "Appunti - Lezione 1 Real-time - Introduzione ai sistemi real-time",
-        "filename": "Appunti_AOS_Lezione-14.pdf",
-        "fingerprint": "9c9cbb3ec4afce5afa1cf15f64f3e00ddc3f551dd22a05652ef0ef0b21834361",
-        "pages": 6
+        "title": "Appunti - Lezione 1-2 Real-time",
+        "filename": "Appunti_AOS_Lezione 1-2 Realtime.pdf",
+        "fingerprint": "b1da4e65adb8b8cc5d6575b5da9e1fff78cc9a8969414437eb404996dea069d3",
+        "pages": 8
       }
     },
     {

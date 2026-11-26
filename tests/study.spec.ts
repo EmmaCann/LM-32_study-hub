@@ -187,6 +187,15 @@ test('nuove lezioni AOS: appunti, sequenza IRQ e confronto delle deadline', asyn
   for (const lesson of [13, 14]) {
     await page.goto(`/percorso/aos-lezione-${lesson}`);
     await expect(page.locator('.desk-panel:not([hidden]) canvas')).toBeVisible({ timeout: 30000 });
+    if (lesson === 14) {
+      await expect(page.getByRole('heading', { name: /Lezione 1-2 Real-time/ })).toBeVisible();
+      const index = await page.request.get('/notes/index.json');
+      expect(
+        (await index.json()).documents.find(
+          (entry: { lessonId: string }) => entry.lessonId === 'aos-lezione-14',
+        ).pages,
+      ).toHaveLength(8);
+    }
     await page.locator('.desk-tabs button').filter({ hasText: 'Laboratori' }).click();
     const lab = page.getByRole('region', { name: 'Laboratori della lezione' });
 

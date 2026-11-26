@@ -37,10 +37,12 @@ function find(folder, name) {
 for (const lesson of curriculum.lessons) {
   const document = lesson.document;
   if (!document) continue;
-  if (
-    !folders[lesson.subject] ||
-    !/^Appunti_(AOS|Algoritmi|CPP)_Lezione-\d+(?:-\d+)?\.pdf$/.test(document.filename)
-  )
+  const standardFilename = /^Appunti_(AOS|Algoritmi|CPP)_Lezione-\d+(?:-\d+)?\.pdf$/;
+  const realtimeFilename = /^Appunti_AOS_Lezione \d+(?:-\d+)? Realtime\.pdf$/;
+  const allowedFilename =
+    standardFilename.test(document.filename) ||
+    (lesson.subject === 'aos' && realtimeFilename.test(document.filename));
+  if (!folders[lesson.subject] || !allowedFilename)
     throw new Error(`Documento non ammesso: ${lesson.id}`);
   const candidates = find(path.join(root, folders[lesson.subject]), document.filename);
   if (candidates.length !== 1)
