@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "aos-l13-dispositivi",
+  "subject": "aos",
+  "chapter": {
+    "id": "lezione-13",
+    "title": "Lezione 13 - Dispositivi, concorrenza e interrupt",
+    "order": 13
+  },
+  "slug": "sensore-irq",
+  "title": "Dal sensore al lettore",
+  "description": "Segui un campione dal GPIO al thread IRQ e alla wait queue.",
+  "order": 1,
+  "demo": false,
+  "updated": "2026-11-26",
+  "revision": 1,
+  "review": {
+    "status": "approved",
+    "reviewer": "Revisione didattica a partire dagli appunti AOS",
+    "sources": [
+      "Appunti AOS — Lezione 13 - Dispositivi, concorrenza e interrupt"
+    ]
+  },
+  "assets": []
+}

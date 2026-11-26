@@ -4,10 +4,10 @@ import fs from 'node:fs';
 import { getCurriculum } from '../src/lib/study-content';
 import { validatePublishedNotes } from '../src/lib/notes-content';
 import { publishedNotesSchema } from '../src/lib/published-notes';
-test('PDF automatici: tutti i 24 appunti sono associati, integri e ricercabili', () => {
+test('PDF automatici: tutti i 26 appunti sono associati, integri e ricercabili', () => {
   const lessons = getCurriculum();
   const records = validatePublishedNotes(lessons);
-  assert.equal(records.length, 24);
+  assert.equal(records.length, 26);
   assert.equal(records.length, lessons.filter((l) => l.document).length);
   assert.ok(records.every((r) => r.pages.some((page) => page.trim())));
   assert.ok(

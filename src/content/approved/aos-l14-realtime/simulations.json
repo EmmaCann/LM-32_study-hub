@@ -1,0 +1,8 @@
+[
+  {
+    "id": "cpu-deadline",
+    "component": "aos-realtime-deadline",
+    "title": "Velocità della CPU, lock e deadline",
+    "description": "Confronta due tracce di scheduling con la stessa deadline e un lock condiviso."
+  }
+]

@@ -1,0 +1,16 @@
+[
+  {
+    "id": "verifica-laboratorio",
+    "type": "multiple-choice",
+    "title": "Verifica il laboratorio",
+    "prompt": "A velocità doppia, perché τ₁ manca la deadline?",
+    "options": [
+      "τ₁ richiede più tempo di CPU",
+      "τ₂ acquisisce prima il lock condiviso"
+    ],
+    "answer": "τ₂ acquisisce prima il lock condiviso",
+    "explanation": "τ₁ usa meno tempo di CPU, ma aspetta il rilascio del lock detenuto da τ₂.",
+    "hints": [],
+    "solution": "τ₂ acquisisce prima il lock condiviso"
+  }
+]

@@ -156,6 +156,8 @@ export const simulationSchema = z
       'aos-car',
       'aos-modules',
       'aos-mailbox',
+      'aos-sensor-irq',
+      'aos-realtime-deadline',
       'aos-flags',
       'aos-cpu-cache',
       'aos-virtqueue',

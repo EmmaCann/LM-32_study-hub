@@ -2514,6 +2514,143 @@
       }
     },
     {
+      "id": "aos-lezione-13",
+      "subject": "aos",
+      "chapter": "Percorso principale",
+      "order": 13,
+      "title": "Lezione 13 - Dispositivi, concorrenza e interrupt",
+      "description": "Segui un campione dal GPIO al thread IRQ e alla wait queue.",
+      "objectives": [
+        "Segui un campione dal GPIO al thread IRQ e alla wait queue."
+      ],
+      "availability": "ready",
+      "topicIds": [
+        "aos-l13-dispositivi"
+      ],
+      "theory": [
+        {
+          "topicId": "aos-l13-dispositivi",
+          "simulationId": "sensore-irq",
+          "page": 4,
+          "section": "Dal sensore al lettore"
+        }
+      ],
+      "activities": [
+        {
+          "id": "verifica-laboratorio",
+          "type": "choice",
+          "title": "Verifica il laboratorio",
+          "prompt": "Dove può avvenire un trasferimento I²C sincrono?",
+          "options": [
+            "Nel top half",
+            "Nel thread IRQ"
+          ],
+          "answer": "Nel thread IRQ",
+          "explanation": "Il thread IRQ opera in un contesto che può dormire."
+        }
+      ],
+      "sections": [
+        {
+          "id": "riconoscimento",
+          "title": "Come Linux trova il dispositivo",
+          "page": 1
+        },
+        {
+          "id": "concorrenza",
+          "title": "Concorrenza e contesti di esecuzione",
+          "page": 2
+        },
+        {
+          "id": "interrupt",
+          "title": "Dalla linea IRQ al thread del driver",
+          "page": 3
+        },
+        {
+          "id": "io-bloccante",
+          "title": "I/O bloccante e wait queue",
+          "page": 4
+        },
+        {
+          "id": "laboratorio",
+          "title": "Laboratorio VL53L1X",
+          "page": 6
+        }
+      ],
+      "document": {
+        "id": "aos-lezione-13-appunti",
+        "title": "Appunti - Lezione 13 - Dispositivi, concorrenza e interrupt",
+        "filename": "Appunti_AOS_Lezione-13.pdf",
+        "fingerprint": "d6f86be413c1a67d8704afe29dad9424309ec36a3bde9b55966d62fd9ea82c74",
+        "pages": 7
+      }
+    },
+    {
+      "id": "aos-lezione-14",
+      "subject": "aos",
+      "chapter": "Percorso principale",
+      "order": 14,
+      "title": "Lezione 1 Real-time - Introduzione ai sistemi real-time",
+      "description": "Confronta due tracce di scheduling con la stessa deadline e un lock condiviso.",
+      "objectives": [
+        "Confronta due tracce di scheduling con la stessa deadline e un lock condiviso."
+      ],
+      "availability": "ready",
+      "topicIds": [
+        "aos-l14-realtime"
+      ],
+      "theory": [
+        {
+          "topicId": "aos-l14-realtime",
+          "simulationId": "cpu-deadline",
+          "page": 4,
+          "section": "Velocità della CPU, lock e deadline"
+        }
+      ],
+      "activities": [
+        {
+          "id": "verifica-laboratorio",
+          "type": "choice",
+          "title": "Verifica il laboratorio",
+          "prompt": "A velocità doppia, perché τ₁ manca la deadline?",
+          "options": [
+            "τ₁ richiede più tempo di CPU",
+            "τ₂ acquisisce prima il lock condiviso"
+          ],
+          "answer": "τ₂ acquisisce prima il lock condiviso",
+          "explanation": "τ₁ usa meno tempo di CPU, ma aspetta il rilascio del lock detenuto da τ₂."
+        }
+      ],
+      "sections": [
+        {
+          "id": "vincoli",
+          "title": "Correttezza e vincoli temporali",
+          "page": 1
+        },
+        {
+          "id": "risposta",
+          "title": "Task, risposta e deadline",
+          "page": 2
+        },
+        {
+          "id": "prevedibilita",
+          "title": "Prevedibilità e inversione di priorità",
+          "page": 3
+        },
+        {
+          "id": "variabilita",
+          "title": "Da dove viene la variabilità",
+          "page": 5
+        }
+      ],
+      "document": {
+        "id": "aos-lezione-14-appunti",
+        "title": "Appunti - Lezione 1 Real-time - Introduzione ai sistemi real-time",
+        "filename": "Appunti_AOS_Lezione-14.pdf",
+        "fingerprint": "9c9cbb3ec4afce5afa1cf15f64f3e00ddc3f551dd22a05652ef0ef0b21834361",
+        "pages": 6
+      }
+    },
+    {
       "id": "algoritmi-lezione-07",
       "subject": "algoritmi",
       "chapter": "Percorso principale",

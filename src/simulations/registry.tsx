@@ -5,6 +5,7 @@ import { Lesson9Lab } from './algoritmi-l09-lab';
 import { AlgoritmiLesson6Lab } from './algoritmi-l06-lab';
 import { AlgoritmiLesson5Lab } from './algoritmi-l05-lab';
 import { AosModulesLab } from './aos-modules-lab';
+import { AosRealtimeLab, AosSensorLab } from './aos-device-realtime-lab';
 import { AosMailboxLab } from './aos-mailbox-lab';
 import { AosCarLab } from './aos-car-lab';
 import { AosContainerLab } from './aos-container-lab';
@@ -143,6 +144,8 @@ export function SimulationPlayer({ simulation: s }: { simulation: Simulation }) 
   if(s.component === 'algoritmi-rb-insert' || s.component === 'algoritmi-rod' || s.component === 'algoritmi-matrix-intro') return <AlgoritmiLesson6Lab id={s.id} title={s.title} mode={s.component === 'algoritmi-rb-insert' ? 'rb' : s.component === 'algoritmi-rod' ? 'rod' : 'matrix'}/>;
   if(s.component === 'algoritmi-containers' || s.component === 'algoritmi-list' || s.component === 'algoritmi-hash') return <AlgoritmiLesson5Lab id={s.id} title={s.title} mode={s.component === 'algoritmi-containers' ? 'containers' : s.component === 'algoritmi-list' ? 'list' : 'hash'}/>;
   if(s.component === 'aos-modules') return <AosModulesLab id={s.id} title={s.title}/>;
+  if (s.component === 'aos-sensor-irq') return <AosSensorLab title={s.title} />;
+  if (s.component === 'aos-realtime-deadline') return <AosRealtimeLab title={s.title} />;
   if(s.component === 'aos-mailbox') return <AosMailboxLab id={s.id} title={s.title}/>;
   if(s.component === 'aos-car') return <AosCarLab id={s.id} title={s.title}/>;
   if(s.component === 'aos-container') return <AosContainerLab id={s.id} title={s.title}/>;

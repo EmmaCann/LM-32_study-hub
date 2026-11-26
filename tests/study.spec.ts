@@ -17,7 +17,7 @@ test('lezione: PDF automatico, indice e cambio lezione senza caricamenti manuali
   expect(source.status()).toBe(200);
   expect(source.headers()['content-type']).toContain('application/pdf');
   const index = await request.get('/notes/index.json');
-  expect((await index.json()).documents).toHaveLength(24);
+  expect((await index.json()).documents).toHaveLength(26);
   if (testInfo.project.name === 'webkit-ipad')
     await page.getByRole('button', { name: 'Indice della lezione', exact: true }).click();
   await page
@@ -181,4 +181,28 @@ test('home, tema e spazi di studio responsive: desktop, iPad e telefono', async 
   await expect(page.locator('.desk-panel:not([hidden]) canvas')).toBeVisible();
   await page.screenshot({ path: testInfo.outputPath('lesson-mobile.png'), fullPage: false });
   expect(errors).toEqual([]);
+});
+
+test('nuove lezioni AOS: appunti, sequenza IRQ e confronto delle deadline', async ({ page }) => {
+  for (const lesson of [13, 14]) {
+    await page.goto(`/percorso/aos-lezione-${lesson}`);
+    await expect(page.locator('.desk-panel:not([hidden]) canvas')).toBeVisible({ timeout: 30000 });
+    await page.locator('.desk-tabs button').filter({ hasText: 'Laboratori' }).click();
+    const lab = page.getByRole('region', { name: 'Laboratori della lezione' });
+
+    if (lesson === 13) {
+      const next = lab.getByRole('button', { name: 'Avanza' });
+      await next.click();
+      await expect(
+        lab.getByRole('heading', { name: 'Il sensore segnala una misura pronta' }),
+      ).toBeVisible();
+      await lab.getByRole('button', { name: 'Ricomincia' }).click();
+      await expect(lab.getByRole('button', { name: 'Indietro' })).toBeDisabled();
+    } else {
+      await expect(lab.getByText(/τ₁ rispetta la deadline/)).toBeVisible();
+      await lab.getByRole('button', { name: 'Velocità doppia' }).click();
+      await expect(lab.getByText(/τ₁ manca la deadline/)).toBeVisible();
+      await expect(lab.getByText(/Completa a t = 10,5/)).toBeVisible();
+    }
+  }
 });

@@ -1,0 +1,8 @@
+[
+  {
+    "id": "sensore-irq",
+    "component": "aos-sensor-irq",
+    "title": "Dal sensore al lettore",
+    "description": "Segui un campione dal GPIO al thread IRQ e alla wait queue."
+  }
+]

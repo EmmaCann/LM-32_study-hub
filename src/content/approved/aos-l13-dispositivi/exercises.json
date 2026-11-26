@@ -1,0 +1,16 @@
+[
+  {
+    "id": "verifica-laboratorio",
+    "type": "multiple-choice",
+    "title": "Verifica il laboratorio",
+    "prompt": "Dove può avvenire un trasferimento I²C sincrono?",
+    "options": [
+      "Nel top half",
+      "Nel thread IRQ"
+    ],
+    "answer": "Nel thread IRQ",
+    "explanation": "Il thread IRQ opera in un contesto che può dormire.",
+    "hints": [],
+    "solution": "Nel thread IRQ"
+  }
+]

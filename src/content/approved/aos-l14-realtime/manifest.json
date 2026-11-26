@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "aos-l14-realtime",
+  "subject": "aos",
+  "chapter": {
+    "id": "lezione-14",
+    "title": "Lezione 1 Real-time - Introduzione ai sistemi real-time",
+    "order": 14
+  },
+  "slug": "cpu-deadline",
+  "title": "Velocità della CPU, lock e deadline",
+  "description": "Confronta due tracce di scheduling con la stessa deadline e un lock condiviso.",
+  "order": 1,
+  "demo": false,
+  "updated": "2026-11-26",
+  "revision": 1,
+  "review": {
+    "status": "approved",
+    "reviewer": "Revisione didattica a partire dagli appunti AOS",
+    "sources": [
+      "Appunti AOS — Lezione 1 Real-time - Introduzione ai sistemi real-time"
+    ]
+  },
+  "assets": []
+}
